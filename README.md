@@ -7,6 +7,9 @@
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![Codecov test
+coverage](https://codecov.io/gh/drieslab/GiottoUtils/branch/main/graph/badge.svg)](https://app.codecov.io/gh/drieslab/GiottoUtils?branch=main)
+[![R-CMD-check](https://github.com/drieslab/GiottoUtils/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/drieslab/GiottoUtils/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 GiottoUtils exports functionalities that are called internally by many
