@@ -4,11 +4,14 @@
 # GiottoUtils
 
 <!-- badges: start -->
+
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-GiottoUtils contains functionalities that are called internally by many
+GiottoUtils exports functionalities that are called internally by many
 of the other packages in the Giotto ecosystem. These range from things
-such commonly used imports to pretty prints. Users should not need to
+such as commonly used imports to pretty prints. Users should not need to
 directly interact with this package.
 
 ## Installation
