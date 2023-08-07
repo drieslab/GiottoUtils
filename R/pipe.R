@@ -1,5 +1,6 @@
-#' Pipe operator
-#'
+# Pipe operator
+
+# nocov start
 #' See \code{magrittr::\link[magrittr]{\%>\%}} for details.
 #'
 #' @name %>%
@@ -9,3 +10,4 @@
 #' @importFrom magrittr %>%
 #' @usage lhs \%>\% rhs
 NULL
+# nocov end

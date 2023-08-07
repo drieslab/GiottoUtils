@@ -6,14 +6,12 @@ Authors@R: c(
 		 role = c("aut", "cre")),
 	person("Jiaji", "George Chen", email = "jiajic@bu.edu",
 		 role = c("aut")),
-	person("Natalie", "Del Rossi", email = "natalie.delrossi@mssm.edu",
-		 role = c("aut")),
 	person("Guo-Cheng", "Yuan", email = "guo-cheng.yuan@mssm.edu",
 		 role = c("aut")),
-    person("Matthew", "O'Brien", email = "mobrien2@bu.edu",
-		 role = c("aut")),
-		 person("Joselyn", "Chávez", email = "joselynchavezf@gmail.com",
-		 role = c("aut"))
+  person("Matthew", "O'Brien", email = "mobrien2@bu.edu",
+	   role = c("aut")),
+	person("Joselyn", "Chávez", email = "joselynchavezf@gmail.com",
+	   role = c("aut"))
 	)
 Maintainer: Ruben Dries <rubendries@gmail.com>
 Description: Utility functions and imports for the Giotto Suite in order to prevent repetitive copying of code.
@@ -30,7 +28,17 @@ Imports:
     checkmate,
     lifecycle,
     magrittr,
+    methods,
     utils
 Suggests: 
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    data.table
 Config/testthat/edition: 3
+Collate: 
+    'assert.R'
+    'check.R'
+    'expect.R'
+    'symbols.R'
+    'format.R'
+    'lifecycle.R'
+    'pipe.R'

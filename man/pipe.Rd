@@ -2,7 +2,7 @@
 % Please edit documentation in R/pipe.R
 \name{\%>\%}
 \alias{\%>\%}
-\title{Pipe operator}
+\title{See \code{magrittr::\link[magrittr]{\%>\%}} for details.}
 \usage{
 lhs \%>\% rhs
 }

@@ -1,6 +1,5 @@
-
 # lifecycle deprecation functions
-
+# nocov start
 
 #' @importFrom lifecycle deprecated
 #' @family lifecycle
@@ -23,6 +22,8 @@ lifecycle::deprecate_warn
 #' @export
 lifecycle::deprecate_stop
 
+# nocov end
+
 #' @name lifecycle_badge
 #' @title lifecycle badge
 #' @description
@@ -37,6 +38,6 @@ lifecycle::deprecate_stop
 #' @importFrom lifecycle badge
 #' @family lifecycle
 #' @export
-lifecycle_badge = function(stage = 'stable') {
+lifecycle_badge <- function(stage = "stable") {
   lifecycle::badge(stage)
 }
