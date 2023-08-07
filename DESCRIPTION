@@ -26,13 +26,13 @@ Depends:
     R (>= 3.5.0)
 Imports:
     checkmate,
+    data.table,
     lifecycle,
     magrittr,
     methods,
     utils
 Suggests: 
     testthat (>= 3.0.0),
-    data.table,
     covr
 Config/testthat/edition: 3
 Collate: 
