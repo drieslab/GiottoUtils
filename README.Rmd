@@ -18,6 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![Codecov test coverage](https://codecov.io/gh/drieslab/GiottoUtils/branch/main/graph/badge.svg)](https://app.codecov.io/gh/drieslab/GiottoUtils?branch=main)
+[![R-CMD-check](https://github.com/drieslab/GiottoUtils/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/drieslab/GiottoUtils/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 GiottoUtils exports functionalities that are called internally by many of the other packages in the Giotto ecosystem. These range from things such as commonly used imports to pretty prints. Users should not need to directly interact with this package.    
