@@ -70,6 +70,27 @@ jobs:
         run: find check -name 'testthat.Rout*' -exec cat '{}' \; || true
         shell: bash
 
+
+  test-coverage:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: r-lib/actions/setup-r@v1
+        with:
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v1
+        with:
+          extra-packages: covr
+
+      - name: Test coverage
+        run: covr::codecov()
+        shell: Rscript {0}
+
       # add code cov
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
