@@ -6,7 +6,6 @@
 # See https://github.com/r-lib/actions/tree/master/examples#readme for
 # additional example workflows available for the R community.
 
-name: R-CMD-check
 
 on:
   push:
@@ -16,6 +15,8 @@ on:
 
 permissions:
   contents: read
+
+name: R-CMD-check
 
 jobs:
   R-CMD-check:
@@ -71,24 +72,34 @@ jobs:
         shell: bash
 
 
+name: test-coverage
+
+jobs:
+
   test-coverage:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - uses: r-lib/actions/setup-r@v1
+      - uses: r-lib/actions/setup-r@v2
         with:
           use-public-rspm: true
 
-      - uses: r-lib/actions/setup-r-dependencies@v1
+      - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: covr
+          extra-packages: any::covr
+          needs: coverage
 
       - name: Test coverage
-        run: covr::codecov()
+        run: |
+          covr::codecov(
+            quiet = FALSE,
+            clean = FALSE,
+            install_path = file.path(Sys.getenv("RUNNER_TEMP"), "package")
+          )
         shell: Rscript {0}
 
       # add code cov
