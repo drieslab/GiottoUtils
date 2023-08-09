@@ -26,12 +26,13 @@ Depends:
     R (>= 3.5.0)
 Imports:
     checkmate,
-    data.table,
     lifecycle,
     magrittr,
     methods,
-    utils
+    utils (>= 3.5.0),
 Suggests: 
+    data.table,
+    reticulate,
     testthat (>= 3.0.0),
     covr
 Config/testthat/edition: 3
@@ -41,5 +42,7 @@ Collate:
     'expect.R'
     'symbols.R'
     'format.R'
+    'gmatch.R'
     'lifecycle.R'
     'pipe.R'
+    'pkg_check.R'

@@ -18,13 +18,13 @@ test_that("is_empty_char returns TRUE for a NA input", {
 
 # Test for an empty character
 test_that("is_empty_char returns TRUE for an empty character", {
-  result <- is_empty_char('')
+  result <- is_empty_char("")
   expect_true(result)
 })
 
 # Test for a non-empty character
 test_that("is_empty_char returns FALSE for a non-empty character", {
-  result <- is_empty_char('Hello')
+  result <- is_empty_char("Hello")
   expect_false(result)
 })
 
@@ -42,15 +42,15 @@ test_that("is_empty_char returns FALSE for a logical input", {
 
 # Test for a character vector with non-empty elements
 test_that("is_empty_char returns FALSE for a character vector with non-empty elements", {
-  result <- is_empty_char(c('a', 'b', 'c'))
+  result <- is_empty_char(c("a", "b", "c"))
   expect_false(result)
 })
 
 # Test for a character vector with empty elements
 test_that("is_empty_char returns TRUE for a character vector with empty elements", {
-  result <- is_empty_char(c('', '', ''))
-  expect_out = rep(TRUE, 3L)
-  names(expect_out) = c('', '', '')
+  result <- is_empty_char(c("", "", ""))
+  expect_out <- rep(TRUE, 3L)
+  names(expect_out) <- c("", "", "")
   expect_identical(result, expect_out)
 })
 
