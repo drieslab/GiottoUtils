@@ -127,14 +127,6 @@ jobs:
           LINTR_ERROR_ON_LINT: true
 
 
-
-on:
-  push:
-    paths: ['**.Rmd']
-
-name: render-rmarkdown
-
-jobs:
   render-rmarkdown:
     runs-on: ubuntu-latest
     env:
