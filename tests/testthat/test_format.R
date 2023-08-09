@@ -10,10 +10,12 @@ test_that("Time conversions", {
   test_time1 <- 10
   test_time2 <- 1e3
   test_time3 <- 1e4
+  test_time4 <- 5
 
   out1 <- time_format(test_time1)
   out2 <- time_format(test_time2)
   out3 <- time_format(test_time3)
+  out4 <- time_format(test_time4)
 
   checkmate::expect_character(out1)
   checkmate::expect_character(out2)
@@ -22,6 +24,7 @@ test_that("Time conversions", {
   expect_identical(out1, "10.0s")
   expect_identical(out2, "00:16:40")
   expect_identical(out3, "02:46:40")
+  expect_identical(out4, "5.000s")
 })
 
 test_that("wrap_txt", {
@@ -56,6 +59,8 @@ test_that("use_color_text settings", {
   expect_message(use_color_text(), "Color text not supported on this system.")
 
   options("cli.num_colors" = 10L)
+  expect_true(use_color_text())
+  options("giotto.color_show" = NULL)
   expect_true(use_color_text())
 
   on.exit({
@@ -150,6 +155,8 @@ test_that("further color decision making works", {
   r_color <- Sys.getenv("R_CLI_NUM_COLORS", "")
   plat <- .Platform$GUI
   env <- Sys.getenv("RSTUDIO")
+  knit <- getOption("knitr.in.progress")
+
   options("crayon.enabled" = FALSE)
   options("crayon.colors" = 10)
 
@@ -177,13 +184,17 @@ test_that("further color decision making works", {
   expect_equal(ansi_colors(), 1L)
   Sys.setenv("NO_COLOR" = NA_character_)
 
+  # options("knitr.in.progress" = TRUE)
+  # expect_equal(ansi_colors(), 1L)
+  # options("knitr.in.progress" = FALSE)
+
   # .Platform$GUI = "AQUA"
   # expect_equal(ansi_colors(), 1L)
-  # .Platform$GUI = 'RStudio'
-  #
-  # Sys.setenv('RSTUDIO' = '1')
+  # .Platform$GUI = "RStudio"
+
+  # Sys.setenv("RSTUDIO" = "1")
   # expect_equal(ansi_colors(), 8L)
-  # Sys.setenv('RSTUDIO' = env)
+  # Sys.setenv("RSTUDIO" = env)
 
   on.exit({
     options("giotto.num_colors" = g_opt)
@@ -194,5 +205,6 @@ test_that("further color decision making works", {
     .Platform$GUI <- plat
     Sys.setenv("RSTUDIO" = env)
     Sys.setenv("R_CLI_NUM_COLORS" = r_color)
+    options("knitr.in.progress" = knit)
   })
 })

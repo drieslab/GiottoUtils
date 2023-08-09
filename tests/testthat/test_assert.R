@@ -53,4 +53,7 @@ test_that("assert framework no .name", {
 test_that("giotto object check", {
   test_num <- 7L
   expect_error(guard_against_notgiotto(test_num))
+
+  expect_error(guard_against_notgiotto(),
+               regexp = 'giotto object must be given')
 })
