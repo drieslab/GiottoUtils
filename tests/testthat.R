@@ -9,7 +9,4 @@
 library(testthat)
 library(GiottoUtils)
 
-library(reticulate)
-library(covr)
-
 test_check("GiottoUtils")
