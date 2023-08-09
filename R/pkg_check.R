@@ -6,11 +6,11 @@
 #' @keywords internal
 #' @export
 check_github_suite_ver <- function(pkg = "Giotto") {
-  pkg <- g_match_arg(pkg, c("Giotto", "GiottoUtils", "GiottoClasses", "GiottoVisuals"))
+  pkg <- g_match_arg(pkg, c("Giotto", "GiottoUtils", "GiottoClass", "GiottoVisuals"))
   repo <- switch(pkg,
     "Giotto" = "Giotto/suite",
     "GiottoUtils" = "GiottoUtils/master",
-    "GiottoClasses" = "GiottoClasses/master",
+    "GiottoClass" = "GiottoClass/master",
     "GiottoVisuals" = "GiottoVisuals/master"
   )
 
