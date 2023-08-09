@@ -51,11 +51,11 @@ specific checks and messages can be built using this base function.
 }}
 \examples{
 \dontrun{
-  g_assert(
-    x,
-    test = inherits(x, 'data.table'),
-    msg = c(.name, 'must be of class data.table, not', class(x))
-  )
+g_assert(
+  x,
+  test = inherits(x, "data.table"),
+  msg = c(.name, "must be of class data.table, not", class(x))
+)
 }
 }
 \keyword{internal}

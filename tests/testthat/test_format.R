@@ -26,62 +26,64 @@ test_that("Time conversions", {
 
 test_that("wrap_txt", {
   ipsum <- "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-  out_30 = "Lorem ipsum dolor sit amet,\n consectetur adipiscing elit,\n sed do eiusmod tempor\n incididunt ut labore et\n dolore magna aliqua. Ut enim\n ad minim veniam, quis\n nostrud exercitation ullamco\n laboris nisi ut aliquip ex\n ea commodo consequat. Duis\n aute irure dolor in\n reprehenderit in voluptate\n velit esse cillum dolore eu\n fugiat nulla pariatur.\n Excepteur sint occaecat\n cupidatat non proident, sunt\n in culpa qui officia\n deserunt mollit anim id est\n laborum."
-  expect_identical(wrap_txt(ipsum,
-                            strWidth = 30L),
-                   out_30)
+  out_30 <- "Lorem ipsum dolor sit amet,\n consectetur adipiscing elit,\n sed do eiusmod tempor\n incididunt ut labore et\n dolore magna aliqua. Ut enim\n ad minim veniam, quis\n nostrud exercitation ullamco\n laboris nisi ut aliquip ex\n ea commodo consequat. Duis\n aute irure dolor in\n reprehenderit in voluptate\n velit esse cillum dolore eu\n fugiat nulla pariatur.\n Excepteur sint occaecat\n cupidatat non proident, sunt\n in culpa qui officia\n deserunt mollit anim id est\n laborum."
+  expect_identical(
+    wrap_txt(ipsum,
+      strWidth = 30L
+    ),
+    out_30
+  )
   expect_no_condition(wrap_txt(ipsum, errWidth = TRUE))
-  expect_identical(wrap_txt('a', 'b', sep = 'Y', errWidth = TRUE), 'aYb')
+  expect_identical(wrap_txt("a", "b", sep = "Y", errWidth = TRUE), "aYb")
 })
 
 
 # color print ####
 
-test_that('color_tag is the expected list', {
-  out = color_tag()
-  checkmate::expect_list(out, types = 'character', names = 'named', len = 7L)
+test_that("color_tag is the expected list", {
+  out <- color_tag()
+  checkmate::expect_list(out, types = "character", names = "named", len = 7L)
 })
 
-test_that('use_color_text settings', {
-  opt1 = getOption('giotto.color_show', default = NULL)
+test_that("use_color_text settings", {
+  opt1 <- getOption("giotto.color_show", default = NULL)
   options("giotto.color_show" = FALSE)
   expect_false(use_color_text())
 
-  opt2 = getOption('cli.num_colors', default = NULL)
-  options('giotto.color_show' = TRUE)
-  options('cli.num_colors' = 2L)
-  expect_message(use_color_text(), 'Color text not supported on this system.')
+  opt2 <- getOption("cli.num_colors", default = NULL)
+  options("giotto.color_show" = TRUE)
+  options("cli.num_colors" = 2L)
+  expect_message(use_color_text(), "Color text not supported on this system.")
 
-  options('cli.num_colors' = 10L)
+  options("cli.num_colors" = 10L)
   expect_true(use_color_text())
 
   on.exit({
     options("giotto.color_show" = opt1)
-    options('cli.num_colors' = opt2)
+    options("cli.num_colors" = opt2)
   })
 })
 
 # Test for ansi_colors function
-test_that('ansi_color settings', {
+test_that("ansi_color settings", {
   # get defaults
-  opt1 = getOption('giotto.num_colors', default = NULL)
-  opt2 = getOption('cli.num_colors', default = NULL)
+  opt1 <- getOption("giotto.num_colors", default = NULL)
+  opt2 <- getOption("cli.num_colors", default = NULL)
 
-  options('cli.num_colors' = NULL) # needed to bypass otherwise value is 1 when
+  options("cli.num_colors" = NULL) # needed to bypass otherwise value is 1 when
   # running from testthat
 
-  options('giotto.num_colors' = 256)
+  options("giotto.num_colors" = 256)
   expect_equal(ansi_colors(), 256)
-  options('giotto.num_colors' = NULL)
+  options("giotto.num_colors" = NULL)
 
-  options('cli.num_colors' = 128)
+  options("cli.num_colors" = 128)
   expect_equal(ansi_colors(), 128)
 
   on.exit({
-    options('giotto.num_colors' = opt1)
-    options('cli.num_colors' = opt2)
+    options("giotto.num_colors" = opt1)
+    options("cli.num_colors" = opt2)
   })
-
 })
 
 # Test for ansi_colors function
@@ -106,7 +108,7 @@ test_that("emacs_version returns a numeric version or NA", {
 
 # Test for a valid version string
 test_that("emacs_version returns a numeric version for a valid version string", {
-  old_ENV <- Sys.getenv('INSIDE_EMACS')
+  old_ENV <- Sys.getenv("INSIDE_EMACS")
   on.exit(Sys.setenv(INSIDE_EMACS = old_ENV))
   Sys.setenv("INSIDE_EMACS" = 1)
   version <- emacs_version()
@@ -116,7 +118,7 @@ test_that("emacs_version returns a numeric version for a valid version string", 
 
 # Test for an invalid version string
 test_that("emacs_version returns NA for an invalid version string", {
-  old_ENV <- Sys.getenv('INSIDE_EMACS')
+  old_ENV <- Sys.getenv("INSIDE_EMACS")
   on.exit(Sys.setenv(INSIDE_EMACS = old_ENV))
 
   Sys.setenv(INSIDE_EMACS = "not_a_version_string")
@@ -128,7 +130,7 @@ test_that("emacs_version returns NA for an invalid version string", {
 
 # Test for an empty version string
 test_that("emacs_version returns NA for an empty version string", {
-  old_ENV <- Sys.getenv('INSIDE_EMACS')
+  old_ENV <- Sys.getenv("INSIDE_EMACS")
   on.exit(Sys.setenv(INSIDE_EMACS = old_ENV))
 
   Sys.setenv(INSIDE_EMACS = "")
@@ -139,41 +141,41 @@ test_that("emacs_version returns NA for an empty version string", {
 })
 
 
-test_that('further color decision making works', {
-  g_opt = getOption('giotto.num_colors', default = NULL)
-  cli_opt = getOption('cli.num_colors', default = NULL)
-  cray_on = getOption('crayon.enabled', NULL)
-  cray_num = getOption('crayon.colors', NULL)
-  sys_color = Sys.getenv('NO_COLOR', NA_character_)
-  r_color = Sys.getenv('R_CLI_NUM_COLORS', '')
-  plat = .Platform$GUI
-  env = Sys.getenv('RSTUDIO')
-  options('crayon.enabled' = FALSE)
-  options('crayon.colors' = 10)
+test_that("further color decision making works", {
+  g_opt <- getOption("giotto.num_colors", default = NULL)
+  cli_opt <- getOption("cli.num_colors", default = NULL)
+  cray_on <- getOption("crayon.enabled", NULL)
+  cray_num <- getOption("crayon.colors", NULL)
+  sys_color <- Sys.getenv("NO_COLOR", NA_character_)
+  r_color <- Sys.getenv("R_CLI_NUM_COLORS", "")
+  plat <- .Platform$GUI
+  env <- Sys.getenv("RSTUDIO")
+  options("crayon.enabled" = FALSE)
+  options("crayon.colors" = 10)
 
   # cli and giotto settings
-  options('cli.num_colors' = NULL) # needed to bypass otherwise value is 1 when
+  options("cli.num_colors" = NULL) # needed to bypass otherwise value is 1 when
   # running from testthat
-  options('giotto.num_colors' = NULL)
+  options("giotto.num_colors" = NULL)
 
-  Sys.setenv('R_CLI_NUM_COLORS' = 2)
+  Sys.setenv("R_CLI_NUM_COLORS" = 2)
   expect_equal(ansi_colors(), 2L)
-  Sys.setenv('R_CLI_NUM_COLORS' = '')
+  Sys.setenv("R_CLI_NUM_COLORS" = "")
 
   # crayon compatibility
   expect_equal(ansi_colors(), 1L)
-  options('crayon.enabled' = TRUE)
+  options("crayon.enabled" = TRUE)
   expect_equal(ansi_colors(), 10L)
 
-  options('crayon.colors' = NULL)
+  options("crayon.colors" = NULL)
   expect_equal(ansi_colors(), 8L)
 
-  options('crayon.enabled' = NULL)
-  options('crayon.colors' = NULL)
+  options("crayon.enabled" = NULL)
+  options("crayon.colors" = NULL)
 
-  Sys.setenv('NO_COLOR' = TRUE)
+  Sys.setenv("NO_COLOR" = TRUE)
   expect_equal(ansi_colors(), 1L)
-  Sys.setenv('NO_COLOR' = NA_character_)
+  Sys.setenv("NO_COLOR" = NA_character_)
 
   # .Platform$GUI = "AQUA"
   # expect_equal(ansi_colors(), 1L)
@@ -184,15 +186,13 @@ test_that('further color decision making works', {
   # Sys.setenv('RSTUDIO' = env)
 
   on.exit({
-    options('giotto.num_colors' = g_opt)
-    options('cli.num_colors' = cli_opt)
-    options('crayon.enabled' = cray_on)
-    options('crayon.colors' = cray_num)
-    Sys.setenv('NO_COLOR' = sys_color)
-    .Platform$GUI = plat
-    Sys.setenv('RSTUDIO' = env)
-    Sys.setenv('R_CLI_NUM_COLORS' = r_color)
+    options("giotto.num_colors" = g_opt)
+    options("cli.num_colors" = cli_opt)
+    options("crayon.enabled" = cray_on)
+    options("crayon.colors" = cray_num)
+    Sys.setenv("NO_COLOR" = sys_color)
+    .Platform$GUI <- plat
+    Sys.setenv("RSTUDIO" = env)
+    Sys.setenv("R_CLI_NUM_COLORS" = r_color)
   })
 })
-
-

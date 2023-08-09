@@ -20,13 +20,17 @@
 #' @keywords internal
 #' @return boolean
 #' @export
-list_element_exists = function(x, index) {
-  tryCatch({
-    if(length(x[[index]]) > -1)
-      return(TRUE)
-  }, error = function(e) {
-    return(FALSE)
-  })
+list_element_exists <- function(x, index) {
+  tryCatch(
+    {
+      if (length(x[[index]]) > -1) {
+        return(TRUE)
+      }
+    },
+    error = function(e) {
+      return(FALSE)
+    }
+  )
 }
 
 
@@ -38,11 +42,23 @@ list_element_exists = function(x, index) {
 #' or has a length of 0 (empty)
 #' @keywords internal
 #' @export
-is_empty_char = function(x) {
-  if(is.null(x)) return(TRUE)
-  if(is.character(x) & length(x) == 0L) return(TRUE)
-  if(any(sapply(x, is.na))) return(sapply(x, is.na))
-  if(any(sapply(x, function(x) {x == ''}))) return(sapply(x, function(x) {x == ''}))
+is_empty_char <- function(x) {
+  if (is.null(x)) {
+    return(TRUE)
+  }
+  if (is.character(x) & length(x) == 0L) {
+    return(TRUE)
+  }
+  if (any(sapply(x, is.na))) {
+    return(sapply(x, is.na))
+  }
+  if (any(sapply(x, function(x) {
+    x == ""
+  }))) {
+    return(sapply(x, function(x) {
+      x == ""
+    }))
+  }
 
   FALSE
 }
