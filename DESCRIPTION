@@ -32,17 +32,26 @@ Imports:
     utils (>= 3.5.0),
 Suggests: 
     data.table,
+    future.apply,
+    parallel,
     reticulate,
     testthat (>= 3.0.0),
     covr
 Config/testthat/edition: 3
 Collate: 
+    'DT_helpers.R'
     'assert.R'
     'check.R'
+    'depth.R'
     'expect.R'
+    'file_read.R'
     'symbols.R'
     'format.R'
+    'globals.R'
     'gmatch.R'
+    'lapply_flex.R'
     'lifecycle.R'
     'pipe.R'
     'pkg_check.R'
+    'system_info.R'
+    'zzz.R'
