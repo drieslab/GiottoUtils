@@ -2,6 +2,12 @@
 % Please edit documentation in R/format.R
 \name{color_tag}
 \alias{color_tag}
+\alias{color_red}
+\alias{color_green}
+\alias{color_yellow}
+\alias{color_blue}
+\alias{color_purple}
+\alias{color_teal}
 \alias{use_color_text}
 \alias{ansi_colors}
 \alias{is_emacs_with_color}
@@ -9,6 +15,18 @@
 \title{Colorize print text}
 \usage{
 color_tag()
+
+color_red(x)
+
+color_green(x)
+
+color_yellow(x)
+
+color_blue(x)
+
+color_purple(x)
+
+color_teal(x)
 
 use_color_text()
 

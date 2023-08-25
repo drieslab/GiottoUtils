@@ -1,6 +1,6 @@
 Package: GiottoUtils
 Title: Giotto Suite Utilities
-Version: 0.0.0.9000
+Version: 0.0.0.9001
 Authors@R: c(
 	person("Ruben", "Dries", email = "rubendries@gmail.com",
 		 role = c("aut", "cre")),
@@ -41,7 +41,6 @@ Config/testthat/edition: 3
 Collate: 
     'DT_helpers.R'
     'assert.R'
-    'check.R'
     'depth.R'
     'expect.R'
     'file_read.R'
@@ -54,4 +53,5 @@ Collate:
     'pipe.R'
     'pkg_check.R'
     'system_info.R'
+    'test.R'
     'zzz.R'

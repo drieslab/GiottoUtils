@@ -68,6 +68,72 @@ color_tag <- function() {
   )
 }
 
+#' @rdname color_tag
+#' @export
+color_red = function(x) {
+  ct = color_tag()
+  if(use_color_text()) {
+    paste0(ct$r, x, ct$x)
+  } else {
+    x
+  }
+}
+
+#' @rdname color_tag
+#' @export
+color_green = function(x) {
+  ct = color_tag()
+  if(use_color_text()) {
+    paste0(ct$g, x, ct$x)
+  } else {
+    x
+  }
+}
+
+#' @rdname color_tag
+#' @export
+color_yellow = function(x) {
+  ct = color_tag()
+  if(use_color_text()) {
+    paste0(ct$y, x, ct$x)
+  } else {
+    x
+  }
+}
+
+#' @rdname color_tag
+#' @export
+color_blue = function(x) {
+  ct = color_tag()
+  if(use_color_text()) {
+    paste0(ct$b, x, ct$x)
+  } else {
+    x
+  }
+}
+
+#' @rdname color_tag
+#' @export
+color_purple = function(x) {
+  ct = color_tag()
+  if(use_color_text()) {
+    paste0(ct$p, x, ct$x)
+  } else {
+    x
+  }
+}
+
+#' @rdname color_tag
+#' @export
+color_teal = function(x) {
+  ct = color_tag()
+  if(use_color_text()) {
+    paste0(ct$t, x, ct$x)
+  } else {
+    x
+  }
+}
+
 
 
 #' @describeIn color_tag Determine if system should print color

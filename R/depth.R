@@ -36,3 +36,33 @@ depth <- function(this,
   }
 
 }
+
+
+# param order should not be changed
+#' @name require_depth
+#' @title Coerce to AT LEAST specified nesting depth
+#' @param x object to evaluate
+#' @param dnames character. vector of names to apply per depth level if not already named
+#' the name entries should match the depth they are intended for. NULL values
+#' @param min_depth required minimum nesting depth
+#' are ignored.
+#' @param count do not use
+#' @export
+require_depth <- function(x, dnames = NULL, min_depth = 1L, count = 1L) {
+
+  x_depth <- depth(x)
+
+  # if not null, dnames must be a character vector with length that covers the min_depth
+  if(!is.null(dnames)) checkmate::assert_character(dnames, len = min_depth + count - x_depth - 1L)
+
+  if (x_depth < min_depth) {
+    depth_name <- dnames[[count]]
+    x <- list(x)
+    names(x) <- depth_name
+    x = require_depth(x, dnames, min_depth, count = count + 1L)
+  }
+  x
+}
+
+
+
