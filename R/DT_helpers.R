@@ -67,3 +67,30 @@ dt_to_matrix <- function(x) {
   rownames(mat) = rownames
   return(mat)
 }
+
+
+
+
+
+#' @title dcast_dt_string
+#' @description Data.table dcast using character inputs for formula
+#' @param data a `data.table`
+#' @param col_name1 character. LHS of cast formula
+#' @param col_name2 character. RHS of cast formula
+#' @param value.var character. Name of the column whose values will be filled to
+#' cast.
+#' @seealso [data.table::dcast.data.table()]
+#' @examples
+#' library(data.table)
+#' ChickWeight = as.data.table(ChickWeight)
+#' setnames(ChickWeight, tolower(names(ChickWeight)))
+#' DT <- melt(as.data.table(ChickWeight), id=2:4) # calls melt.data.table
+#'
+#' dcast_dt_string(DT, 'chick', 'time', 'value')
+#' @export
+dcast_dt_string <- function(data, col_name1, col_name2, value.var) {
+  checkmate::assert_data_table(data)
+  data.table::dcast.data.table(data, paste(col_name1, "~", col_name2), value.var = value.var)
+}
+
+
