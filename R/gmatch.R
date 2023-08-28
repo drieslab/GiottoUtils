@@ -10,7 +10,7 @@
 #' @export
 g_match_arg <- function(arg, choices, ...) {
   args_list <- list(...)
-  args_list$pattern <- arg
+  args_list$pattern <- arg[1]
   args_list$x <- choices
   if (is.null(args_list$value)) args_list$value <- TRUE
   if (is.null(args_list$ignore.case)) args_list$ignore.case <- TRUE
