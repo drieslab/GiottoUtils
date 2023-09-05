@@ -26,12 +26,12 @@ Depends:
     R (>= 3.5.0)
 Imports:
     checkmate,
+    data.table,
     lifecycle,
     magrittr,
     methods,
     utils (>= 3.5.0),
 Suggests: 
-    data.table,
     future.apply,
     parallel,
     reticulate,
