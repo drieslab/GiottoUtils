@@ -1,4 +1,7 @@
 
+#' @importClassesFrom data.table data.table
+NULL
+
 ## data.table helper functions ####
 
 #' @title DT_removeNA
