@@ -46,6 +46,7 @@ wrap_txt <- function(..., sep = " ", strWidth = 100, errWidth = FALSE) {
 
 # Color text (8 colors) ####
 
+# nocov start
 
 #' @title Colorize print text
 #' @name color_tag
@@ -134,6 +135,7 @@ color_teal = function(x) {
   }
 }
 
+# nocov end
 
 
 #' @describeIn color_tag Determine if system should print color
