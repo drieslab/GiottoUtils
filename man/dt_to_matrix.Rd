@@ -12,4 +12,4 @@ dt_to_matrix(x)
 \description{
 converts data.table to matrix
 }
-\keyword{internal}
+\concept{data.table}
