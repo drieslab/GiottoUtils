@@ -30,3 +30,4 @@ dcast_dt_string(DT, 'chick', 'time', 'value')
 \seealso{
 \code{\link[data.table:dcast.data.table]{data.table::dcast.data.table()}}
 }
+\concept{data.table}
