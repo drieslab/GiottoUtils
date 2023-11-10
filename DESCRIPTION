@@ -52,6 +52,7 @@ Collate:
     'lifecycle.R'
     'pipe.R'
     'pkg_check.R'
+    'seed.R'
     'system_info.R'
     'test.R'
     'zzz.R'
