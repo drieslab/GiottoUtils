@@ -6,7 +6,16 @@
 \usage{
 sort_combine_two_DT_columns(DT, column1, column2, myname = "unif_gene_gene")
 }
+\arguments{
+\item{DT}{datatable}
+
+\item{column1}{column1 to use}
+
+\item{column2}{column2 to use}
+
+\item{myname}{name of combined column to generate}
+}
 \description{
 fast sorting and pasting of 2 character columns in a data.table
 }
-\keyword{internal}
+\concept{data.table}

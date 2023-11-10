@@ -1,6 +1,6 @@
 Package: GiottoUtils
 Title: Giotto Suite Utilities
-Version: 0.0.0.9003
+Version: 0.0.0.9004
 Authors@R: c(
 	person("Ruben", "Dries", email = "rubendries@gmail.com",
 		 role = c("aut", "cre")),
@@ -52,6 +52,7 @@ Collate:
     'lifecycle.R'
     'pipe.R'
     'pkg_check.R'
+    'seed.R'
     'system_info.R'
     'test.R'
     'zzz.R'
