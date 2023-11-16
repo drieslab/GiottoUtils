@@ -17,7 +17,7 @@ Maintainer: Ruben Dries <rubendries@gmail.com>
 Description: Utility functions and imports for the Giotto Suite in order to prevent repetitive copying of code.
 License: GPL (>= 3)
 Encoding: UTF-8
-URL: https://drieslab.github.io/Giotto/, https://github.com/drieslab/Giotto
+URL: https://drieslab.github.io/Giotto/, https://github.com/drieslab/Giotto, https://drieslab.github.io/GiottoUtils/
 BugReports: https://github.com/drieslab/Giotto/issues
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
