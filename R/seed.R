@@ -3,7 +3,7 @@
 #' @name random_seed
 #' @param set.seed Whether to apply the random seed. Defaults to TRUE
 #' @description
-#' From [reproducible::set.randomseed]\cr
+#' From reproducible package, set.randomseed()\cr
 #' Convenient function for applying a random seed. Usually used with
 #' `on.exit()` when a specified seed is applied so that non-random operations
 #' do not interfere with other aspects of a user's work. May also be called with
