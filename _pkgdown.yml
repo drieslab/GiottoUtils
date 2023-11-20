@@ -26,7 +26,7 @@ navbar:
       href: reference/index.html
     github:
       icon: fab fa-github fa-lg
-      href: https://github.com/drieslab/Giotto/
+      href: https://github.com/drieslab/GiottoUtils/
       aria-label: github
 
 home:
