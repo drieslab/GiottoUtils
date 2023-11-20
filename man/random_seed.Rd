@@ -13,7 +13,7 @@ random_seed(set.seed = TRUE)
 The seed value is returned invisibly
 }
 \description{
-From \link[reproducible:set.randomseed]{reproducible::set.randomseed}\cr
+From reproducible package, set.randomseed()\cr
 Convenient function for applying a random seed. Usually used with
 \code{on.exit()} when a specified seed is applied so that non-random operations
 do not interfere with other aspects of a user's work. May also be called with
