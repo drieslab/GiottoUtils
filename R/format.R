@@ -38,6 +38,49 @@ wrap_txt <- function(..., sep = " ", strWidth = 100, errWidth = FALSE) {
 }
 
 
+#' @title Verbose message handler
+#' @name vmsg
+#' @param ... additional strings and/or elements to pass to wrap_msg
+#' @param .v verbose flag to pass. Will check options through .vopt if NULL (default).
+#' @param .is_debug flag as a debug print (only prints when .v or .vopt is 'debug')
+#' @param .vopt verbosity option to pull from
+#' @export
+vmsg <- function(..., .v = NULL, .is_debug = FALSE, .vopt = getOption('giotto.verbose', TRUE)) {
+
+  if (!is.null(.v)) .vopt <- .v
+
+  if (isTRUE(.vopt)) .vopt <- 'yes'
+  if (isFALSE(.vopt)) .vopt <- 'no'
+  .vopt <- match.arg(
+    arg = .vopt,
+    choices = c(
+      'yes',
+      'no',
+      'debug',
+      'log',
+      'debug_log'
+    )
+  )
+
+  # if debug type print, ignore if .vopt is not related to debug
+  if (isTRUE(.is_debug)) {
+    if (!(.vopt == 'debug' || .vopt == 'debug_log')) .vopt <- 'no'
+    else if (.vopt == 'debug') .vopt <- 'yes'
+    else if (.vopt == 'debug_log') .vopt <- 'log'
+  }
+
+  switch(
+    .vopt,
+    'yes' = wrap_msg(...),
+    'no' = return(invisible(NULL)),
+    'log' = stop('verbose: \'log\' to be implemented', call. = FALSE)
+  )
+}
+
+
+
+
+
 
 
 
