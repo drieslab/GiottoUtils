@@ -21,8 +21,15 @@ wrap_msg <- function(..., sep = " ") {
 #' @param sep how to join elements of string (default is one space)
 #' @param strWidth externally set wrapping width. (default value of 100 is not effected)
 #' @param errWidth default = FALSE. Set strWidth to be compatible with error printout
+#' @param .initial character. prefix for first line
+#' @param .prefix character. prefix for later lines
 #' @export
-wrap_txt <- function(..., sep = " ", strWidth = 100, errWidth = FALSE) {
+wrap_txt <- function(...,
+                     sep = " ",
+                     strWidth = 100,
+                     errWidth = FALSE,
+                     .prefix = ' ',
+                     .initial = '') {
   custom_width <- ifelse(is.null(match.call()$strWidth), yes = FALSE, no = TRUE)
   if (!isTRUE(custom_width)) {
     if (isTRUE(errWidth)) strWidth <- getOption("width") - 6
@@ -31,7 +38,7 @@ wrap_txt <- function(..., sep = " ", strWidth = 100, errWidth = FALSE) {
   cat(..., sep = sep) %>%
     utils::capture.output() %>%
     strwrap(
-      prefix = " ", initial = "", # indent later lines, no indent first line
+      prefix = .prefix, initial = .initial, # indent later lines, no indent first line
       width = min(80, getOption("width"), strWidth)
     ) %>%
     paste(collapse = "\n")
