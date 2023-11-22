@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# GiottoUtils <img src="man/figures/GiottoLogo.png" align="right" alt="" width="160" />
+# GiottoUtils <img src="man/figures/logo.png" align="right" alt="" width="160" />
 
 <!-- badges: start -->
 
