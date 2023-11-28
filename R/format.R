@@ -49,15 +49,36 @@ wrap_txt <- function(...,
 #' @name vmsg
 #' @param ... additional strings and/or elements to pass to wrap_msg
 #' @param .v verbose flag to pass. Will check options through .vopt if NULL (default).
+# This param is intended for passing function-level verbose flags
 #' @param .is_debug flag as a debug print (only prints when .v or .vopt is 'debug')
-#' @param .vopt verbosity option to pull from
+#' @param .vopt global verbosity option to pull from
+#' @examples
+#' # common usage (.v is logical)
+#' vmsg('print me', .v = TRUE)
+#' vmsg('dont print me', .v = FALSE)
+#'
+#' # debug messages (.v == "debug")
+#' vmsg('I am a debug message', .is_debug = TRUE, .v = TRUE) # no print
+#' vmsg('I am a debug message', .is_debug = TRUE, .v = "debug") # prints
+#'
+#' vmsg('print me', .v = 'debug') # also prints non-debug messages
 #' @export
 vmsg <- function(..., .v = NULL, .is_debug = FALSE, .vopt = getOption('giotto.verbose', TRUE)) {
 
-  if (!is.null(.v)) .vopt <- .v
+  # if function-level flag is provided, override global option
+  if (!is.null(.v)) {
+    .vopt <- .v
+  }
 
   if (isTRUE(.vopt)) .vopt <- 'yes'
   if (isFALSE(.vopt)) .vopt <- 'no'
+
+  .vopt <- tolower(.vopt)
+  vflags <- c('yes', 'no', 'debug', 'log', 'debug_log')
+  if (!.vopt %in% vflags) {
+    .vopt <- 'no' # default behavior with no match is to be nonverbose
+  }
+
   .vopt <- match.arg(
     arg = .vopt,
     choices = c(
@@ -72,9 +93,11 @@ vmsg <- function(..., .v = NULL, .is_debug = FALSE, .vopt = getOption('giotto.ve
   # if debug type print, ignore if .vopt is not related to debug
   if (isTRUE(.is_debug)) {
     if (!(.vopt == 'debug' || .vopt == 'debug_log')) .vopt <- 'no'
-    else if (.vopt == 'debug') .vopt <- 'yes'
-    else if (.vopt == 'debug_log') .vopt <- 'log'
   }
+
+  # debug overrides
+  if (.vopt == 'debug') .vopt <- 'yes'
+  if (.vopt == 'debug_log') .vopt <- 'log'
 
   switch(
     .vopt,

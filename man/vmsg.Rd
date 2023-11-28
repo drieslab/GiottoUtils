@@ -18,8 +18,19 @@ vmsg(
 
 \item{.is_debug}{flag as a debug print (only prints when .v or .vopt is 'debug')}
 
-\item{.vopt}{verbosity option to pull from}
+\item{.vopt}{global verbosity option to pull from}
 }
 \description{
 Verbose message handler
+}
+\examples{
+# common usage (.v is logical)
+vmsg('print me', .v = TRUE)
+vmsg('dont print me', .v = FALSE)
+
+# debug messages (.v == "debug")
+vmsg('I am a debug message', .is_debug = TRUE, .v = TRUE) # no print
+vmsg('I am a debug message', .is_debug = TRUE, .v = "debug") # prints
+
+vmsg('print me', .v = 'debug') # also prints non-debug messages
 }
