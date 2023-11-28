@@ -83,12 +83,23 @@
 <span class="r-in"><span><span class="fu">vmsg</span><span class="op">(</span><span class="st">'dont print me'</span>, .v <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># debug messages (.v == "debug")</span></span></span>
+<span class="r-in"><span><span class="co"># flag as a debug message using .is_debug = TRUE</span></span></span>
 <span class="r-in"><span><span class="fu">vmsg</span><span class="op">(</span><span class="st">'I am a debug message'</span>, .is_debug <span class="op">=</span> <span class="cn">TRUE</span>, .v <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># no print</span></span></span>
 <span class="r-in"><span><span class="fu">vmsg</span><span class="op">(</span><span class="st">'I am a debug message'</span>, .is_debug <span class="op">=</span> <span class="cn">TRUE</span>, .v <span class="op">=</span> <span class="st">"debug"</span><span class="op">)</span> <span class="co"># prints</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> I am a debug message</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">vmsg</span><span class="op">(</span><span class="st">'print me'</span>, .v <span class="op">=</span> <span class="st">'debug'</span><span class="op">)</span> <span class="co"># also prints non-debug messages</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> print me</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># with global option</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span><span class="st">"giotto.verbose"</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">vmsg</span><span class="op">(</span><span class="st">"Print by default"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Print by default</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span><span class="st">"giotto.verbose"</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">vmsg</span><span class="op">(</span><span class="st">"Do not print by default"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">vmsg</span><span class="op">(</span><span class="st">"Do not print by default"</span>, .v <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># function level input overrides global option</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Do not print by default</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
