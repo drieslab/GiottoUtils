@@ -58,10 +58,19 @@ wrap_txt <- function(...,
 #' vmsg('dont print me', .v = FALSE)
 #'
 #' # debug messages (.v == "debug")
+#' # flag as a debug message using .is_debug = TRUE
 #' vmsg('I am a debug message', .is_debug = TRUE, .v = TRUE) # no print
 #' vmsg('I am a debug message', .is_debug = TRUE, .v = "debug") # prints
 #'
 #' vmsg('print me', .v = 'debug') # also prints non-debug messages
+#'
+#' # with global option
+#' options("giotto.verbose" = TRUE)
+#' vmsg("Print by default")
+#'
+#' options("giotto.verbose" = FALSE)
+#' vmsg("Do not print by default")
+#' vmsg("Do not print by default", .v = TRUE) # function level input overrides global option
 #' @export
 vmsg <- function(..., .v = NULL, .is_debug = FALSE, .vopt = getOption('giotto.verbose', TRUE)) {
 
