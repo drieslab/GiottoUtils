@@ -28,7 +28,7 @@ GiottoUtils exports functionalities that are called internally by many of the ot
 
 ## Installation
 
-You can install the development version of GiottoUtils like so:
+You can install GiottoUtils like:
 
 ``` r
 library(devtools)
