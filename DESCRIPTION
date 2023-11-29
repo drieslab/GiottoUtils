@@ -11,7 +11,9 @@ Authors@R: c(
   person("Matthew", "O'Brien", email = "mobrien2@bu.edu",
 	   role = c("aut")),
 	person("Joselyn", "Chávez", email = "joselynchavezf@gmail.com",
-	   role = c("aut"), comment = c(ORCID = "0000-0002-4974-4591"))
+	   role = c("aut"), comment = c(ORCID = "0000-0002-4974-4591")),
+	person("Edward", "Ruiz", email = "ecruiz@bu.edu",
+		 role = c("aut"))
 	)
 Maintainer: Ruben Dries <rubendries@gmail.com>
 Description: Utility functions and imports for the Giotto Suite in order to prevent repetitive copying of code.

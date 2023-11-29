@@ -1,6 +1,10 @@
 url: https://drieslab.github.io/GiottoUtils/
 
 authors:
+  Ruben Dries:
+    href: https://www.drieslab.com
+  Guo-Cheng Yuan:
+    href: https://labs.icahn.mssm.edu/yuanlab/
   Joselyn Chávez:
     href: https://josschavezf.github.io
 
@@ -14,7 +18,7 @@ template:
     code_font: {google: "JetBrains Mono"}
 
 navbar:
-  bg: dark
+  bg: light
   structure:
     left:
     - intro
