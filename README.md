@@ -24,7 +24,7 @@ directly interact with this package.
 
 ## Installation
 
-You can install the development version of GiottoUtils like so:
+You can install GiottoUtils like:
 
 ``` r
 library(devtools)
