@@ -1,6 +1,6 @@
 Package: GiottoUtils
 Title: Giotto Suite Utilities
-Version: 0.1.0
+Version: 0.1.0.1
 Authors@R: c(
 	person("Ruben", "Dries", email = "rubendries@gmail.com",
 		 role = c("aut", "cre")),
@@ -36,6 +36,7 @@ Imports:
 Suggests: 
     future.apply,
     parallel,
+    RColorBrewer,
     reticulate,
     testthat (>= 3.0.0),
     covr
@@ -43,8 +44,8 @@ Config/testthat/edition: 3
 Collate: 
     'DT_helpers.R'
     'assert.R'
+    'color_pals.R'
     'depth.R'
-    'expect.R'
     'file_read.R'
     'symbols.R'
     'format.R'
@@ -54,7 +55,9 @@ Collate:
     'lifecycle.R'
     'pipe.R'
     'pkg_check.R'
+    'prev_call.R'
     'seed.R'
+    'string.R'
     'system_info.R'
     'test.R'
     'zzz.R'
