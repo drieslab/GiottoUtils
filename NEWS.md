@@ -16,13 +16,14 @@
 - Add `gstop()` as a framework for sending module specific error messages
 - Add `str_locate2()` (implementation of `stringr::str_locate()` in base R)
 - Add `str_vector()` for pretty printing a vector as a string
-- Add `str_convenience` for commonly used string formatting
-- Move basic color palettes `getDistinctColors()` and `getRainbowColors()` to this package
+- Add: `str_bracket()`, `str_parenth()`, `str_quote()`, `str_double_quote()` convenience functions
+- Move: `get_prev_fname()`, `get_args()`, and `get_prev_call()` to this package
 - Add `get_prev_call()`
-- Move `get_prev_fname()` and `get_prev_call()` to this package
+- Move basic color palettes `getDistinctColors()` and `getRainbowColors()` to this package
+- Add: *RColorBrewer* to suggests for `getDistinctColors()`
 
 ## Changes
-
+- improvements to `assert_giotto()`
 
 
 
