@@ -4,21 +4,21 @@ NULL
 
 ## data.table helper functions ####
 
-#' @title DT_removeNA
-#' @name DT_removeNA
+#' @title dt_remove_na
+#' @name dt_remove_na
 #' @param DT datatable
 #' @description set NA values to 0 in a data.table object
 #' @concept data.table
 #' @export
-DT_removeNA = function(DT) {
+dt_remove_na = function(DT) {
   for (i in names(DT))
     DT[is.na(get(i)), (i):=0]
   return(DT)
 }
 
 
-#' @title sort_combine_two_DT_columns
-#' @name sort_combine_two_DT_columns
+#' @title dt_sort_combine_two_columns
+#' @name dt_sort_combine_two_columns
 #' @param DT datatable
 #' @param column1 column1 to use
 #' @param column2 column2 to use
@@ -26,7 +26,7 @@ DT_removeNA = function(DT) {
 #' @description fast sorting and pasting of 2 character columns in a data.table
 #' @concept data.table
 #' @export
-sort_combine_two_DT_columns = function(DT,
+dt_sort_combine_two_columns = function(DT,
                                        column1,
                                        column2,
                                        myname = 'unif_gene_gene') {
@@ -80,7 +80,7 @@ dt_to_matrix <- function(x) {
 
 
 
-#' @title dcast_dt_string
+#' @title dt_dcast_string
 #' @description Data.table dcast using character inputs for formula
 #' @param data a `data.table`
 #' @param col_name1 character. LHS of cast formula
@@ -94,10 +94,10 @@ dt_to_matrix <- function(x) {
 #' setnames(ChickWeight, tolower(names(ChickWeight)))
 #' DT <- melt(as.data.table(ChickWeight), id=2:4) # calls melt.data.table
 #'
-#' dcast_dt_string(DT, 'chick', 'time', 'value')
+#' dt_dcast_string(DT, 'chick', 'time', 'value')
 #' @concept data.table
 #' @export
-dcast_dt_string <- function(data, col_name1, col_name2, value.var) {
+dt_dcast_string <- function(data, col_name1, col_name2, value.var) {
   checkmate::assert_data_table(data)
   data.table::dcast.data.table(
     data,
@@ -110,12 +110,12 @@ dcast_dt_string <- function(data, col_name1, col_name2, value.var) {
 
 # Based on https://stackoverflow.com/questions/37878620/reorder-rows-in-data-table-in-a-specific-order
 #' @title Set specific data.table row order
+#' @name dt_set_row_order
 #' @param x data.table
 #' @param neworder numerical vector to reorder rows
 #' @export
 #' @concept data.table
-#' @noRd
-set_row_order_dt = function(x, neworder) {
+dt_set_row_order = function(x, neworder) {
   if('.r' %in% colnames(x)) {
     temp_r = x[, .SD, .SDcols = '.r']
     data.table::setorderv(temp_r[, eval(call(":=", as.name(".r_alt"), call("order", neworder)))], ".r_alt")[, ".r_alt" := NULL]

@@ -51,23 +51,3 @@ lapply_flex = function(X,
   return(save_list)
 }
 
-
-#' @title flex_lapply
-#' @name  flex_lapply
-#' @inheritDotParams lapply_flex
-#' @seealso \code{\link{lapply_flex}}
-#' @keywords internal
-#' @export
-flex_lapply = function(X,
-                       FUN,
-                       cores = NA,
-                       fun = NULL,
-                       ...) {
-
-
-  .Deprecated(new = "lapply_flex")
-
-  lapply_flex(...)
-
-}
-

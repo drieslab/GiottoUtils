@@ -1,6 +1,6 @@
 test_that("box_char provides list of 8 values with expected names", {
   x <- box_chars()
-  expect_list(x,
+  checkmate::expect_list(x,
     types = "character",
     len = 8L,
     names = "named"
@@ -20,8 +20,8 @@ test_that("box_char provides alternatives when not utf8", {
   options(giotto.unicode = FALSE)
   b2 <- box_chars()
 
-  expect_list(b1, types = "character", len = 8L, names = "named")
-  expect_list(b2, types = "character", len = 8L, names = "named")
+  checkmate::expect_list(b1, types = "character", len = 8L, names = "named")
+  checkmate::expect_list(b2, types = "character", len = 8L, names = "named")
 
   expect_identical(names(b1), c("h", "v", "l", "j", "b", "t", "i", "s"))
   expect_identical(names(b2), c("h", "v", "l", "j", "b", "t", "i", "s"))

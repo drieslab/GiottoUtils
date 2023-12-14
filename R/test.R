@@ -46,7 +46,7 @@ is_empty_char <- function(x) {
   if (is.null(x)) {
     return(TRUE)
   }
-  if (is.character(x) & length(x) == 0L) {
+  if (is.character(x) && length(x) == 0L) {
     return(TRUE)
   }
   if (any(sapply(x, is.na))) {
