@@ -112,7 +112,7 @@ vmsg <- function(..., .v = NULL, .is_debug = FALSE, .vopt = getOption('giotto.ve
     .vopt,
     'yes' = wrap_msg(...),
     'no' = return(invisible(NULL)),
-    'log' = .gstop("verbose: \'log\' to be implemented")
+    'log' = log_write(x = wrap_txt(...))
   )
 }
 
