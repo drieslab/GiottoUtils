@@ -53,6 +53,7 @@ Collate:
     'gmatch.R'
     'lapply_flex.R'
     'lifecycle.R'
+    'logging.R'
     'pipe.R'
     'pkg_check.R'
     'prev_call.R'
