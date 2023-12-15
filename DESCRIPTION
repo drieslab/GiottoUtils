@@ -1,6 +1,6 @@
 Package: GiottoUtils
 Title: Giotto Suite Utilities
-Version: 0.1.0.1
+Version: 0.1.1
 Authors@R: c(
 	person("Ruben", "Dries", email = "rubendries@gmail.com",
 		 role = c("aut", "cre")),
@@ -16,7 +16,7 @@ Authors@R: c(
 		 role = c("aut"))
 	)
 Maintainer: Ruben Dries <rubendries@gmail.com>
-Description: Utility functions and imports for the Giotto Suite in order to prevent repetitive copying of code.
+Description: Utility functions and imports for Giotto Suite
 License: GPL (>= 3)
 Encoding: UTF-8
 URL: https://drieslab.github.io/Giotto/, https://github.com/drieslab/Giotto, https://drieslab.github.io/GiottoUtils/
