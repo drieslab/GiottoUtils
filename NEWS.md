@@ -1,6 +1,6 @@
 
 
-# GiottoUtils 0.1.1 (TBD)
+# GiottoUtils 0.1.1 (2023/12/16)
 
 ## Breaking changes
 - Remove checkmate reexports
