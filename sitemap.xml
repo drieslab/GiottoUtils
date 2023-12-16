@@ -13,16 +13,13 @@
     <loc>https://drieslab.github.io/GiottoUtils/index.html</loc>
   </url>
   <url>
-    <loc>https://drieslab.github.io/GiottoUtils/reference/DT_removeNA.html</loc>
+    <loc>https://drieslab.github.io/GiottoUtils/news/index.html</loc>
   </url>
   <url>
     <loc>https://drieslab.github.io/GiottoUtils/reference/check_github_suite_ver.html</loc>
   </url>
   <url>
     <loc>https://drieslab.github.io/GiottoUtils/reference/color_tag.html</loc>
-  </url>
-  <url>
-    <loc>https://drieslab.github.io/GiottoUtils/reference/dcast_dt_string.html</loc>
   </url>
   <url>
     <loc>https://drieslab.github.io/GiottoUtils/reference/degrees.html</loc>
@@ -34,13 +31,31 @@
     <loc>https://drieslab.github.io/GiottoUtils/reference/determine_cores.html</loc>
   </url>
   <url>
+    <loc>https://drieslab.github.io/GiottoUtils/reference/dot-log_conn.html</loc>
+  </url>
+  <url>
+    <loc>https://drieslab.github.io/GiottoUtils/reference/dot-log_create.html</loc>
+  </url>
+  <url>
+    <loc>https://drieslab.github.io/GiottoUtils/reference/dot-log_dir.html</loc>
+  </url>
+  <url>
+    <loc>https://drieslab.github.io/GiottoUtils/reference/dt_dcast_string.html</loc>
+  </url>
+  <url>
+    <loc>https://drieslab.github.io/GiottoUtils/reference/dt_remove_na.html</loc>
+  </url>
+  <url>
+    <loc>https://drieslab.github.io/GiottoUtils/reference/dt_set_row_order.html</loc>
+  </url>
+  <url>
+    <loc>https://drieslab.github.io/GiottoUtils/reference/dt_sort_combine_two_columns.html</loc>
+  </url>
+  <url>
     <loc>https://drieslab.github.io/GiottoUtils/reference/dt_to_matrix.html</loc>
   </url>
   <url>
     <loc>https://drieslab.github.io/GiottoUtils/reference/file_extention.html</loc>
-  </url>
-  <url>
-    <loc>https://drieslab.github.io/GiottoUtils/reference/flex_lapply.html</loc>
   </url>
   <url>
     <loc>https://drieslab.github.io/GiottoUtils/reference/fread_colmatch.html</loc>
@@ -52,7 +67,22 @@
     <loc>https://drieslab.github.io/GiottoUtils/reference/g_match_arg.html</loc>
   </url>
   <url>
+    <loc>https://drieslab.github.io/GiottoUtils/reference/getDistinctColors.html</loc>
+  </url>
+  <url>
+    <loc>https://drieslab.github.io/GiottoUtils/reference/getRainbowColors.html</loc>
+  </url>
+  <url>
     <loc>https://drieslab.github.io/GiottoUtils/reference/get_os.html</loc>
+  </url>
+  <url>
+    <loc>https://drieslab.github.io/GiottoUtils/reference/giottoNewLog.html</loc>
+  </url>
+  <url>
+    <loc>https://drieslab.github.io/GiottoUtils/reference/giottoReadLog.html</loc>
+  </url>
+  <url>
+    <loc>https://drieslab.github.io/GiottoUtils/reference/gstop.html</loc>
   </url>
   <url>
     <loc>https://drieslab.github.io/GiottoUtils/reference/index.html</loc>
@@ -70,10 +100,16 @@
     <loc>https://drieslab.github.io/GiottoUtils/reference/list_element_exists.html</loc>
   </url>
   <url>
+    <loc>https://drieslab.github.io/GiottoUtils/reference/log_write.html</loc>
+  </url>
+  <url>
     <loc>https://drieslab.github.io/GiottoUtils/reference/package_check.html</loc>
   </url>
   <url>
     <loc>https://drieslab.github.io/GiottoUtils/reference/pipe.html</loc>
+  </url>
+  <url>
+    <loc>https://drieslab.github.io/GiottoUtils/reference/prev_call.html</loc>
   </url>
   <url>
     <loc>https://drieslab.github.io/GiottoUtils/reference/random_seed.html</loc>
@@ -85,10 +121,13 @@
     <loc>https://drieslab.github.io/GiottoUtils/reference/require_depth.html</loc>
   </url>
   <url>
-    <loc>https://drieslab.github.io/GiottoUtils/reference/sort_combine_two_DT_columns.html</loc>
+    <loc>https://drieslab.github.io/GiottoUtils/reference/special_characters.html</loc>
   </url>
   <url>
-    <loc>https://drieslab.github.io/GiottoUtils/reference/special_characters.html</loc>
+    <loc>https://drieslab.github.io/GiottoUtils/reference/str_convenience.html</loc>
+  </url>
+  <url>
+    <loc>https://drieslab.github.io/GiottoUtils/reference/str_locate2.html</loc>
   </url>
   <url>
     <loc>https://drieslab.github.io/GiottoUtils/reference/time_format.html</loc>
