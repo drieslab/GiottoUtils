@@ -1,6 +1,6 @@
 Package: GiottoUtils
 Title: Giotto Suite Utilities
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: c(
 	person("Ruben", "Dries", email = "rubendries@gmail.com",
 		 role = c("aut", "cre")),
@@ -16,7 +16,7 @@ Authors@R: c(
 		 role = c("aut"))
 	)
 Maintainer: Ruben Dries <rubendries@gmail.com>
-Description: Utility functions and imports for the Giotto Suite in order to prevent repetitive copying of code.
+Description: Utility functions and imports for Giotto Suite
 License: GPL (>= 3)
 Encoding: UTF-8
 URL: https://drieslab.github.io/Giotto/, https://github.com/drieslab/Giotto, https://drieslab.github.io/GiottoUtils/
@@ -36,6 +36,7 @@ Imports:
 Suggests: 
     future.apply,
     parallel,
+    RColorBrewer,
     reticulate,
     testthat (>= 3.0.0),
     covr
@@ -43,8 +44,8 @@ Config/testthat/edition: 3
 Collate: 
     'DT_helpers.R'
     'assert.R'
+    'color_pals.R'
     'depth.R'
-    'expect.R'
     'file_read.R'
     'symbols.R'
     'format.R'
@@ -52,9 +53,12 @@ Collate:
     'gmatch.R'
     'lapply_flex.R'
     'lifecycle.R'
+    'logging.R'
     'pipe.R'
     'pkg_check.R'
+    'prev_call.R'
     'seed.R'
+    'string.R'
     'system_info.R'
     'test.R'
     'zzz.R'

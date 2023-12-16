@@ -1,9 +1,9 @@
 test_that("assert framework - DT", {
-  expect_no_condition(assert_DT(data.table::data.table()))
+  expect_no_condition(assert_dt(data.table::data.table()))
 
   test_char <- "not a data.table"
   foo <- function(input = test_char) {
-    assert_DT(x = input)
+    assert_dt(x = input)
   }
   expect_error(foo(), regexp = "input' must be of class data.table, not character")
 })
@@ -52,8 +52,8 @@ test_that("assert framework no .name", {
 
 test_that("giotto object check", {
   test_num <- 7L
-  expect_error(guard_against_notgiotto(test_num))
+  expect_error(assert_giotto(test_num))
 
-  expect_error(guard_against_notgiotto(),
+  expect_error(assert_giotto(),
                regexp = 'giotto object must be given')
 })

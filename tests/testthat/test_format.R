@@ -41,6 +41,22 @@ test_that("wrap_txt", {
 })
 
 
+
+
+test_that("str_vector", {
+  x <- letters[1:5]
+  out1 <- str_vector(x)
+  expect_identical(out1, "'a', 'b', 'c', 'd', 'e'")
+
+  y <- 1:6
+  out2 <- str_vector(y)
+  expect_identical(out2, "'1', '2', '3', '4', '5', '6'")
+})
+
+
+
+
+
 # color print ####
 
 test_that("color_tag is the expected list", {
@@ -117,7 +133,7 @@ test_that("emacs_version returns a numeric version for a valid version string", 
   on.exit(Sys.setenv(INSIDE_EMACS = old_ENV))
   Sys.setenv("INSIDE_EMACS" = 1)
   version <- emacs_version()
-  expect_numeric(version)
+  checkmate::expect_numeric(version)
   expect_true(!is.na(version))
 })
 
@@ -129,7 +145,7 @@ test_that("emacs_version returns NA for an invalid version string", {
   Sys.setenv(INSIDE_EMACS = "not_a_version_string")
   version <- emacs_version()
 
-  expect_integer(version)
+  checkmate::expect_integer(version)
   expect_true(is.na(version))
 })
 
@@ -141,7 +157,7 @@ test_that("emacs_version returns NA for an empty version string", {
   Sys.setenv(INSIDE_EMACS = "")
   version <- emacs_version()
 
-  expect_integer(version)
+  checkmate::expect_integer(version)
   expect_true(is.na(version))
 })
 

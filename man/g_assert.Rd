@@ -2,17 +2,17 @@
 % Please edit documentation in R/assert.R
 \name{g_assert}
 \alias{g_assert}
-\alias{guard_against_notgiotto}
-\alias{assert_DT}
+\alias{assert_giotto}
+\alias{assert_dt}
 \alias{assert_file}
 \alias{assert_numeric}
 \title{Assertion framework}
 \usage{
 g_assert(x, test, msg = NULL, n = 2L, ...)
 
-guard_against_notgiotto(gobject, n = 1L, ...)
+assert_giotto(gobject, n = 1L, ...)
 
-assert_DT(x)
+assert_dt(x)
 
 assert_file(x)
 
@@ -40,9 +40,9 @@ specific checks and messages can be built using this base function.
 }
 \section{Functions}{
 \itemize{
-\item \code{guard_against_notgiotto()}: Test for whether supplied object is a \code{giotto} object
+\item \code{assert_giotto()}: Test for whether supplied object is a \code{giotto} object
 
-\item \code{assert_DT()}: Test whether input is a data.table object
+\item \code{assert_dt()}: Test whether input is a data.table object
 
 \item \code{assert_file()}: Test whether input is an existing file
 

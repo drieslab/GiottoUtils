@@ -42,7 +42,7 @@ fread_colmatch = function(file,
     } else if(grepl(pattern = '.tsv', x = filename)) {
       sep = '.*\t'
     } else {
-      stop('sep param cannot be guessed')
+      .gstop('sep param cannot be guessed')
     }
   }
 

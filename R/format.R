@@ -112,7 +112,7 @@ vmsg <- function(..., .v = NULL, .is_debug = FALSE, .vopt = getOption('giotto.ve
     .vopt,
     'yes' = wrap_msg(...),
     'no' = return(invisible(NULL)),
-    'log' = stop('verbose: \'log\' to be implemented', call. = FALSE)
+    'log' = log_write(x = wrap_txt(...))
   )
 }
 
@@ -121,8 +121,154 @@ vmsg <- function(..., .v = NULL, .is_debug = FALSE, .vopt = getOption('giotto.ve
 
 
 
+#' @name gstop
+#' @title Module-specific error message
+#' @description
+#' Send an error message formatted with `wrap_txt()`. Prepends the Giotto
+#' module from which the error was triggered. This function should not be used
+#' directly, but instead an internal `.gstop()` function should be created using
+#' this framework for each module using it. The `.n` param should be incremented
+#' to 2L for this wrapper function
+#' @param ... additional strings and/or elements to pass to wrap_msg
+#' @param sep how to join elements of string (default is one space)
+#' @param strWidth externally set wrapping width. (default value of 100 is not effected)
+#' @param errWidth default = FALSE. Set strWidth to be compatible with error printout
+#' @param .module character. Giotto module to send the error from
+#' @param .initial character. prefix for first line
+#' @param .prefix character. prefix for later lines
+#' @param .n stack frames back where the error happened
+#' @param .call logical, whether to include the call selected through .n as the
+#' location where the error was. Default is TRUE
+#' @param .warn_nstack logica. whether to warn when there are insufficient
+#' stackframes for requested .n (default = FALSE)
+#' @export
+gstop <- function(
+    ...,
+    sep = " ",
+    strWidth = 100,
+    errWidth = FALSE,
+    .module,
+    .prefix = ' ',
+    .initial = '',
+    .n = 1L,
+    .call = TRUE,
+    .warn_nstack = getOption('giotto.warn_gstop_nstack', FALSE)
+) {
+
+  nf <- sys.nframe()
+  if (.n > nf) {
+    # send message and automatically limit to max nframes
+    if (.warn_nstack) {
+      warning("[gstop] .n of ", .n, " is greater than number of stackframes ", nf,
+              call. = FALSE)
+    }
+    .n <- nf
+  }
+
+  # determine specific call that triggered this stop
+  if (nf %in% c(1L, 2L)) { # call from gstop or .gstop has no specific call
+    sc <- NULL
+  } else {
+    .n = as.integer(.n)
+    sc <- get_prev_call(toplevel = .n + 1) # + 1 because of this else statement
+  }
+
+  # format
+  sc <- paste0(sc, ":")
+
+  # if .call is not TRUE then set sc as NULL
+  if (!isTRUE(.call) ||
+      identical(sc, "NULL")) {
+    sc <- NULL
+  }
+
+  emsg <- wrap_txt(
+    paste(str_bracket(.module), sc, "\n"),
+    ...,
+    errWidth = TRUE
+  )
+
+  stop(emsg, call. = FALSE)
+}
 
 
+# Use this function internal to this package
+.gstop <- function(...,
+                   sep = " ",
+                   strWidth = 100,
+                   errWidth = FALSE,
+                   .prefix = ' ',
+                   .initial = '',
+                   .n = 1L,
+                   .call = TRUE) {
+  gstop(...,
+        sep = sep,
+        strWidth = strWidth,
+        errWidth = errWidth,
+        .module = "GiottoUtils",
+        .prefix = .prefix,
+        .initial = .initial,
+        .n = .n + 1L,
+        .call = .call)
+}
+
+
+
+
+
+
+
+#' @title String convenience functions
+#' @name str_convenience
+#' @param x string item(s) to format
+#' @examples
+#' x <- "test"
+#' cat(str_bracket(x), "\n")
+#' cat(str_parenth(x), "\n")
+#' cat(str_double_quote(x), "\n")
+#' cat(str_quote(x), "\n")
+#'
+#' vec <- c("item1", "item2", "item3")
+#' cat(str_vector(vec), "\n")
+#' cat(str_vector(vec, qchar = "double"))
+NULL
+
+#' @rdname str_convenience
+#' @param qchar quote character to use. Either 'single' or "double"
+#' @export
+str_vector <- function(x, qchar = c("single", "double")) {
+  qchar <- match.arg(qchar, choices = c("single", "double"))
+  switch(
+    qchar,
+    "single" = return(toString(sprintf("'%s'", x))),
+    "double" = return(toString(sprintf("\"%s\"", x)))
+  )
+
+}
+
+#' @rdname str_convenience
+#' @export
+str_bracket <- function(x) {
+  paste0("[", x, "]")
+}
+
+#' @rdname str_convenience
+#' @export
+str_parenth <- function(x) {
+  paste0("(", x, ")")
+}
+
+#' @rdname str_convenience
+#' @export
+str_double_quote <- function(x) {
+  paste0("\"", x, "\"")
+}
+
+#' @rdname str_convenience
+#' @export
+str_quote <- function(x) {
+  paste0("\'", x, "\'")
+}
 
 
 
