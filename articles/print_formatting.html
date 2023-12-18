@@ -146,10 +146,10 @@ require usage of “\n” to be formatted as expected.</p>
 <div class="section level2">
 <h2 id="messages">Messages<a class="anchor" aria-label="anchor" href="#messages"></a>
 </h2>
-<p>Giotto primarily uses messages to write to write helpful console
-prints. Whenever a function has a message print, we also encourage
-adding a <code>verbose</code> param so that it can be turned off. The
-standard implementation looks like this.</p>
+<p>Giotto primarily uses messages to write helpful console prints.
+Whenever a function has a message print, we also encourage adding a
+<code>verbose</code> param so that it can be turned off. The standard
+implementation looks like this.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">test_fun1</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">verbose</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="va">verbose</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="st">"hello world"</span><span class="op">)</span></span>
@@ -205,11 +205,11 @@ this can be set to a directory of choice using the
 stored within the <code>"giotto.last_logpath"</code>.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/vmsg.html">vmsg</a></span><span class="op">(</span>.v <span class="op">=</span> <span class="st">"log"</span>, <span class="st">"Write this to a logfile in tempdir"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Logging to:/tmp/Rtmpsa0WRg/giotto_20231218_1.txt</span></span></code></pre>
+<pre><code><span><span class="co">## Logging to:/tmp/RtmpOmAA2D/giotto_20231218_1.txt</span></span></code></pre>
 <p>To read the log items, use <code><a href="../reference/giottoReadLog.html">giottoReadLog()</a></code>.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/giottoReadLog.html">giottoReadLog</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] " (2023-12-18 08:07:11) Write this to a logfile in tempdir"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] " (2023-12-18 08:13:24) Write this to a logfile in tempdir"</span></span></code></pre>
 <p>You can start a new logfile using <code><a href="../reference/giottoNewLog.html">giottoNewLog()</a></code></p>
 </div>
 </div>
