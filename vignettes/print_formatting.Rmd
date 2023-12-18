@@ -43,7 +43,7 @@ cat("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tem
 
 
 ## Messages
-Giotto primarily uses messages to write to write helpful console prints.
+Giotto primarily uses messages to write helpful console prints.
 Whenever a function has a message print, we also encourage adding a `verbose`
 param so that it can be turned off. The standard implementation looks like this.
 ```{r}
