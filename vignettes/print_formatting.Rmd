@@ -57,7 +57,8 @@ test_fun1()
 *GiottoUtils* v0.1.1 introduces `vmsg()` which simplifies this to a single
 function without a preceding `if` statement. It also applies text wrapping.
 Note that the `verbose` default should be `NULL` with this implementation since
-`vmsg()` checks the `"giotto.verbose"` option that can be set globally.
+`vmsg()` checks for a default using the `"giotto.verbose"` option that can be
+set globally.
 ``` {r}
 test_fun2 <- function(verbose = NULL) {
   vmsg(.v = verbose, "hello world")
