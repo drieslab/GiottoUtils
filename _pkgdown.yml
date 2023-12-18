@@ -23,12 +23,18 @@ navbar:
     left:
     - intro
     - reference
+    - articles
     - news
     right: github
   components:
     reference:
       text: Documentation
       href: reference/index.html
+    articles:
+      text: Articles
+      menu:
+      - text: Console Printing
+        href: articles/print_formatting.html
     news:
       text: News
       href: news/index.html
