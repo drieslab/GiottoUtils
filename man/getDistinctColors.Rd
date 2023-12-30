@@ -15,3 +15,9 @@ character vector of hexadecimal distinct colors
 \description{
 Returns a number of distinct colors based on the RGB scale
 }
+\seealso{
+Other basic color palette functions: 
+\code{\link{getMonochromeColors}()},
+\code{\link{getRainbowColors}()}
+}
+\concept{basic color palette functions}

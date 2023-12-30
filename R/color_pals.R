@@ -6,6 +6,7 @@
 #' @param n number of colors wanted
 #' @return character vector of hexadecimal rainbow colors
 #' @export
+#' @family basic color palette functions
 getRainbowColors <- function(n) {
   n <- as.integer(n)
   if (n < 1L) .gstop("'n' colors wanted must be at least 1\n")
@@ -27,6 +28,7 @@ getRainbowColors <- function(n) {
 #' @param n number of colors wanted
 #' @return character vector of hexadecimal distinct colors
 #' @export
+#' @family basic color palette functions
 getDistinctColors <- function(n) {
   package_check('RColorBrewer')
   if(n < 1) .gstop("'n' colors wanted must be at least 1\n")
@@ -67,4 +69,18 @@ getDistinctColors <- function(n) {
 
   }
   return(col_vector)
+}
+
+
+
+
+#' @title Create color scaling for a single color starting from black
+#' @name getMonochromeColors
+#' @param col hexadecimal color to scale scale towards
+#' @param n number of colors to request in monochrome palette
+#' @inheritDotParams grDevices::colorRampPalette -colors
+#' @export
+#' @family basic color palette functions
+getMonochromeColors = function(col, n = 256L, ...) {
+  grDevices::colorRampPalette(colors = c('black', col), ...)(n)
 }
