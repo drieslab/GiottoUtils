@@ -1,6 +1,6 @@
 Package: GiottoUtils
 Title: Giotto Suite Utilities
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: c(
 	person("Ruben", "Dries", email = "rubendries@gmail.com",
 		 role = c("aut", "cre")),
