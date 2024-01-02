@@ -1,5 +1,5 @@
 
-# GiottoUtils 0.1.2
+# GiottoUtils 0.1.2 (2024/01/02)
 
 ## Added
 - Add: `getMonochromeColors()` basic color palette function. Useful for image colorization.
