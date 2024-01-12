@@ -1,4 +1,9 @@
 
+# GiottoUtils 0.1.3
+
+## Added
+- Add: `mixedsort()` and `mixedorder()` from *gtools*
+
 # GiottoUtils 0.1.2 (2024/01/02)
 
 ## Added
