@@ -1,4 +1,9 @@
 
+# GiottoUtils 0.1.4
+
+## Enhancement
+- new `seed` param for `getDistinctColors()` that allows the ordering of the distinct colors to be changed.
+
 # GiottoUtils 0.1.3
 
 ## Added
