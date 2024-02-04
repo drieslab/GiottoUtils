@@ -3,6 +3,9 @@
 
 ## Enhancement
 - new `seed` param for `getDistinctColors()` that allows the ordering of the distinct colors to be changed.
+- `package_check()` is now allows more than one package to be checked using repo:location notation.
+
+
 
 # GiottoUtils 0.1.3
 
