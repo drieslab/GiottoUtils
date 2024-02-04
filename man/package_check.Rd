@@ -15,7 +15,8 @@ package_check(
 \arguments{
 \item{pkg_name}{name of package}
 
-\item{repository}{where is the package}
+\item{repository}{where is the package (in format repo:cooltool for CRAN,
+Bioc, and pip repos. format repo:johndoe/cooltool for github or bitbucket)}
 
 \item{github_repo}{name of github repository if needed}
 

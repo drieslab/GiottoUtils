@@ -39,7 +39,8 @@ check_github_suite_ver <- function(pkg = "Giotto") {
 #' @title package_check
 #' @name package_check
 #' @param pkg_name name of package
-#' @param repository where is the package
+#' @param repository where is the package (in format repo:cooltool for CRAN,
+#' Bioc, and pip repos. format repo:johndoe/cooltool for github or bitbucket)
 #' @param github_repo name of github repository if needed
 #' @param optional whether the package is optional. \code{stop()} is used if TRUE
 #' and only \code{message()} will be sent if FALSE.
