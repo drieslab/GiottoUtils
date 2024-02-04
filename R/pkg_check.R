@@ -39,103 +39,236 @@ check_github_suite_ver <- function(pkg = "Giotto") {
 #' @title package_check
 #' @name package_check
 #' @param pkg_name name of package
-#' @param repository where is the package
+#' @param repository where is the package (in format repo:cooltool for CRAN,
+#' Bioc, and pip repos. format repo:johndoe/cooltool for github or bitbucket)
 #' @param github_repo name of github repository if needed
 #' @param optional whether the package is optional. \code{stop()} is used if TRUE
 #' and only \code{message()} will be sent if FALSE.
 #' @param custom_msg custom message to be sent instead of default error or message
 #' @description check if package is available and provide installation instruction if not available
 #' @keywords internal
+#' @examples
+#' \dontrun{
+#' package_check("Matrix")
+#' package_check("BiocSingular", repository = "Bioc")
+#' # (only expected to work when giottoenv is loaded)
+#' package_check("leidenalg", repository = "pip")
+#'
+#' # expected to fail
+#' package_check("faketool")
+#' package_check("faketool", repository = "Bioc")
+#' package_check("installme", repository = "pip")
+#'
+#' # vectorized
+#' package_check(
+#'   pkg_name = c("faketool", "cooltool"),
+#'   repository = c("CRAN", "github:johndoe/cooltool")
+#' )
+#' }
 #' @export
 package_check <- function(pkg_name,
-                          repository = c("CRAN", "Bioc", "github", "pip"),
+                          repository = NULL,
                           github_repo = NULL,
                           optional = FALSE,
                           custom_msg = NULL) {
-  repository <- match.arg(repository, choices = c("CRAN", "Bioc", "github", "pip"))
 
-  check_message <- function(default_msg, custom_msg, optional) {
-    if (!isTRUE(optional)) {
-      if (is.null(custom_msg)) {
-        stop(default_msg, call. = FALSE)
-      } else {
-        stop(custom_msg, call. = FALSE)
-      }
+  repo <- NULL
+
+  # set default repo to CRAN if not supplied
+  no_val <- is.null(repository)
+  if (any(is.na(repository))) no_val <- is.na(repository)
+  if (any(no_val)) {
+    repository[no_val] <- paste0("CRAN:", pkg_name[no_val])
+  }
+  no_split <- !sapply(repository, function(x) grepl(":", x))
+  repository[no_split] <- sprintf("%s:%s", repository[no_split], pkg_name[no_split])
+
+
+  # handle deprecations
+  # Only single length inputs to github repo can be recovered from.
+  # Longer inputs make the relative ordering of the other param inputs unclear
+  if (!is.null(github_repo)) {
+    if (length(github_repo) > 1L) {
+      stop(sprintf(
+        "%s\n  %s",
+        "[pkg_check] 'github_repo' param is deprecated",
+        "Use 'repository' param with github:repo style formatting instead"
+      ))
     } else {
-      if (is.null(custom_msg)) {
-        message(default_msg)
-      } else {
-        message(custom_msg)
-      }
+      # only allowed for single length github_repo inputs
+      # assume github is the repository requested
+      repository <- paste0("github:", github_repo)
     }
   }
 
-  if (repository == "CRAN") {
-    default_msg <- c(
-      "\n package ", pkg_name, " is not yet installed \n",
-      "To install: \n",
-      "install.packages('", pkg_name, "')"
+
+  checkmate::assert_character(pkg_name)
+  checkmate::assert_logical(optional)
+
+  # optional is a flag for whether error or warning is thrown.
+  # throw error if ANY optional entry is FALSE
+  is_error <- any(!optional)
+
+  # treat custom_msg as a replacement for the overall error/warning message
+
+  repo_split <- strsplit(repository, ":")
+  repos_dt <- data.table::data.table(
+    name = pkg_name,
+    repo = lapply(repo_split, function(r) r[1L]),
+    location = lapply(repo_split, function(r) r[2L])
+  )
+
+
+  # check repos
+  repo_choices = c("CRAN", "Bioc", "github", "bitbucket", "pip")
+
+  if (!all(repos_dt[, unlist(repo)] %in% repo_choices)) {
+    stop(sprintf(
+      "[package_check] all 'repository' input(s) must be one of\n  \'%s\'",
+      paste(repo_choices, collapse = "', '")
+    ))
+  }
+
+  # check missing packages
+  repos_dt[, missing := sapply(seq(.N), function(i) {
+    .check_package_handler(name = name[[i]], repo = repo[[i]])
+  }, USE.NAMES = FALSE)]
+
+  install_dt <- repos_dt[(missing), ]
+  if (nrow(install_dt) == 0L) return(invisible(TRUE)) # return TRUE if no installs needed
+
+
+
+  # prints
+
+  # select console print function
+  print_fun <- ifelse(
+    is_error,
+    function(...) stop(..., call. = FALSE),
+    function(...) {
+      warning(..., call. = FALSE)
+      return(invisible(FALSE))
+    }
+  )
+
+
+
+  # custom install msg
+  if (!is.null(custom_msg)) {
+    print_fun(custom_msg)
+
+  } else { # default install msg
+
+    # header
+    plural_installs <- install_dt[, .N > 1L]
+    inst_msg <- sprintf(
+      "package%s '%s' %s not yet installed\n\n To install:\n",
+      ifelse(plural_installs, "s", ""),
+      install_dt[, paste0(name, collapse = "\', \'")],
+      ifelse(plural_installs, "are", "is")
     )
 
-    if (!requireNamespace(pkg_name, quietly = TRUE)) {
-      check_message(
-        default_msg = default_msg,
-        custom_msg = custom_msg,
-        optional = optional
-      )
-    } else {
-      return(TRUE)
-    }
-  } else if (repository == "Bioc") {
-    default_msg <- c(
-      "\n package ", pkg_name, " is not yet installed \n",
-      "To install: \n",
-      "if(!requireNamespace('BiocManager', quietly = TRUE)) install.packages('BiocManager');\nBiocManager::install('", pkg_name, "')"
+    # pip
+    inst_msg <- c(
+      inst_msg,
+      .msg_pip_install(location = install_dt[repo == "pip", location])
+    )
+    # bioc
+    inst_msg <- c(
+      inst_msg,
+      .msg_bioc_install(location = install_dt[repo == "Bioc", location])
+    )
+    # cran
+    inst_msg <- c(
+      inst_msg,
+      .msg_cran_install(location = install_dt[repo == "CRAN", location])
+    )
+    # github
+    inst_msg <- c(
+      inst_msg,
+      .msg_github_install(location = install_dt[repo == "github", location])
+    )
+    # bitbucket
+    inst_msg <- c(
+      inst_msg,
+      .msg_bitbucket_install(location = install_dt[repo == "bitbucket", location])
     )
 
-    if (!requireNamespace(pkg_name, quietly = TRUE)) {
-      check_message(
-        default_msg = default_msg,
-        custom_msg = custom_msg,
-        optional = optional
-      )
-    } else {
-      return(TRUE)
-    }
-  } else if (repository == "github") {
-    if (is.null(github_repo)) stop(wrap_txt("provide the github repo of package, e.g. 'johndoe/cooltool' ", sep = ""))
+    print_fun(inst_msg)
+  }
 
-    default_msg <- c(
-      "\n package ", pkg_name, " is not yet installed \n",
-      "To install: \n",
-      "devtools::install_github('", github_repo, "')"
-    )
 
-    if (!requireNamespace(pkg_name, quietly = TRUE)) {
-      check_message(
-        default_msg = default_msg,
-        custom_msg = custom_msg,
-        optional = optional
-      )
-    } else {
-      return(TRUE)
-    }
-  } else if (repository == "pip") { # nocov start
-
-    package_check("reticulate", repository = "CRAN")
-
-    default_msg <- c(
-      "\n package ", pkg_name, " is not yet installed \n",
-      "To install for default Giotto miniconda environment: \n",
-      "reticulate::conda_install(envname = 'giotto_env',packages = '", pkg_name, "',pip = TRUE)"
-    )
-
-    if (!reticulate::py_module_available(pkg_name)) {
-      check_message(
-        default_msg = default_msg,
-        custom_msg = custom_msg,
-        optional = optional
-      )
-    }
-  } # nocov end
 }
+
+
+
+
+# package check functions ####
+# return TRUE if install is needed
+.check_package_handler <- function(name, repo) {
+  switch(
+    repo,
+    "pip" = .check_package_py(name),
+    .check_package_r(name) # default
+  )
+}
+
+.check_package_r <- function(name) {
+  !requireNamespace(name, quietly = TRUE)
+}
+
+.check_package_py <- function(name) {
+  package_check("reticulate", repository = "CRAN")
+  !reticulate::py_module_available(name)
+}
+
+
+
+# vectorized install prints ####
+.msg_github_install <- function(location) {
+  if (length(location) == 0L) return(NULL)
+  sprintf(
+    "devtools::install_github(\"%s\")\n",
+    location
+  )
+}
+
+.msg_cran_install <- function(location) {
+  if (length(location) == 0L) return(NULL)
+  locs_string <- paste0(location, collapse = "\", \"")
+
+  sprintf(
+    "install.packages(c(\"%s\"))\n",
+    locs_string
+  )
+}
+
+.msg_bitbucket_install <- function(location) {
+  if (length(location) == 0L) return(NULL)
+  sprintf(
+    "devtools::install_bitbucket(\"%s\")\n",
+    location
+  )
+}
+
+.msg_bioc_install <- function(location) {
+  if (length(location) == 0L) return(NULL)
+  locs_string <- paste0(location, collapse = "\", \"")
+
+  sprintf(
+    "if(!requireNamespace('BiocManager', quietly = TRUE)) install.packages('BiocManager');\nBiocManager::install(c(\"%s\"))\n",
+    locs_string
+  )
+}
+
+.msg_pip_install <- function(location) { # nocov start
+  if (length(location) == 0L) return(NULL)
+  header_msg <- "# instructions for python pkg install to default Giotto miniconda environment\n"
+
+  inst_msg <- sprintf(
+    "reticulate::conda_install(envname = 'giotto_env',packages = '%s',pip = TRUE)\n",
+    location
+  )
+
+  c(header_msg, paste0(inst_msg))
+} # nocov end
