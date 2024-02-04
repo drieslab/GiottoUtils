@@ -6,7 +6,7 @@
 \usage{
 package_check(
   pkg_name,
-  repository = c("CRAN", "Bioc", "github", "pip"),
+  repository = NULL,
   github_repo = NULL,
   optional = FALSE,
   custom_msg = NULL
@@ -26,5 +26,24 @@ and only \code{message()} will be sent if FALSE.}
 }
 \description{
 check if package is available and provide installation instruction if not available
+}
+\examples{
+\dontrun{
+package_check("Matrix")
+package_check("BiocSingular", repository = "Bioc")
+# (only expected to work when giottoenv is loaded)
+package_check("leidenalg", repository = "pip")
+
+# expected to fail
+package_check("faketool")
+package_check("faketool", repository = "Bioc")
+package_check("installme", repository = "pip")
+
+# vectorized
+package_check(
+  pkg_name = c("faketool", "cooltool"),
+  repository = c("CRAN", "github:johndoe/cooltool")
+)
+}
 }
 \keyword{internal}
