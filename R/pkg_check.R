@@ -146,7 +146,7 @@ package_check <- function(pkg_name,
     is_error,
     function(...) stop(..., call. = FALSE),
     function(...) {
-      warning(..., call. = FALSE)
+      message(...)
       return(invisible(FALSE))
     }
   )

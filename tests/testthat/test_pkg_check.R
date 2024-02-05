@@ -36,7 +36,7 @@ test_that("Nonexisting optional packages return message with install instruction
     regexp = "BiocManager::install"
   )
   expect_message(package_check(mock_pkg, repository = "github", github_repo = "fake_repo", optional = TRUE),
-    regexp = "devtools::install_github\\('fake_repo"
+    regexp = "devtools::install_github\\(\"fake_repo"
   )
 })
 
@@ -49,7 +49,7 @@ test_that("Nonexisting Nonoptional packages throw error with install instruction
     regexp = "BiocManager::install"
   )
   expect_error(package_check(mock_pkg, repository = "github", github_repo = "I_made_it_up", optional = FALSE),
-    regexp = "devtools::install_github\\('I_made_it_up"
+    regexp = "devtools::install_github\\(\"I_made_it_up"
   )
 })
 
