@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">GiottoUtils</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,7 +62,7 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">package_check</span><span class="op">(</span></span>
 <span>  <span class="va">pkg_name</span>,</span>
-<span>  repository <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CRAN"</span>, <span class="st">"Bioc"</span>, <span class="st">"github"</span>, <span class="st">"pip"</span><span class="op">)</span>,</span>
+<span>  repository <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  github_repo <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  optional <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  custom_msg <span class="op">=</span> <span class="cn">NULL</span></span>
@@ -76,7 +76,8 @@
 
 
 <dt>repository</dt>
-<dd><p>where is the package</p></dd>
+<dd><p>where is the package (in format repo:cooltool for CRAN,
+Bioc, and pip repos. format repo:johndoe/cooltool for github or bitbucket)</p></dd>
 
 
 <dt>github_repo</dt>
@@ -93,6 +94,27 @@ and only <code><a href="https://rdrr.io/r/base/message.html" class="external-lin
 
 </dl></div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="fu">package_check</span><span class="op">(</span><span class="st">"Matrix"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">package_check</span><span class="op">(</span><span class="st">"BiocSingular"</span>, repository <span class="op">=</span> <span class="st">"Bioc"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># (only expected to work when giottoenv is loaded)</span></span></span>
+<span class="r-in"><span><span class="fu">package_check</span><span class="op">(</span><span class="st">"leidenalg"</span>, repository <span class="op">=</span> <span class="st">"pip"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># expected to fail</span></span></span>
+<span class="r-in"><span><span class="fu">package_check</span><span class="op">(</span><span class="st">"faketool"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">package_check</span><span class="op">(</span><span class="st">"faketool"</span>, repository <span class="op">=</span> <span class="st">"Bioc"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">package_check</span><span class="op">(</span><span class="st">"installme"</span>, repository <span class="op">=</span> <span class="st">"pip"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># vectorized</span></span></span>
+<span class="r-in"><span><span class="fu">package_check</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  pkg_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"faketool"</span>, <span class="st">"cooltool"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  repository <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CRAN"</span>, <span class="st">"github:johndoe/cooltool"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

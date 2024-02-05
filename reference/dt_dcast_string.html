@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">GiottoUtils</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,58 +95,113 @@ cast.</p></dd>
 <span class="r-in"><span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/melt.data.table.html" class="external-link">melt</a></span><span class="op">(</span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">ChickWeight</span><span class="op">)</span>, id<span class="op">=</span><span class="fl">2</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span> <span class="co"># calls melt.data.table</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">dt_dcast_string</span><span class="op">(</span><span class="va">DT</span>, <span class="st">'chick'</span>, <span class="st">'time'</span>, <span class="st">'value'</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     chick  0  2  4  6   8  10  12  14  16  18  20  21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1:    18 39 35 NA NA  NA  NA  NA  NA  NA  NA  NA  NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2:    16 41 45 49 51  57  51  54  NA  NA  NA  NA  NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3:    15 41 49 56 64  68  68  67  68  NA  NA  NA  NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:    13 41 48 53 60  65  67  71  70  71  81  91  96</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5:     9 42 51 59 68  85  96  90  92  93 100 100  98</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6:    20 41 47 54 58  65  73  77  89  98 107 115 117</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7:    10 41 44 52 63  74  81  89  96 101 112 120 124</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:     8 42 50 61 71  84  93 110 116 126 134 125  NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9:    17 42 51 61 72  83  89  98 103 113 123 133 142</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:    19 43 48 55 62  65  71  82  88 106 120 144 157</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11:     4 42 49 56 67  74  87 102 108 136 154 160 157</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12:     6 41 49 59 74  97 124 141 148 155 160 160 157</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13:    11 43 51 63 84 112 139 168 177 182 184 181 175</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14:     3 43 39 55 67  84  99 115 138 163 187 198 202</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15:     1 42 51 59 64  76  93 106 125 149 171 199 205</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16:    12 41 49 56 62  72  88 119 135 162 185 195 205</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17:     2 40 49 58 72  84 103 122 138 162 187 209 215</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18:     5 41 42 48 60  79 106 141 164 197 199 220 223</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19:    14 41 49 62 79 101 128 164 192 227 248 259 266</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20:     7 41 49 57 71  89 112 146 174 218 250 288 305</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21:    24 42 52 58 74  66  68  70  71  72  72  76  74</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22:    30 42 48 59 72  85  98 115 122 143 151 157 150</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23:    22 41 55 64 77  90  95 108 111 131 148 164 167</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24:    23 43 52 61 73  90 103 127 135 145 163 170 175</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25:    27 39 46 58 73  87 100 115 123 144 163 185 192</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26:    28 39 46 58 73  92 114 145 156 184 207 212 233</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27:    26 42 48 57 74  93 114 136 147 169 205 236 251</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28:    25 40 49 62 78 102 124 146 164 197 231 259 265</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29:    29 39 48 59 74  87 106 134 150 187 230 279 309</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30:    21 40 50 62 86 125 163 217 240 275 307 318 331</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31:    33 39 50 63 77  96 111 137 144 151 146 156 147</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32:    37 41 48 56 68  80  83 103 112 135 157 169 178</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33:    36 39 48 61 76  98 116 145 166 198 227 225 220</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34:    31 42 53 62 73  85 102 123 138 170 204 235 256</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35:    39 42 50 61 78  89 109 130 146 170 214 250 272</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36:    38 41 49 61 74  98 109 128 154 192 232 280 290</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37:    32 41 49 65 82 107 129 159 179 221 263 291 305</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38:    40 41 55 66 79 101 120 154 182 215 262 295 321</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39:    34 41 49 63 85 107 134 164 186 235 294 327 341</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40:    35 41 53 64 87 123 158 201 238 287 332 361 373</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41:    44 42 51 65 86 103 118 127 138 145 146  NA  NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42:    45 41 50 61 78  98 117 135 141 147 174 197 196</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43:    43 42 55 69 96 131 157 184 188 197 198 199 200</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44:    41 42 51 66 85 103 124 155 153 175 184 199 204</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45:    47 41 53 66 79 100 123 148 157 168 185 210 205</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46:    49 40 53 64 85 108 128 152 166 184 203 233 237</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47:    46 40 52 62 82 101 120 144 156 173 210 231 238</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48:    50 41 54 67 84 105 122 155 175 205 234 264 264</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49:    42 42 49 63 84 103 126 160 174 204 234 269 281</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50:    48 39 50 62 80 104 125 154 170 222 261 303 322</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     chick  0  2  4  6   8  10  12  14  16  18  20  21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Key: &lt;chick&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     chick     0     2     4     6     8    10    12    14    16    18    20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;ord&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:    18    39    35    NA    NA    NA    NA    NA    NA    NA    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:    16    41    45    49    51    57    51    54    NA    NA    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:    15    41    49    56    64    68    68    67    68    NA    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:    13    41    48    53    60    65    67    71    70    71    81    91</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:     9    42    51    59    68    85    96    90    92    93   100   100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:    20    41    47    54    58    65    73    77    89    98   107   115</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:    10    41    44    52    63    74    81    89    96   101   112   120</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:     8    42    50    61    71    84    93   110   116   126   134   125</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:    17    42    51    61    72    83    89    98   103   113   123   133</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:    19    43    48    55    62    65    71    82    88   106   120   144</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:     4    42    49    56    67    74    87   102   108   136   154   160</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:     6    41    49    59    74    97   124   141   148   155   160   160</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13:    11    43    51    63    84   112   139   168   177   182   184   181</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14:     3    43    39    55    67    84    99   115   138   163   187   198</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15:     1    42    51    59    64    76    93   106   125   149   171   199</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16:    12    41    49    56    62    72    88   119   135   162   185   195</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17:     2    40    49    58    72    84   103   122   138   162   187   209</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18:     5    41    42    48    60    79   106   141   164   197   199   220</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19:    14    41    49    62    79   101   128   164   192   227   248   259</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20:     7    41    49    57    71    89   112   146   174   218   250   288</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21:    24    42    52    58    74    66    68    70    71    72    72    76</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22:    30    42    48    59    72    85    98   115   122   143   151   157</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23:    22    41    55    64    77    90    95   108   111   131   148   164</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24:    23    43    52    61    73    90   103   127   135   145   163   170</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25:    27    39    46    58    73    87   100   115   123   144   163   185</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26:    28    39    46    58    73    92   114   145   156   184   207   212</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27:    26    42    48    57    74    93   114   136   147   169   205   236</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28:    25    40    49    62    78   102   124   146   164   197   231   259</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29:    29    39    48    59    74    87   106   134   150   187   230   279</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30:    21    40    50    62    86   125   163   217   240   275   307   318</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31:    33    39    50    63    77    96   111   137   144   151   146   156</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32:    37    41    48    56    68    80    83   103   112   135   157   169</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33:    36    39    48    61    76    98   116   145   166   198   227   225</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34:    31    42    53    62    73    85   102   123   138   170   204   235</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35:    39    42    50    61    78    89   109   130   146   170   214   250</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36:    38    41    49    61    74    98   109   128   154   192   232   280</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37:    32    41    49    65    82   107   129   159   179   221   263   291</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38:    40    41    55    66    79   101   120   154   182   215   262   295</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39:    34    41    49    63    85   107   134   164   186   235   294   327</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40:    35    41    53    64    87   123   158   201   238   287   332   361</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41:    44    42    51    65    86   103   118   127   138   145   146    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42:    45    41    50    61    78    98   117   135   141   147   174   197</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43:    43    42    55    69    96   131   157   184   188   197   198   199</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44:    41    42    51    66    85   103   124   155   153   175   184   199</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45:    47    41    53    66    79   100   123   148   157   168   185   210</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46:    49    40    53    64    85   108   128   152   166   184   203   233</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47:    46    40    52    62    82   101   120   144   156   173   210   231</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48:    50    41    54    67    84   105   122   155   175   205   234   264</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49:    42    42    49    63    84   103   126   160   174   204   234   269</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50:    48    39    50    62    80   104   125   154   170   222   261   303</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     chick     0     2     4     6     8    10    12    14    16    18    20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;num&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:    96</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:    98</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:   117</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:   124</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:   142</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:   157</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:   157</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:   157</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13:   175</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14:   202</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15:   205</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16:   205</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17:   215</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18:   223</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19:   266</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20:   305</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21:    74</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22:   150</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23:   167</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24:   175</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25:   192</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26:   233</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27:   251</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28:   265</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29:   309</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30:   331</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31:   147</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32:   178</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33:   220</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34:   256</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35:   272</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36:   290</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37:   305</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38:   321</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39:   341</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40:   373</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41:    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42:   196</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43:   200</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44:   204</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45:   205</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46:   237</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47:   238</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48:   264</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49:   281</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50:   322</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        21</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

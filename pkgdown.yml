@@ -3,7 +3,7 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   print_formatting: print_formatting.html
-last_built: 2024-01-12T21:46Z
+last_built: 2024-02-05T06:08Z
 urls:
   reference: https://drieslab.github.io/GiottoUtils/reference
   article: https://drieslab.github.io/GiottoUtils/articles
