@@ -26,10 +26,11 @@ getRainbowColors <- function(n) {
 #' @title getDistinctColors
 #' @description Returns a number of distinct colors based on the RGB scale
 #' @param n number of colors wanted
+#' @param seed seed to use when randomizing color order. Default is 1234
 #' @return character vector of hexadecimal distinct colors
 #' @export
 #' @family basic color palette functions
-getDistinctColors <- function(n) {
+getDistinctColors <- function(n, seed = 1234) {
   package_check('RColorBrewer')
   if(n < 1) .gstop("'n' colors wanted must be at least 1\n")
 
@@ -45,8 +46,8 @@ getDistinctColors <- function(n) {
     admitted_grey_colors = grey_colors[seq(1, 110, 10)]
     broad_colors = c(all_colors_no_grey, admitted_grey_colors)
 
-    set.seed(1234)
-    on.exit(set.seed(Sys.time()))
+    set.seed(seed = seed)
+    on.exit(random_seed())
     # if too many colors requested, warn about recycling
     if(n > length(broad_colors)) {
       warning('\n not enough unique colors in R, maximum = 444 \n')
@@ -74,6 +75,9 @@ getDistinctColors <- function(n) {
 
 
 
+
+
+
 #' @title Create color scaling for a single color starting from black
 #' @name getMonochromeColors
 #' @param col hexadecimal color to scale scale towards
@@ -84,3 +88,7 @@ getDistinctColors <- function(n) {
 getMonochromeColors = function(col, n = 256L, ...) {
   grDevices::colorRampPalette(colors = c('black', col), ...)(n)
 }
+
+
+
+

@@ -4,10 +4,12 @@
 \alias{getDistinctColors}
 \title{getDistinctColors}
 \usage{
-getDistinctColors(n)
+getDistinctColors(n, seed = 1234)
 }
 \arguments{
 \item{n}{number of colors wanted}
+
+\item{seed}{seed to use when randomizing color order. Default is 1234}
 }
 \value{
 character vector of hexadecimal distinct colors
