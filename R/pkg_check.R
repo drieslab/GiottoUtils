@@ -72,7 +72,8 @@ package_check <- function(pkg_name,
                           optional = FALSE,
                           custom_msg = NULL) {
 
-  repo <- NULL
+  # NSE vars
+  repo <- location <- name <- NULL
 
   # set default repo to CRAN if not supplied
   no_val <- is.null(repository)
