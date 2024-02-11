@@ -1,6 +1,4 @@
 
-# install scipy for test
-reticulate::conda_install(packages = 'scipy', pip = TRUE)
 
 # mock matrix
 m <- matrix(data = 0L, nrow = 400, ncol = 300)
