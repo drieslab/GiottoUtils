@@ -16,7 +16,6 @@
 #' str_locate2(fruit, "e")
 #' str_locate2(fruit, c("a", "b", "p", "p"))
 #' @export
-#' @return a matrix
 str_locate2 <- function(string, pattern) {
 
   if (length(pattern) != 1L && length(string) != length(pattern)) {
@@ -33,17 +32,12 @@ str_locate2 <- function(string, pattern) {
     res <- regexpr(pattern = pattern[[i]], text = string[[i]])
     .start <- res[1]
     .end <- attr(res, "match.length") - 1L + .start
-    c(.start, .end)
+    matrix(c(.start, .end), ncol = 2, dimnames = list(NULL, c("start", "end")))
   })
 
-  if (length(out) > 1L) {
-    out <- Reduce(rbind, out)
-  }
+  out <- Reduce(rbind, out)
 
-  neg_bool <- out < 0L
-  out[neg_bool] <- NA_integer_
+  out[out < 0L] <- NA_integer_
 
-  rownames(out) <- NULL
-  colnames(out) <- c("start", "end")
   return(out)
 }
