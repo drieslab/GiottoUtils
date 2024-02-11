@@ -1,8 +1,8 @@
 .Rproj.user
+*.Rproj
 .Rhistory
 inst/doc
 .DS_Store
-*.Rproj
 .git_old
 .vscode/*
 .Rprofile
