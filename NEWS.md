@@ -1,9 +1,9 @@
 
-# GiottoUtils 0.1.4
+# GiottoUtils 0.1.4 (2024/02/05)
 
 ## Enhancement
 - new `seed` param for `getDistinctColors()` that allows the ordering of the distinct colors to be changed.
-- `package_check()` is now allows more than one package to be checked using repo:location notation.
+- `package_check()` now allows more than one package to be checked using repo:location notation.
 
 
 
