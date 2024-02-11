@@ -9,10 +9,35 @@
 #' Implementation of \pkg{stringr}'s `str_locate` with base R.
 #' @param string Input vector. Either a character vector, or something coercible to one.
 #' @param pattern Pattern to look for.
+#' @examples
+#' fruit <- c("apple", "banana", "pear", "pineapple")
+#' str_locate2(fruit, "$")
+#' str_locate2(fruit, "a")
+#' str_locate2(fruit, "e")
+#' str_locate2(fruit, c("a", "b", "p", "p"))
 #' @export
 str_locate2 <- function(string, pattern) {
-  res <- regexpr(pattern = pattern, text = string)
-  .start <- res[1]
-  .end <- attr(res, "match.length") - 1L + .start
-  array(data = c(.start, .end), dim = c(1,2), dimnames = list(NULL, c('start', 'end')))
+
+  if (length(pattern) != 1L && length(string) != length(pattern)) {
+    .gstop(
+      sprintf("Can't recycle `string` (size %d) to match `pattern` (size %d)"),
+      length(string), length(pattern)
+    )
+  }
+
+  # recycle
+  if (length(pattern) != length(string)) pattern <- rep(pattern, length(string))
+
+  out <- lapply(seq_along(string), function(i) {
+    res <- regexpr(pattern = pattern[[i]], text = string[[i]])
+    .start <- res[1]
+    .end <- attr(res, "match.length") - 1L + .start
+    matrix(c(.start, .end), ncol = 2, dimnames = list(NULL, c("start", "end")))
+  })
+
+  out <- Reduce(rbind, out)
+
+  out[out < 0L] <- NA_integer_
+
+  return(out)
 }

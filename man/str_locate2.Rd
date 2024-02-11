@@ -19,3 +19,10 @@ match, and the second column, end, gives the position of the end.
 \description{
 Implementation of \pkg{stringr}'s \code{str_locate} with base R.
 }
+\examples{
+fruit <- c("apple", "banana", "pear", "pineapple")
+str_locate2(fruit, "$")
+str_locate2(fruit, "a")
+str_locate2(fruit, "e")
+str_locate2(fruit, c("a", "b", "p", "p"))
+}

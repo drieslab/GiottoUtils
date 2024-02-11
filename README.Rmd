@@ -31,7 +31,7 @@ GiottoUtils exports functionalities that are called internally by many of the ot
 You can install GiottoUtils like:
 
 ``` r
-library(devtools)
-devtools::install_github('drieslab/GiottoUtils')
+if (!requireNamespace("pak", quietly = TRUE)) install.packages("pak")
+pak::pak("drieslab/GiottoUtils")
 ```
 
