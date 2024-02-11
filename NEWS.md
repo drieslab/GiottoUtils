@@ -1,9 +1,18 @@
 
-# GiottoUtils 0.1.4
+# GiottoUtils 0.1.5 (2024/02/11)
+
+## Bug Fixes
+- `str_locate2()` now works with vectorized inputs like the *stringr* counterpart
+- `str_locate2()` no-matches now properly return `NA_integer_` instead of negative values
+
+## New
+- `to_scipy_sparse()` conversion of R matrices to scipy sparse representations
+
+# GiottoUtils 0.1.4 (2024/02/05)
 
 ## Enhancement
 - new `seed` param for `getDistinctColors()` that allows the ordering of the distinct colors to be changed.
-- `package_check()` is now allows more than one package to be checked using repo:location notation.
+- `package_check()` now allows more than one package to be checked using repo:location notation.
 
 
 

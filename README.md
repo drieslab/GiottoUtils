@@ -27,6 +27,6 @@ directly interact with this package.
 You can install GiottoUtils like:
 
 ``` r
-library(devtools)
-devtools::install_github('drieslab/GiottoUtils')
+if (!requireNamespace("pak", quietly = TRUE)) install.packages("pak")
+pak::pak("drieslab/GiottoUtils")
 ```
