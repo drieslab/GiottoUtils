@@ -36,9 +36,6 @@ jobs:
 
       - name: Set up dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
-        env:
-          _R_CHECK_FORCE_SUGGESTS: false
-          _R_CHECK_RD_XREFS: false
         with:
           dependencies: '"hard"' # do not use suggested dependencies
           extra-packages: any::pkgdown, local::.

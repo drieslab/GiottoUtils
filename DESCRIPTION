@@ -6,19 +6,20 @@ Authors@R: c(
 		 role = c("aut", "cre")),
 	person("Jiaji", "George Chen", email = "jiajic@bu.edu",
 		 role = c("aut")),
+	person("Joselyn C.", "Chávez-Fuentes", email = "joselynchavezf@gmail.com",
+	   role = c("aut"), comment = c(ORCID = "0000-0002-4974-4591")),
 	person("Guo-Cheng", "Yuan", email = "guo-cheng.yuan@mssm.edu",
 		 role = c("aut")),
   person("Matthew", "O'Brien", email = "mobrien2@bu.edu",
 	   role = c("aut")),
-	person("Joselyn C.", "Chávez-Fuentes", email = "joselynchavezf@gmail.com",
-	   role = c("aut"), comment = c(ORCID = "0000-0002-4974-4591")),
 	person("Edward", "Ruiz", email = "ecruiz@bu.edu",
 		 role = c("aut"))
 	)
 Maintainer: Ruben Dries <rubendries@gmail.com>
-Description: Utility functions and imports for Giotto Suite
+Description: Utility functions and imports for Giotto Suite.
 License: GPL (>= 3)
 Encoding: UTF-8
+LazyData: true
 URL: https://drieslab.github.io/Giotto/, https://github.com/drieslab/Giotto, https://drieslab.github.io/GiottoUtils/
 BugReports: https://github.com/drieslab/Giotto/issues
 Roxygen: list(markdown = TRUE)
@@ -33,16 +34,16 @@ Imports:
     lifecycle,
     magrittr,
     methods,
-    utils (>= 3.5.0),
+    utils (>= 3.5.0)
 Suggests: 
     future.apply,
     Matrix,
+    knitr,
     parallel,
     RColorBrewer,
     reticulate,
     testthat (>= 3.0.0),
     covr
-Config/testthat/edition: 3
 Collate: 
     'DT_helpers.R'
     'assert.R'
@@ -66,3 +67,5 @@ Collate:
     'system_info.R'
     'test.R'
     'zzz.R'
+VignetteBuilder: knitr
+Config/testthat/edition: 3
