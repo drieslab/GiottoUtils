@@ -37,6 +37,7 @@ Imports:
     utils (>= 3.5.0)
 Suggests: 
     future.apply,
+    Matrix,
     knitr,
     parallel,
     RColorBrewer,
@@ -60,6 +61,7 @@ Collate:
     'pipe.R'
     'pkg_check.R'
     'prev_call.R'
+    'py_utils.R'
     'seed.R'
     'string.R'
     'system_info.R'
