@@ -9,10 +9,41 @@
 #' Implementation of \pkg{stringr}'s `str_locate` with base R.
 #' @param string Input vector. Either a character vector, or something coercible to one.
 #' @param pattern Pattern to look for.
+#' @examples
+#' fruit <- c("apple", "banana", "pear", "pineapple")
+#' str_locate2(fruit, "$")
+#' str_locate2(fruit, "a")
+#' str_locate2(fruit, "e")
+#' str_locate2(fruit, c("a", "b", "p", "p"))
 #' @export
+#' @return a matrix
 str_locate2 <- function(string, pattern) {
-  res <- regexpr(pattern = pattern, text = string)
-  .start <- res[1]
-  .end <- attr(res, "match.length") - 1L + .start
-  array(data = c(.start, .end), dim = c(1,2), dimnames = list(NULL, c('start', 'end')))
+
+  if (length(pattern) != 1L && length(string) != length(pattern)) {
+    .gstop(
+      sprintf("Can't recycle `string` (size %d) to match `pattern` (size %d)"),
+      length(string), length(pattern)
+    )
+  }
+
+  # recycle
+  if (length(pattern) != length(string)) pattern <- rep(pattern, length(string))
+
+  out <- lapply(seq_along(string), function(i) {
+    res <- regexpr(pattern = pattern[[i]], text = string[[i]])
+    .start <- res[1]
+    .end <- attr(res, "match.length") - 1L + .start
+    c(.start, .end)
+  })
+
+  if (length(out) > 1L) {
+    out <- Reduce(rbind, out)
+  }
+
+  neg_bool <- out < 0L
+  out[neg_bool] <- NA_integer_
+
+  rownames(out) <- NULL
+  colnames(out) <- c("start", "end")
+  return(out)
 }
