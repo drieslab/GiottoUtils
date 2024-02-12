@@ -28,8 +28,8 @@ wrap_txt <- function(...,
                      sep = " ",
                      strWidth = 100,
                      errWidth = FALSE,
-                     .prefix = ' ',
-                     .initial = '') {
+                     .prefix = " ",
+                     .initial = "") {
   custom_width <- ifelse(is.null(match.call()$strWidth), yes = FALSE, no = TRUE)
   if (!isTRUE(custom_width)) {
     if (isTRUE(errWidth)) strWidth <- getOption("width") - 6
@@ -54,15 +54,15 @@ wrap_txt <- function(...,
 #' @param .vopt global verbosity option to pull from
 #' @examples
 #' # common usage (.v is logical)
-#' vmsg('print me', .v = TRUE)
-#' vmsg('dont print me', .v = FALSE)
+#' vmsg("print me", .v = TRUE)
+#' vmsg("dont print me", .v = FALSE)
 #'
 #' # debug messages (.v == "debug")
 #' # flag as a debug message using .is_debug = TRUE
-#' vmsg('I am a debug message', .is_debug = TRUE, .v = TRUE) # no print
-#' vmsg('I am a debug message', .is_debug = TRUE, .v = "debug") # prints
+#' vmsg("I am a debug message", .is_debug = TRUE, .v = TRUE) # no print
+#' vmsg("I am a debug message", .is_debug = TRUE, .v = "debug") # prints
 #'
-#' vmsg('print me', .v = 'debug') # also prints non-debug messages
+#' vmsg("print me", .v = "debug") # also prints non-debug messages
 #'
 #' # with global option
 #' options("giotto.verbose" = TRUE)
@@ -72,47 +72,45 @@ wrap_txt <- function(...,
 #' vmsg("Do not print by default")
 #' vmsg("Do not print by default", .v = TRUE) # function level input overrides global option
 #' @export
-vmsg <- function(..., .v = NULL, .is_debug = FALSE, .vopt = getOption('giotto.verbose', TRUE)) {
-
+vmsg <- function(..., .v = NULL, .is_debug = FALSE, .vopt = getOption("giotto.verbose", TRUE)) {
   # if function-level flag is provided, override global option
   if (!is.null(.v)) {
     .vopt <- .v
   }
 
-  if (isTRUE(.vopt)) .vopt <- 'yes'
-  if (isFALSE(.vopt)) .vopt <- 'no'
+  if (isTRUE(.vopt)) .vopt <- "yes"
+  if (isFALSE(.vopt)) .vopt <- "no"
 
   .vopt <- tolower(.vopt)
-  vflags <- c('yes', 'no', 'debug', 'log', 'debug_log')
+  vflags <- c("yes", "no", "debug", "log", "debug_log")
   if (!.vopt %in% vflags) {
-    .vopt <- 'no' # default behavior with no match is to be nonverbose
+    .vopt <- "no" # default behavior with no match is to be nonverbose
   }
 
   .vopt <- match.arg(
     arg = .vopt,
     choices = c(
-      'yes',
-      'no',
-      'debug',
-      'log',
-      'debug_log'
+      "yes",
+      "no",
+      "debug",
+      "log",
+      "debug_log"
     )
   )
 
   # if debug type print, ignore if .vopt is not related to debug
   if (isTRUE(.is_debug)) {
-    if (!(.vopt == 'debug' || .vopt == 'debug_log')) .vopt <- 'no'
+    if (!(.vopt == "debug" || .vopt == "debug_log")) .vopt <- "no"
   }
 
   # debug overrides
-  if (.vopt == 'debug') .vopt <- 'yes'
-  if (.vopt == 'debug_log') .vopt <- 'log'
+  if (.vopt == "debug") .vopt <- "yes"
+  if (.vopt == "debug_log") .vopt <- "log"
 
-  switch(
-    .vopt,
-    'yes' = wrap_msg(...),
-    'no' = return(invisible(NULL)),
-    'log' = log_write(x = wrap_txt(...))
+  switch(.vopt,
+    "yes" = wrap_msg(...),
+    "no" = return(invisible(NULL)),
+    "log" = log_write(x = wrap_txt(...))
   )
 }
 
@@ -148,19 +146,18 @@ gstop <- function(
     strWidth = 100,
     errWidth = FALSE,
     .module,
-    .prefix = ' ',
-    .initial = '',
+    .prefix = " ",
+    .initial = "",
     .n = 1L,
     .call = TRUE,
-    .warn_nstack = getOption('giotto.warn_gstop_nstack', FALSE)
-) {
-
+    .warn_nstack = getOption("giotto.warn_gstop_nstack", FALSE)) {
   nf <- sys.nframe()
   if (.n > nf) {
     # send message and automatically limit to max nframes
     if (.warn_nstack) {
       warning("[gstop] .n of ", .n, " is greater than number of stackframes ", nf,
-              call. = FALSE)
+        call. = FALSE
+      )
     }
     .n <- nf
   }
@@ -169,7 +166,7 @@ gstop <- function(
   if (nf %in% c(1L, 2L)) { # call from gstop or .gstop has no specific call
     sc <- NULL
   } else {
-    .n = as.integer(.n)
+    .n <- as.integer(.n)
     sc <- get_prev_call(toplevel = .n + 1) # + 1 because of this else statement
   }
 
@@ -197,19 +194,20 @@ gstop <- function(
                    sep = " ",
                    strWidth = 100,
                    errWidth = FALSE,
-                   .prefix = ' ',
-                   .initial = '',
+                   .prefix = " ",
+                   .initial = "",
                    .n = 1L,
                    .call = TRUE) {
   gstop(...,
-        sep = sep,
-        strWidth = strWidth,
-        errWidth = errWidth,
-        .module = "GiottoUtils",
-        .prefix = .prefix,
-        .initial = .initial,
-        .n = .n + 1L,
-        .call = .call)
+    sep = sep,
+    strWidth = strWidth,
+    errWidth = errWidth,
+    .module = "GiottoUtils",
+    .prefix = .prefix,
+    .initial = .initial,
+    .n = .n + 1L,
+    .call = .call
+  )
 }
 
 
@@ -238,12 +236,10 @@ NULL
 #' @export
 str_vector <- function(x, qchar = c("single", "double")) {
   qchar <- match.arg(qchar, choices = c("single", "double"))
-  switch(
-    qchar,
+  switch(qchar,
     "single" = return(toString(sprintf("'%s'", x))),
     "double" = return(toString(sprintf("\"%s\"", x)))
   )
-
 }
 
 #' @rdname str_convenience
@@ -299,9 +295,9 @@ color_tag <- function() {
 
 #' @rdname color_tag
 #' @export
-color_red = function(x) {
-  ct = color_tag()
-  if(use_color_text()) {
+color_red <- function(x) {
+  ct <- color_tag()
+  if (use_color_text()) {
     paste0(ct$r, x, ct$x)
   } else {
     x
@@ -310,9 +306,9 @@ color_red = function(x) {
 
 #' @rdname color_tag
 #' @export
-color_green = function(x) {
-  ct = color_tag()
-  if(use_color_text()) {
+color_green <- function(x) {
+  ct <- color_tag()
+  if (use_color_text()) {
     paste0(ct$g, x, ct$x)
   } else {
     x
@@ -321,9 +317,9 @@ color_green = function(x) {
 
 #' @rdname color_tag
 #' @export
-color_yellow = function(x) {
-  ct = color_tag()
-  if(use_color_text()) {
+color_yellow <- function(x) {
+  ct <- color_tag()
+  if (use_color_text()) {
     paste0(ct$y, x, ct$x)
   } else {
     x
@@ -332,9 +328,9 @@ color_yellow = function(x) {
 
 #' @rdname color_tag
 #' @export
-color_blue = function(x) {
-  ct = color_tag()
-  if(use_color_text()) {
+color_blue <- function(x) {
+  ct <- color_tag()
+  if (use_color_text()) {
     paste0(ct$b, x, ct$x)
   } else {
     x
@@ -343,9 +339,9 @@ color_blue = function(x) {
 
 #' @rdname color_tag
 #' @export
-color_purple = function(x) {
-  ct = color_tag()
-  if(use_color_text()) {
+color_purple <- function(x) {
+  ct <- color_tag()
+  if (use_color_text()) {
     paste0(ct$p, x, ct$x)
   } else {
     x
@@ -354,9 +350,9 @@ color_purple = function(x) {
 
 #' @rdname color_tag
 #' @export
-color_teal = function(x) {
-  ct = color_tag()
-  if(use_color_text()) {
+color_teal <- function(x) {
+  ct <- color_tag()
+  if (use_color_text()) {
     paste0(ct$t, x, ct$x)
   } else {
     x

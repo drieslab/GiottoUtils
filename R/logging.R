@@ -5,10 +5,10 @@
 #' @param filepath character. filepath to log file. If omitted, tries to find the
 #' last created log (will not work after a crash)
 #' @export
-giottoReadLog <- function(filepath = getOption('giotto.last_logpath', NULL)) {
+giottoReadLog <- function(filepath = getOption("giotto.last_logpath", NULL)) {
 
   if (is.null(filepath)) {
-    .gstop('No last log found.', .call = FALSE)
+    .gstop("No last log found.", .call = FALSE)
   }
 
   file_conn = file(filepath)
@@ -91,7 +91,7 @@ giottoNewLog = function(logdir) {
   file.create(filepath)
   filepath = normalizePath(filepath)
 
-  options('giotto.last_logpath' = filepath) # store filepath
+  options("giotto.last_logpath" = filepath) # store filepath
   return(invisible(filepath))
 }
 
