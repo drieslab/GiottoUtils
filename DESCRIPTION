@@ -28,6 +28,7 @@ Depends:
     base (>= 3.5.0),
     R (>= 3.5.0)
 Imports:
+    checkmate,
     data.table,
     gtools,
     lifecycle,
@@ -35,7 +36,6 @@ Imports:
     methods,
     utils (>= 3.5.0)
 Suggests: 
-    checkmate,
     future.apply,
     Matrix,
     knitr,
