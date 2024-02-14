@@ -42,7 +42,6 @@ Suggests:
     parallel,
     RColorBrewer,
     reticulate,
-    rlang,
     testthat (>= 3.0.0),
     covr
 Collate: 
