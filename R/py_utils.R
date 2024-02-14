@@ -22,75 +22,75 @@
 #' @importFrom methods as
 #' @export
 to_scipy_sparse <- function(x, format = c("C", "R"), transpose = FALSE, ...) {
-  format <- match.arg(toupper(format), choices = c("C", "R"))
+    format <- match.arg(toupper(format), choices = c("C", "R"))
 
-  if (inherits(x, "matrix")) {
-    return(.to_scipy_sparse_matrix(x, format, transpose, ...))
-  }
-  if (inherits(x, "dgCMatrix")) {
-    return(.to_scipy_sparse_dgc(x, format, transpose, ...))
-  }
-  if (inherits(x, "dgRMatrix")) {
-    return(.to_scipy_sparse_dgr(x, format, transpose, ...))
-  }
-  if (inherits(x, "dgTMatrix")) {
-    return(.to_scipy_sparse_dgt(x, format, transpose, ...))
-  }
+    if (inherits(x, "matrix")) {
+        return(.to_scipy_sparse_matrix(x, format, transpose, ...))
+    }
+    if (inherits(x, "dgCMatrix")) {
+        return(.to_scipy_sparse_dgc(x, format, transpose, ...))
+    }
+    if (inherits(x, "dgRMatrix")) {
+        return(.to_scipy_sparse_dgr(x, format, transpose, ...))
+    }
+    if (inherits(x, "dgTMatrix")) {
+        return(.to_scipy_sparse_dgt(x, format, transpose, ...))
+    }
 
-  .gstop("No to_scipy_sparse method found for class", class(x))
+    .gstop("No to_scipy_sparse method found for class", class(x))
 }
 
 
 # internals ####
 
 .to_scipy_sparse_matrix <- function(
-    x, format, transpose = FALSE, ...) {
-  SCP <- reticulate::import("scipy", convert = FALSE)
-  if (transpose) x <- t(x)
-  switch(format,
-    "C" = SCP$sparse$csc_matrix(x, ...),
-    "R" = SCP$sparse$csr_matrix(x, ...)
-  )
+        x, format, transpose = FALSE, ...) {
+    SCP <- reticulate::import("scipy", convert = FALSE)
+    if (transpose) x <- t(x)
+    switch(format,
+        "C" = SCP$sparse$csc_matrix(x, ...),
+        "R" = SCP$sparse$csr_matrix(x, ...)
+    )
 }
 
 .to_scipy_sparse_dgc <- function(
-    x, format = c("C", "R"), transpose = FALSE, ...) {
-  SCP <- reticulate::import("scipy", convert = FALSE)
-  if (transpose) x <- Matrix::t(x)
-  if (format == "R") {
-    x2 <- as(x, "RsparseMatrix")
-    return(to_scipy_sparse(x2, format = "R", transpose = FALSE, ...))
-  }
+        x, format = c("C", "R"), transpose = FALSE, ...) {
+    SCP <- reticulate::import("scipy", convert = FALSE)
+    if (transpose) x <- Matrix::t(x)
+    if (format == "R") {
+        x2 <- as(x, "RsparseMatrix")
+        return(to_scipy_sparse(x2, format = "R", transpose = FALSE, ...))
+    }
 
-  SCP$sparse$csc_matrix(
-    arg1 = reticulate::tuple(x@x, x@i, x@p),
-    shape = reticulate::tuple(x@Dim[1L], x@Dim[2L])
-  )
+    SCP$sparse$csc_matrix(
+        arg1 = reticulate::tuple(x@x, x@i, x@p),
+        shape = reticulate::tuple(x@Dim[1L], x@Dim[2L])
+    )
 }
 
 .to_scipy_sparse_dgr <- function(
-    x, format = c("C", "R"), transpose = FALSE, ...) {
-  SCP <- reticulate::import("scipy", convert = FALSE)
-  if (transpose) x <- Matrix::t(x)
-  if (format == "C") {
-    x2 <- as(x, "CsparseMatrix")
-    return(to_scipy_sparse(x2, format = "C", transpose = FALSE, ...))
-  }
+        x, format = c("C", "R"), transpose = FALSE, ...) {
+    SCP <- reticulate::import("scipy", convert = FALSE)
+    if (transpose) x <- Matrix::t(x)
+    if (format == "C") {
+        x2 <- as(x, "CsparseMatrix")
+        return(to_scipy_sparse(x2, format = "C", transpose = FALSE, ...))
+    }
 
-  SCP$sparse$csr_matrix(
-    arg1 = reticulate::tuple(x@x, x@j, x@p),
-    shape = reticulate::tuple(x@Dim[1L], x@Dim[2L])
-  )
+    SCP$sparse$csr_matrix(
+        arg1 = reticulate::tuple(x@x, x@j, x@p),
+        shape = reticulate::tuple(x@Dim[1L], x@Dim[2L])
+    )
 }
 
 .to_scipy_sparse_dgt <- function(
-    x, format = c("C", "R"), transpose = FALSE, ...) {
-  if (transpose) x <- Matrix::t(x)
+        x, format = c("C", "R"), transpose = FALSE, ...) {
+    if (transpose) x <- Matrix::t(x)
 
-  switch(format,
-    "C" = x <- as(x, "CsparseMatrix"),
-    "R" = x <- as(x, "RsparseMatrix")
-  )
+    switch(format,
+        "C" = x <- as(x, "CsparseMatrix"),
+        "R" = x <- as(x, "RsparseMatrix")
+    )
 
-  to_scipy_sparse(x, format = format, transpose = FALSE, ...)
+    to_scipy_sparse(x, format = format, transpose = FALSE, ...)
 }

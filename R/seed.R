@@ -11,11 +11,11 @@
 #' @return The seed value is returned invisibly
 #' @export
 random_seed <- function(set.seed = TRUE) {
-  digits <- 9
-  newSeed <- as.numeric(Sys.time()) * 10^(digits - 3)
-  newSeed <- as.integer(round(newSeed, -digits) - newSeed)
-  if (isTRUE(set.seed)) {
-    set.seed(newSeed)
-  }
-  return(invisible(newSeed))
+    digits <- 9
+    newSeed <- as.numeric(Sys.time()) * 10^(digits - 3)
+    newSeed <- as.integer(round(newSeed, -digits) - newSeed)
+    if (isTRUE(set.seed)) {
+        set.seed(newSeed)
+    }
+    return(invisible(newSeed))
 }

@@ -4,24 +4,24 @@
 #' @keywords internal
 #' @export
 determine_cores <- function(cores = getOption("giotto.cores", default = NA),
-                            min_cores = 1,
-                            max_cores = 10) {
-  if (is.na(cores) | !is.numeric(cores) | (is.numeric(cores) & cores <= 0)) {
-    package_check("parallel")
-    cores <- parallel::detectCores()
+    min_cores = 1,
+    max_cores = 10) {
+    if (is.na(cores) | !is.numeric(cores) | (is.numeric(cores) & cores <= 0)) {
+        package_check("parallel")
+        cores <- parallel::detectCores()
 
-    if (cores <= 2) {
-      cores <- ifelse(cores < min_cores, cores, min_cores)
+        if (cores <= 2) {
+            cores <- ifelse(cores < min_cores, cores, min_cores)
+        } else {
+            cores <- cores - 2
+            cores <- ifelse(cores > max_cores, max_cores, cores)
+        }
+        options("giotto.cores" = cores)
+        return(cores)
     } else {
-      cores <- cores - 2
-      cores <- ifelse(cores > max_cores, max_cores, cores)
+        cores <- cores
+        return(cores)
     }
-    options("giotto.cores" = cores)
-    return(cores)
-  } else {
-    cores <- cores
-    return(cores)
-  }
 }
 
 
@@ -33,24 +33,24 @@ determine_cores <- function(cores = getOption("giotto.cores", default = NA),
 #' @keywords internal
 #' @export
 get_os <- function() {
-  if (.Platform[["OS.type"]] == "windows") {
-    os <- "windows"
-  } else {
-    sysinf <- Sys.info()
-    if (!is.null(sysinf)) {
-      os <- sysinf["sysname"]
-      if (os == "Darwin") {
-        os <- "osx"
-      }
-    } else { ## mystery machine
-      os <- .Platform$OS.type
-      if (grepl("^darwin", R.version$os)) {
-        os <- "osx"
-      }
-      if (grepl("linux-gnu", R.version$os)) {
-        os <- "linux"
-      }
+    if (.Platform[["OS.type"]] == "windows") {
+        os <- "windows"
+    } else {
+        sysinf <- Sys.info()
+        if (!is.null(sysinf)) {
+            os <- sysinf["sysname"]
+            if (os == "Darwin") {
+                os <- "osx"
+            }
+        } else { ## mystery machine
+            os <- .Platform$OS.type
+            if (grepl("^darwin", R.version$os)) {
+                os <- "osx"
+            }
+            if (grepl("linux-gnu", R.version$os)) {
+                os <- "linux"
+            }
+        }
     }
-  }
-  return(tolower(os))
+    return(tolower(os))
 }

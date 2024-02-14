@@ -29,29 +29,29 @@
 #' @examples
 #' \dontrun{
 #' g_assert(
-#'   x,
-#'   test = inherits(x, "data.table"),
-#'   msg = c(.name, "must be of class data.table, not", class(x))
+#'     x,
+#'     test = inherits(x, "data.table"),
+#'     msg = c(.name, "must be of class data.table, not", class(x))
 #' )
 #' }
 #' @export
 g_assert <- function(x, test, msg = NULL, n = 2L, ...) {
-  if (!test) {
-    # get name of function where test failed
-    fn_name <- deparse(sys.calls()[[sys.nframe() - n]])
-    # get name of object that failed test
-    .name <- deparse(eval(call("substitute", as.name(substitute(x)), parent.frame(n = 1L))))
-    .name <- paste0('\"\'', .name, '\'\"')
+    if (!test) {
+        # get name of function where test failed
+        fn_name <- deparse(sys.calls()[[sys.nframe() - n]])
+        # get name of object that failed test
+        .name <- deparse(eval(call("substitute", as.name(substitute(x)), parent.frame(n = 1L))))
+        .name <- paste0('\"\'', .name, '\'\"')
 
-    # compose message
-    msg <- gsub(pattern = "\\.name", replacement = .name, x = deparse(substitute(msg)))
-    msg <- parse(text = msg)
+        # compose message
+        msg <- gsub(pattern = "\\.name", replacement = .name, x = deparse(substitute(msg)))
+        msg <- parse(text = msg)
 
-    # send error
-    stop(wrap_txt(fn_name, ":\n", eval(msg, envir = parent.frame(n = 1L)), errWidth = TRUE),
-      call. = FALSE
-    )
-  }
+        # send error
+        stop(wrap_txt(fn_name, ":\n", eval(msg, envir = parent.frame(n = 1L)), errWidth = TRUE),
+            call. = FALSE
+        )
+    }
 }
 
 
@@ -61,24 +61,24 @@ g_assert <- function(x, test, msg = NULL, n = 2L, ...) {
 #' @keywords internal
 #' @export
 assert_giotto <- function(gobject, n = 1L, ...) {
-  fn_name <- deparse(sys.calls()[[sys.nframe() - n]])
-  orig_name <- deparse(eval(call("substitute", as.name(substitute(gobject)), parent.frame())))
-  if (!methods::hasArg(gobject)) {
-    stop(
-      wrap_txt(fn_name, ":\ngiotto object must be given",
-        errWidth = TRUE
-      ),
-      call. = FALSE
-    )
-  }
-  if (!inherits(gobject, "giotto")) {
-    stop(
-      wrap_txt(fn_name, ":\n", orig_name, "is not a giotto object",
-        errWidth = TRUE
-      ),
-      call. = FALSE
-    )
-  }
+    fn_name <- deparse(sys.calls()[[sys.nframe() - n]])
+    orig_name <- deparse(eval(call("substitute", as.name(substitute(gobject)), parent.frame())))
+    if (!methods::hasArg(gobject)) {
+        stop(
+            wrap_txt(fn_name, ":\ngiotto object must be given",
+                errWidth = TRUE
+            ),
+            call. = FALSE
+        )
+    }
+    if (!inherits(gobject, "giotto")) {
+        stop(
+            wrap_txt(fn_name, ":\n", orig_name, "is not a giotto object",
+                errWidth = TRUE
+            ),
+            call. = FALSE
+        )
+    }
 }
 
 
@@ -86,11 +86,11 @@ assert_giotto <- function(gobject, n = 1L, ...) {
 #' @describeIn g_assert Test whether input is a data.table object
 #' @export
 assert_dt <- function(x) {
-  g_assert(
-    x,
-    test = inherits(x, "data.table"),
-    msg = c(.name, "must be of class data.table, not", class(x))
-  )
+    g_assert(
+        x,
+        test = inherits(x, "data.table"),
+        msg = c(.name, "must be of class data.table, not", class(x))
+    )
 }
 
 
@@ -98,25 +98,25 @@ assert_dt <- function(x) {
 #' @describeIn g_assert Test whether input is an existing file
 #' @export
 assert_file <- function(x) {
-  g_assert(
-    x,
-    test = is.character(x),
-    msg = c(.name, "must be a character vector filepath")
-  )
-  g_assert(
-    x,
-    test = file.exists(x),
-    msg = c(.name, "is not an existing file")
-  )
+    g_assert(
+        x,
+        test = is.character(x),
+        msg = c(.name, "must be a character vector filepath")
+    )
+    g_assert(
+        x,
+        test = file.exists(x),
+        msg = c(.name, "is not an existing file")
+    )
 }
 
 # NOTE: this currently overrides the checkmate function of the same name
 #' @describeIn g_assert Test whether input is of class numeric
 #' @export
 assert_numeric <- function(x) {
-  g_assert(
-    x,
-    test = is.numeric(x),
-    msg = c(.name, "must be of class numeric, not", class(x))
-  )
+    g_assert(
+        x,
+        test = is.numeric(x),
+        msg = c(.name, "must be of class numeric, not", class(x))
+    )
 }

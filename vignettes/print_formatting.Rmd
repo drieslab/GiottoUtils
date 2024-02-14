@@ -57,7 +57,7 @@ Whenever a function has a message print, we also encourage adding a `verbose`
 param so that it can be turned off. The standard implementation looks like this.
 ```{r}
 test_fun1 <- function(verbose = TRUE) {
-  if (verbose) message("hello world")
+    if (verbose) message("hello world")
 }
 
 test_fun1()
@@ -70,7 +70,7 @@ Note that the `verbose` default should be `NULL` with this implementation since
 set globally.
 ``` {r}
 test_fun2 <- function(verbose = NULL) {
-  vmsg(.v = verbose, "hello world")
+    vmsg(.v = verbose, "hello world")
 }
 
 test_fun2()
@@ -83,8 +83,8 @@ be helpful to include more abstract or wordy printouts such as messages for
 every successful step. These can be included by flagging as `"debug"`
 ```{r}
 test_debug <- function(verbose = NULL) {
-  vmsg(.v = verbose, .is_debug = TRUE, "this is a debug statement")
-  vmsg(.v = verbose, "this is a normal message")
+    vmsg(.v = verbose, .is_debug = TRUE, "this is a debug statement")
+    vmsg(.v = verbose, "this is a normal message")
 }
 
 test_debug(verbose = TRUE)
@@ -122,17 +122,17 @@ provides the `.n` param that allows developers to specify how many stackframes
 back the error should be reported from.
 ```{r, error = TRUE}
 foo <- function(x, y) {
-  GiottoUtils:::.gstop("This is an error.")
+    GiottoUtils:::.gstop("This is an error.")
 }
 
 bar <- function() {
-  foo(1, 2)
+    foo(1, 2)
 }
 
 bar()
 
 foo <- function(x, y) {
-  GiottoUtils:::.gstop("This is an error.", .n = 2) # report from one stackframe back
+    GiottoUtils:::.gstop("This is an error.", .n = 2) # report from one stackframe back
 }
 
 bar()

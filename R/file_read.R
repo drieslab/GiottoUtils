@@ -5,8 +5,8 @@
 #' @param file character. Filepath
 #' @export
 file_extension <- function(file) {
-  ex <- strsplit(basename(file), split = ".", fixed = TRUE)[[1L]]
-  return(ex[-1])
+    ex <- strsplit(basename(file), split = ".", fixed = TRUE)[[1L]]
+    return(ex[-1])
 }
 
 
@@ -21,35 +21,35 @@ file_extension <- function(file) {
 #' @keywords internal
 #' @export
 fread_colmatch <- function(file,
-                           col,
-                           sep = NULL,
-                           values_to_match,
-                           verbose = FALSE,
-                           ...) {
-  package_check("data.table", repository = "CRAN")
+    col,
+    sep = NULL,
+    values_to_match,
+    verbose = FALSE,
+    ...) {
+    package_check("data.table", repository = "CRAN")
 
-  # get colnames
-  col_names <- colnames(data.table::fread(file, nrows = 1L))
-  col_num <- which(col_names == col)
+    # get colnames
+    col_names <- colnames(data.table::fread(file, nrows = 1L))
+    col_num <- which(col_names == col)
 
-  # try to guess col separating char if not given
-  if (is.null(sep)) {
-    filename <- basename(file)
-    if (grepl(pattern = ".csv", x = filename)) {
-      sep <- ".*,"
-    } else if (grepl(pattern = ".tsv", x = filename)) {
-      sep <- ".*\t"
-    } else {
-      .gstop("sep param cannot be guessed")
+    # try to guess col separating char if not given
+    if (is.null(sep)) {
+        filename <- basename(file)
+        if (grepl(pattern = ".csv", x = filename)) {
+            sep <- ".*,"
+        } else if (grepl(pattern = ".tsv", x = filename)) {
+            sep <- ".*\t"
+        } else {
+            .gstop("sep param cannot be guessed")
+        }
     }
-  }
 
-  # create grep search
-  pattern <- paste(values_to_match, collapse = "|")
-  gpat <- paste0("'", strrep(x = sep, times = col_num - 1), "(", pattern, "),' ")
-  fread_cmd <- paste0("grep -E ", gpat, file)
-  if (isTRUE(verbose)) print(fread_cmd)
+    # create grep search
+    pattern <- paste(values_to_match, collapse = "|")
+    gpat <- paste0("'", strrep(x = sep, times = col_num - 1), "(", pattern, "),' ")
+    fread_cmd <- paste0("grep -E ", gpat, file)
+    if (isTRUE(verbose)) print(fread_cmd)
 
-  file_DT <- data.table::fread(cmd = fread_cmd, col.names = col_names, ...)
-  return(file_DT)
+    file_DT <- data.table::fread(cmd = fread_cmd, col.names = col_names, ...)
+    return(file_DT)
 }

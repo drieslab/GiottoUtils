@@ -11,7 +11,7 @@ NULL
 #' @param sep how to join elements of string (default is one space)
 #' @export
 wrap_msg <- function(..., sep = " ") {
-  message(wrap_txt(..., sep = sep))
+    message(wrap_txt(..., sep = sep))
 }
 # nocov end
 
@@ -25,23 +25,23 @@ wrap_msg <- function(..., sep = " ") {
 #' @param .prefix character. prefix for later lines
 #' @export
 wrap_txt <- function(...,
-                     sep = " ",
-                     strWidth = 100,
-                     errWidth = FALSE,
-                     .prefix = " ",
-                     .initial = "") {
-  custom_width <- ifelse(is.null(match.call()$strWidth), yes = FALSE, no = TRUE)
-  if (!isTRUE(custom_width)) {
-    if (isTRUE(errWidth)) strWidth <- getOption("width") - 6
-  }
+    sep = " ",
+    strWidth = 100,
+    errWidth = FALSE,
+    .prefix = " ",
+    .initial = "") {
+    custom_width <- ifelse(is.null(match.call()$strWidth), yes = FALSE, no = TRUE)
+    if (!isTRUE(custom_width)) {
+        if (isTRUE(errWidth)) strWidth <- getOption("width") - 6
+    }
 
-  cat(..., sep = sep) %>%
-    utils::capture.output() %>%
-    strwrap(
-      prefix = .prefix, initial = .initial, # indent later lines, no indent first line
-      width = min(80, getOption("width"), strWidth)
-    ) %>%
-    paste(collapse = "\n")
+    cat(..., sep = sep) %>%
+        utils::capture.output() %>%
+        strwrap(
+            prefix = .prefix, initial = .initial, # indent later lines, no indent first line
+            width = min(80, getOption("width"), strWidth)
+        ) %>%
+        paste(collapse = "\n")
 }
 
 
@@ -73,45 +73,45 @@ wrap_txt <- function(...,
 #' vmsg("Do not print by default", .v = TRUE) # function level input overrides global option
 #' @export
 vmsg <- function(..., .v = NULL, .is_debug = FALSE, .vopt = getOption("giotto.verbose", TRUE)) {
-  # if function-level flag is provided, override global option
-  if (!is.null(.v)) {
-    .vopt <- .v
-  }
+    # if function-level flag is provided, override global option
+    if (!is.null(.v)) {
+        .vopt <- .v
+    }
 
-  if (isTRUE(.vopt)) .vopt <- "yes"
-  if (isFALSE(.vopt)) .vopt <- "no"
+    if (isTRUE(.vopt)) .vopt <- "yes"
+    if (isFALSE(.vopt)) .vopt <- "no"
 
-  .vopt <- tolower(.vopt)
-  vflags <- c("yes", "no", "debug", "log", "debug_log")
-  if (!.vopt %in% vflags) {
-    .vopt <- "no" # default behavior with no match is to be nonverbose
-  }
+    .vopt <- tolower(.vopt)
+    vflags <- c("yes", "no", "debug", "log", "debug_log")
+    if (!.vopt %in% vflags) {
+        .vopt <- "no" # default behavior with no match is to be nonverbose
+    }
 
-  .vopt <- match.arg(
-    arg = .vopt,
-    choices = c(
-      "yes",
-      "no",
-      "debug",
-      "log",
-      "debug_log"
+    .vopt <- match.arg(
+        arg = .vopt,
+        choices = c(
+            "yes",
+            "no",
+            "debug",
+            "log",
+            "debug_log"
+        )
     )
-  )
 
-  # if debug type print, ignore if .vopt is not related to debug
-  if (isTRUE(.is_debug)) {
-    if (!(.vopt == "debug" || .vopt == "debug_log")) .vopt <- "no"
-  }
+    # if debug type print, ignore if .vopt is not related to debug
+    if (isTRUE(.is_debug)) {
+        if (!(.vopt == "debug" || .vopt == "debug_log")) .vopt <- "no"
+    }
 
-  # debug overrides
-  if (.vopt == "debug") .vopt <- "yes"
-  if (.vopt == "debug_log") .vopt <- "log"
+    # debug overrides
+    if (.vopt == "debug") .vopt <- "yes"
+    if (.vopt == "debug_log") .vopt <- "log"
 
-  switch(.vopt,
-    "yes" = wrap_msg(...),
-    "no" = return(invisible(NULL)),
-    "log" = log_write(x = wrap_txt(...))
-  )
+    switch(.vopt,
+        "yes" = wrap_msg(...),
+        "no" = return(invisible(NULL)),
+        "log" = log_write(x = wrap_txt(...))
+    )
 }
 
 
@@ -141,73 +141,73 @@ vmsg <- function(..., .v = NULL, .is_debug = FALSE, .vopt = getOption("giotto.ve
 #' stackframes for requested .n (default = FALSE)
 #' @export
 gstop <- function(
-    ...,
-    sep = " ",
-    strWidth = 100,
-    errWidth = FALSE,
-    .module,
-    .prefix = " ",
-    .initial = "",
-    .n = 1L,
-    .call = TRUE,
-    .warn_nstack = getOption("giotto.warn_gstop_nstack", FALSE)) {
-  nf <- sys.nframe()
-  if (.n > nf) {
-    # send message and automatically limit to max nframes
-    if (.warn_nstack) {
-      warning("[gstop] .n of ", .n, " is greater than number of stackframes ", nf,
-        call. = FALSE
-      )
+        ...,
+        sep = " ",
+        strWidth = 100,
+        errWidth = FALSE,
+        .module,
+        .prefix = " ",
+        .initial = "",
+        .n = 1L,
+        .call = TRUE,
+        .warn_nstack = getOption("giotto.warn_gstop_nstack", FALSE)) {
+    nf <- sys.nframe()
+    if (.n > nf) {
+        # send message and automatically limit to max nframes
+        if (.warn_nstack) {
+            warning("[gstop] .n of ", .n, " is greater than number of stackframes ", nf,
+                call. = FALSE
+            )
+        }
+        .n <- nf
     }
-    .n <- nf
-  }
 
-  # determine specific call that triggered this stop
-  if (nf %in% c(1L, 2L)) { # call from gstop or .gstop has no specific call
-    sc <- NULL
-  } else {
-    .n <- as.integer(.n)
-    sc <- get_prev_call(toplevel = .n + 1) # + 1 because of this else statement
-  }
+    # determine specific call that triggered this stop
+    if (nf %in% c(1L, 2L)) { # call from gstop or .gstop has no specific call
+        sc <- NULL
+    } else {
+        .n <- as.integer(.n)
+        sc <- get_prev_call(toplevel = .n + 1) # + 1 because of this else statement
+    }
 
-  # format
-  sc <- paste0(sc, ":")
+    # format
+    sc <- paste0(sc, ":")
 
-  # if .call is not TRUE then set sc as NULL
-  if (!isTRUE(.call) ||
-      identical(sc, "NULL")) {
-    sc <- NULL
-  }
+    # if .call is not TRUE then set sc as NULL
+    if (!isTRUE(.call) ||
+        identical(sc, "NULL")) {
+        sc <- NULL
+    }
 
-  emsg <- wrap_txt(
-    paste(str_bracket(.module), sc, "\n"),
-    ...,
-    errWidth = TRUE
-  )
+    emsg <- wrap_txt(
+        paste(str_bracket(.module), sc, "\n"),
+        ...,
+        errWidth = TRUE
+    )
 
-  stop(emsg, call. = FALSE)
+    stop(emsg, call. = FALSE)
 }
 
 
 # Use this function internal to this package
 .gstop <- function(...,
-                   sep = " ",
-                   strWidth = 100,
-                   errWidth = FALSE,
-                   .prefix = " ",
-                   .initial = "",
-                   .n = 1L,
-                   .call = TRUE) {
-  gstop(...,
-    sep = sep,
-    strWidth = strWidth,
-    errWidth = errWidth,
-    .module = "GiottoUtils",
-    .prefix = .prefix,
-    .initial = .initial,
-    .n = .n + 1L,
-    .call = .call
-  )
+    sep = " ",
+    strWidth = 100,
+    errWidth = FALSE,
+    .prefix = " ",
+    .initial = "",
+    .n = 1L,
+    .call = TRUE) {
+    gstop(...,
+        sep = sep,
+        strWidth = strWidth,
+        errWidth = errWidth,
+        .module = "GiottoUtils",
+        .prefix = .prefix,
+        .initial = .initial,
+        .n = .n + 1L,
+        .call = .call
+    )
 }
 
 
@@ -235,35 +235,35 @@ NULL
 #' @param qchar quote character to use. Either 'single' or "double"
 #' @export
 str_vector <- function(x, qchar = c("single", "double")) {
-  qchar <- match.arg(qchar, choices = c("single", "double"))
-  switch(qchar,
-    "single" = return(toString(sprintf("'%s'", x))),
-    "double" = return(toString(sprintf("\"%s\"", x)))
-  )
+    qchar <- match.arg(qchar, choices = c("single", "double"))
+    switch(qchar,
+        "single" = return(toString(sprintf("'%s'", x))),
+        "double" = return(toString(sprintf("\"%s\"", x)))
+    )
 }
 
 #' @rdname str_convenience
 #' @export
 str_bracket <- function(x) {
-  paste0("[", x, "]")
+    paste0("[", x, "]")
 }
 
 #' @rdname str_convenience
 #' @export
 str_parenth <- function(x) {
-  paste0("(", x, ")")
+    paste0("(", x, ")")
 }
 
 #' @rdname str_convenience
 #' @export
 str_double_quote <- function(x) {
-  paste0("\"", x, "\"")
+    paste0("\"", x, "\"")
 }
 
 #' @rdname str_convenience
 #' @export
 str_quote <- function(x) {
-  paste0("\'", x, "\'")
+    paste0("\'", x, "\'")
 }
 
 
@@ -282,81 +282,81 @@ str_quote <- function(x) {
 #' @return named list of characters
 #' @export
 color_tag <- function() {
-  list(
-    r = "\u001b[31m", # red
-    g = "\u001b[32m", # green
-    y = "\u001b[33m", # yellow
-    b = "\u001b[34m", # blue
-    p = "\u001b[35m", # purple
-    t = "\u001b[36m", # teal
-    x = "\u001b[39m" # none (return)
-  )
+    list(
+        r = "\u001b[31m", # red
+        g = "\u001b[32m", # green
+        y = "\u001b[33m", # yellow
+        b = "\u001b[34m", # blue
+        p = "\u001b[35m", # purple
+        t = "\u001b[36m", # teal
+        x = "\u001b[39m" # none (return)
+    )
 }
 
 #' @rdname color_tag
 #' @export
 color_red <- function(x) {
-  ct <- color_tag()
-  if (use_color_text()) {
-    paste0(ct$r, x, ct$x)
-  } else {
-    x
-  }
+    ct <- color_tag()
+    if (use_color_text()) {
+        paste0(ct$r, x, ct$x)
+    } else {
+        x
+    }
 }
 
 #' @rdname color_tag
 #' @export
 color_green <- function(x) {
-  ct <- color_tag()
-  if (use_color_text()) {
-    paste0(ct$g, x, ct$x)
-  } else {
-    x
-  }
+    ct <- color_tag()
+    if (use_color_text()) {
+        paste0(ct$g, x, ct$x)
+    } else {
+        x
+    }
 }
 
 #' @rdname color_tag
 #' @export
 color_yellow <- function(x) {
-  ct <- color_tag()
-  if (use_color_text()) {
-    paste0(ct$y, x, ct$x)
-  } else {
-    x
-  }
+    ct <- color_tag()
+    if (use_color_text()) {
+        paste0(ct$y, x, ct$x)
+    } else {
+        x
+    }
 }
 
 #' @rdname color_tag
 #' @export
 color_blue <- function(x) {
-  ct <- color_tag()
-  if (use_color_text()) {
-    paste0(ct$b, x, ct$x)
-  } else {
-    x
-  }
+    ct <- color_tag()
+    if (use_color_text()) {
+        paste0(ct$b, x, ct$x)
+    } else {
+        x
+    }
 }
 
 #' @rdname color_tag
 #' @export
 color_purple <- function(x) {
-  ct <- color_tag()
-  if (use_color_text()) {
-    paste0(ct$p, x, ct$x)
-  } else {
-    x
-  }
+    ct <- color_tag()
+    if (use_color_text()) {
+        paste0(ct$p, x, ct$x)
+    } else {
+        x
+    }
 }
 
 #' @rdname color_tag
 #' @export
 color_teal <- function(x) {
-  ct <- color_tag()
-  if (use_color_text()) {
-    paste0(ct$t, x, ct$x)
-  } else {
-    x
-  }
+    ct <- color_tag()
+    if (use_color_text()) {
+        paste0(ct$t, x, ct$x)
+    } else {
+        x
+    }
 }
 
 # nocov end
@@ -366,22 +366,22 @@ color_teal <- function(x) {
 #' @keywords internal
 #' @export
 use_color_text <- function() {
-  opt <- getOption("giotto.color_show", default = NULL)
-  ansi8_color <- ansi_colors() >= 8L
-  if (!is.null(opt)) {
-    if (!isTRUE(opt)) {
-      return(opt)
-    }
-    if (isTRUE(opt) & isTRUE(ansi8_color)) {
-      return(opt)
-    }
-    if (isTRUE(opt) & !isTRUE(ansi8_color)) {
-      wrap_msg('Color text not supported on this system.
+    opt <- getOption("giotto.color_show", default = NULL)
+    ansi8_color <- ansi_colors() >= 8L
+    if (!is.null(opt)) {
+        if (!isTRUE(opt)) {
+            return(opt)
+        }
+        if (isTRUE(opt) & isTRUE(ansi8_color)) {
+            return(opt)
+        }
+        if (isTRUE(opt) & !isTRUE(ansi8_color)) {
+            wrap_msg('Color text not supported on this system.
                Set options("giotto.color_show" = FALSE)')
+        }
+    } else {
+        ansi8_color
     }
-  } else {
-    ansi8_color
-  }
 }
 
 
@@ -390,67 +390,67 @@ use_color_text <- function() {
 #' @keywords internal
 #' @export
 ansi_colors <- function() {
-  # options
-  opt <- getOption("cli.num_colors", default = NULL)
-  if (!is.null(opt)) {
-    return(as.integer(opt))
-  }
-  opt <- getOption("giotto.num_colors", default = NULL)
-  if (!is.null(opt)) {
-    return(as.integer(opt))
-  }
+    # options
+    opt <- getOption("cli.num_colors", default = NULL)
+    if (!is.null(opt)) {
+        return(as.integer(opt))
+    }
+    opt <- getOption("giotto.num_colors", default = NULL)
+    if (!is.null(opt)) {
+        return(as.integer(opt))
+    }
 
-  if ((env <- Sys.getenv("R_CLI_NUM_COLORS", "")) != "") {
-    return(as.integer(env))
-  }
+    if ((env <- Sys.getenv("R_CLI_NUM_COLORS", "")) != "") {
+        return(as.integer(env))
+    }
 
-  # crayon compatibility (allow color disabling through crayon)
-  cray_opt_has <- getOption("crayon.enabled", NULL)
-  cray_opt_num <- getOption("crayon.colors", NULL)
-  if (!is.null(cray_opt_has) & !isTRUE(cray_opt_has)) {
-    return(1L)
-  } # disable
-  if (isTRUE(cray_opt_has) & !is.null(cray_opt_num)) {
-    return(as.integer(cray_opt_num))
-  }
-  if (isTRUE(cray_opt_has) & is.null(cray_opt_num)) {
+    # crayon compatibility (allow color disabling through crayon)
+    cray_opt_has <- getOption("crayon.enabled", NULL)
+    cray_opt_num <- getOption("crayon.colors", NULL)
+    if (!is.null(cray_opt_has) & !isTRUE(cray_opt_has)) {
+        return(1L)
+    } # disable
+    if (isTRUE(cray_opt_has) & !is.null(cray_opt_num)) {
+        return(as.integer(cray_opt_num))
+    }
+    if (isTRUE(cray_opt_has) & is.null(cray_opt_num)) {
+        return(8L)
+    }
+
+    # 'NO_COLOR env setting disabling
+    if (!is.na(Sys.getenv("NO_COLOR", NA_character_))) {
+        return(1L)
+    }
+
+    # if knitr then no color in .Rmd chunks
+    if (isTRUE(getOption("knitr.in.progress"))) {
+        return(1L)
+    }
+
+    if (.Platform$GUI == "AQUA") {
+        return(1L)
+    }
+
+    # No specific usage cases needed
+    # Colors only used in show functions
+    if (identical(Sys.getenv("RSTUDIO"), "1")) {
+        return(8L)
+    } # at least
+
+    # Must be placed after 'RSTUDIO' check
+    if (.Platform$GUI == "Rgui") {
+        return(1L)
+    }
+
+    # Windows Emacs
+    if (.Platform$OS.type == "windows" &
+        "--ess" %in% commandArgs() &
+        is_emacs_with_color()) {
+        return(8L)
+    }
+
+    # end catch
     return(8L)
-  }
-
-  # 'NO_COLOR env setting disabling
-  if (!is.na(Sys.getenv("NO_COLOR", NA_character_))) {
-    return(1L)
-  }
-
-  # if knitr then no color in .Rmd chunks
-  if (isTRUE(getOption("knitr.in.progress"))) {
-    return(1L)
-  }
-
-  if (.Platform$GUI == "AQUA") {
-    return(1L)
-  }
-
-  # No specific usage cases needed
-  # Colors only used in show functions
-  if (identical(Sys.getenv("RSTUDIO"), "1")) {
-    return(8L)
-  } # at least
-
-  # Must be placed after 'RSTUDIO' check
-  if (.Platform$GUI == "Rgui") {
-    return(1L)
-  }
-
-  # Windows Emacs
-  if (.Platform$OS.type == "windows" &
-    "--ess" %in% commandArgs() &
-    is_emacs_with_color()) {
-    return(8L)
-  }
-
-  # end catch
-  return(8L)
 }
 
 
@@ -459,9 +459,9 @@ ansi_colors <- function() {
 #' @keywords internal
 #' @export
 is_emacs_with_color <- function() {
-  (Sys.getenv("EMACS") != "" || Sys.getenv("INSIDE_EMACS") !=
-    "") & !is.na(emacs_version()[1]) & emacs_version()[1] >=
-    23
+    (Sys.getenv("EMACS") != "" || Sys.getenv("INSIDE_EMACS") !=
+        "") & !is.na(emacs_version()[1]) & emacs_version()[1] >=
+        23
 }
 
 
@@ -470,13 +470,13 @@ is_emacs_with_color <- function() {
 #' @keywords internal
 #' @export
 emacs_version <- function() {
-  ver <- Sys.getenv("INSIDE_EMACS")
-  ver <- gsub("[^0-9\\.]+", "", ver)
-  if (ver == "") {
-    return(NA_integer_)
-  }
-  ver <- strsplit(ver, ".", fixed = TRUE)[[1]]
-  as.numeric(ver)
+    ver <- Sys.getenv("INSIDE_EMACS")
+    ver <- gsub("[^0-9\\.]+", "", ver)
+    if (ver == "") {
+        return(NA_integer_)
+    }
+    ver <- strsplit(ver, ".", fixed = TRUE)[[1]]
+    as.numeric(ver)
 }
 
 
@@ -504,7 +504,7 @@ NULL
 #' radians(180)
 #' @export
 radians <- function(deg) {
-  deg * pi / 180
+    deg * pi / 180
 }
 
 #' @describeIn degrees Radians to degrees
@@ -512,7 +512,7 @@ radians <- function(deg) {
 #' degrees(pi)
 #' @export
 degrees <- function(rad) {
-  rad * 180 / pi
+    rad * 180 / pi
 }
 
 
@@ -527,17 +527,17 @@ degrees <- function(rad) {
 #' @details Code from \code{\link[data.table]{timetaken}}
 #' @export
 time_format <- function(secs) {
-  if (secs > 60) {
-    secs <- as.integer(secs)
-    sprintf(
-      "%02d:%02d:%02d", secs %/% 3600L, (secs %/% 60L) %% 60L,
-      secs %% 60L
-    )
-  } else {
-    sprintf(if (secs >= 10) {
-      "%.1fs"
+    if (secs > 60) {
+        secs <- as.integer(secs)
+        sprintf(
+            "%02d:%02d:%02d", secs %/% 3600L, (secs %/% 60L) %% 60L,
+            secs %% 60L
+        )
     } else {
-      "%.3fs"
-    }, secs)
-  }
+        sprintf(if (secs >= 10) {
+            "%.1fs"
+        } else {
+            "%.3fs"
+        }, secs)
+    }
 }
