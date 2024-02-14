@@ -62,8 +62,3 @@ is_empty_char <- function(x) {
 
   FALSE
 }
-
-
-
-
-

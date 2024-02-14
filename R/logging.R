@@ -6,12 +6,11 @@
 #' last created log (will not work after a crash)
 #' @export
 giottoReadLog <- function(filepath = getOption("giotto.last_logpath", NULL)) {
-
   if (is.null(filepath)) {
     .gstop("No last log found.", .call = FALSE)
   }
 
-  file_conn = file(filepath)
+  file_conn <- file(filepath)
   on.exit(close(file_conn))
   readLines(file_conn)
 }
@@ -22,8 +21,7 @@ giottoReadLog <- function(filepath = getOption("giotto.last_logpath", NULL)) {
 #' If not provided, will choose a directory based on
 #' `getOption("giotto.logdir", tempdir())`
 #' @export
-giottoNewLog = function(logdir) {
-
+giottoNewLog <- function(logdir) {
   # if logdir is provided, create a new log file in the specified logdir
   if (!missing(logdir)) .log_dir(logdir)
   # otherwise use directory defaults
@@ -40,9 +38,8 @@ giottoNewLog = function(logdir) {
 .unique_filename <- function(filedir = tempdir(),
                              prefix = "giotto_",
                              suffix = NULL) {
-
   logfile_base <- Sys.Date() %>%
-    gsub(pattern = '-', replacement = '')
+    gsub(pattern = "-", replacement = "")
 
   # generate initial full ID
   i <- 1
@@ -50,16 +47,14 @@ giottoNewLog = function(logdir) {
 
   # loop until an unused name is found
   while (file.exists(full_path)) {
-
     i <- i + 1 # increment
     full_path <- .combine_filename(filedir, logfile_base, prefix, suffix, i = i)
-
   }
 
   return(full_path)
 }
 
-.combine_filename = function(filedir, logfile_base, prefix, suffix, i = 1) {
+.combine_filename <- function(filedir, logfile_base, prefix, suffix, i = 1) {
   logfile_id <- paste0(prefix, logfile_base, "_", i, suffix, ".txt")
   full_path <- file.path(filedir, logfile_id)
   return(full_path)
@@ -85,11 +80,11 @@ giottoNewLog = function(logdir) {
 #' by setting it to the "giotto.logdir" option or using `.log_dir()`.
 #' The filepath is additionally written to the option 'giotto.last_logpath'.
 #' @keywords internal
-.log_create = function(filedir = getOption("giotto.logdir", tempdir())) {
+.log_create <- function(filedir = getOption("giotto.logdir", tempdir())) {
   if (!dir.exists(filedir)) dir.create(filedir, recursive = TRUE)
-  filepath = .unique_filename(filedir = filedir, prefix = "giotto_")
+  filepath <- .unique_filename(filedir = filedir, prefix = "giotto_")
   file.create(filepath)
-  filepath = normalizePath(filepath)
+  filepath <- normalizePath(filepath)
 
   options("giotto.last_logpath" = filepath) # store filepath
   return(invisible(filepath))
@@ -102,7 +97,7 @@ giottoNewLog = function(logdir) {
 #' @description Create an active file connection object to the logfile to
 #' write to. Opens it in mode "a+" which allows both appending and reading.
 #' @keywords internal
-.log_conn <- function(filepath = getOption('giotto.last_logpath', NULL)) {
+.log_conn <- function(filepath = getOption("giotto.last_logpath", NULL)) {
   if (is.null(filepath)) {
     filepath <- .log_create() %>%
       normalizePath()
@@ -121,7 +116,6 @@ giottoNewLog = function(logdir) {
 #' @param main character. Title to assign log entry
 #' @export
 log_write <- function(file_conn = .log_conn(), x = "", collapse = " ", main = NULL) {
-
   on.exit(close(file_conn), add = TRUE)
 
   if (!is.null(main)) main <- str_bracket(main)
@@ -134,9 +128,5 @@ log_write <- function(file_conn = .log_conn(), x = "", collapse = " ", main = NU
     log_entry,
     collapse = " "
   )
-  writeLines(timestamped_log_entry, con = file_conn, sep = '\n')
+  writeLines(timestamped_log_entry, con = file_conn, sep = "\n")
 }
-
-
-
-

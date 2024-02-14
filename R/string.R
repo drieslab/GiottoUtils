@@ -17,7 +17,6 @@
 #' str_locate2(fruit, c("a", "b", "p", "p"))
 #' @export
 str_locate2 <- function(string, pattern) {
-
   if (length(pattern) != 1L && length(string) != length(pattern)) {
     .gstop(
       sprintf("Can't recycle `string` (size %d) to match `pattern` (size %d)"),

@@ -120,5 +120,3 @@ assert_numeric <- function(x) {
     msg = c(.name, "must be of class numeric, not", class(x))
   )
 }
-
-

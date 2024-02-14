@@ -55,5 +55,6 @@ test_that("giotto object check", {
   expect_error(assert_giotto(test_num))
 
   expect_error(assert_giotto(),
-               regexp = 'giotto object must be given')
+    regexp = "giotto object must be given"
+  )
 })

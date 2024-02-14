@@ -31,43 +31,39 @@ getRainbowColors <- function(n) {
 #' @export
 #' @family basic color palette functions
 getDistinctColors <- function(n, seed = 1234) {
-  package_check('RColorBrewer')
-  if(n < 1) .gstop("'n' colors wanted must be at least 1\n")
+  package_check("RColorBrewer")
+  if (n < 1) .gstop("'n' colors wanted must be at least 1\n")
 
-  qual_col_pals <- RColorBrewer::brewer.pal.info[RColorBrewer::brewer.pal.info$category == 'qual',]
-  col_vector <- unique(unlist(mapply(RColorBrewer::brewer.pal, qual_col_pals$maxcolors, rownames(qual_col_pals))));
+  qual_col_pals <- RColorBrewer::brewer.pal.info[RColorBrewer::brewer.pal.info$category == "qual", ]
+  col_vector <- unique(unlist(mapply(RColorBrewer::brewer.pal, qual_col_pals$maxcolors, rownames(qual_col_pals))))
 
-  if(n > length(col_vector)) {
-
+  if (n > length(col_vector)) {
     # get all possible colors
-    all_colors = grDevices::colors()
-    all_colors_no_grey = grep(x = all_colors, pattern = 'grey|gray', value = T, invert = T)
-    grey_colors = grep(x = all_colors, pattern = 'grey', value = T, invert = F)
-    admitted_grey_colors = grey_colors[seq(1, 110, 10)]
-    broad_colors = c(all_colors_no_grey, admitted_grey_colors)
+    all_colors <- grDevices::colors()
+    all_colors_no_grey <- grep(x = all_colors, pattern = "grey|gray", value = T, invert = T)
+    grey_colors <- grep(x = all_colors, pattern = "grey", value = T, invert = F)
+    admitted_grey_colors <- grey_colors[seq(1, 110, 10)]
+    broad_colors <- c(all_colors_no_grey, admitted_grey_colors)
 
     set.seed(seed = seed)
     on.exit(random_seed())
     # if too many colors requested, warn about recycling
-    if(n > length(broad_colors)) {
-      warning('\n not enough unique colors in R, maximum = 444 \n')
-      col_vector = sample(x = broad_colors, size = n, replace = TRUE)
+    if (n > length(broad_colors)) {
+      warning("\n not enough unique colors in R, maximum = 444 \n")
+      col_vector <- sample(x = broad_colors, size = n, replace = TRUE)
     } else {
-      col_vector = sample(x = broad_colors, size = n, replace = FALSE)
+      col_vector <- sample(x = broad_colors, size = n, replace = FALSE)
     }
-
   } else {
-
-    xxx <- grDevices::col2rgb(col_vector);
-    dist_mat <- as.matrix(stats::dist(t(xxx)));
-    diag(dist_mat) <- 1e10;
+    xxx <- grDevices::col2rgb(col_vector)
+    dist_mat <- as.matrix(stats::dist(t(xxx)))
+    diag(dist_mat) <- 1e10
     while (length(col_vector) > n) {
-      minv <- apply(dist_mat,1,function(x)min(x));
-      idx <- which(minv==min(minv))[1];
-      dist_mat <- dist_mat[-idx, -idx];
+      minv <- apply(dist_mat, 1, function(x) min(x))
+      idx <- which(minv == min(minv))[1]
+      dist_mat <- dist_mat[-idx, -idx]
       col_vector <- col_vector[-idx]
     }
-
   }
   return(col_vector)
 }
@@ -85,10 +81,6 @@ getDistinctColors <- function(n, seed = 1234) {
 #' @inheritDotParams grDevices::colorRampPalette -colors
 #' @export
 #' @family basic color palette functions
-getMonochromeColors = function(col, n = 256L, ...) {
-  grDevices::colorRampPalette(colors = c('black', col), ...)(n)
+getMonochromeColors <- function(col, n = 256L, ...) {
+  grDevices::colorRampPalette(colors = c("black", col), ...)(n)
 }
-
-
-
-

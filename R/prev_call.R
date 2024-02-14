@@ -1,5 +1,3 @@
-
-
 #' @name prev_call
 #' @title Previous calls
 #' @description Functions to check the call stack and get aspects of previous
@@ -95,7 +93,8 @@ get_args <- function(toplevel = 2L, verbose = FALSE) {
 #' @param \dots additional params to capture
 #' @export
 get_args_list <- function(toplevel = 1L, ...) {
-  c(as.list(as.environment(parent.frame(toplevel))),
+  c(
+    as.list(as.environment(parent.frame(toplevel))),
     list(...)
   )
 }

@@ -71,7 +71,6 @@ package_check <- function(pkg_name,
                           github_repo = NULL,
                           optional = FALSE,
                           custom_msg = NULL) {
-
   # NSE vars
   repo <- location <- name <- NULL
 
@@ -121,7 +120,7 @@ package_check <- function(pkg_name,
 
 
   # check repos
-  repo_choices = c("CRAN", "Bioc", "github", "bitbucket", "pip")
+  repo_choices <- c("CRAN", "Bioc", "github", "bitbucket", "pip")
 
   if (!all(repos_dt[, unlist(repo)] %in% repo_choices)) {
     stop(sprintf(
@@ -136,7 +135,9 @@ package_check <- function(pkg_name,
   }, USE.NAMES = FALSE)]
 
   install_dt <- repos_dt[(missing), ]
-  if (nrow(install_dt) == 0L) return(invisible(TRUE)) # return TRUE if no installs needed
+  if (nrow(install_dt) == 0L) {
+    return(invisible(TRUE))
+  } # return TRUE if no installs needed
 
 
 
@@ -157,7 +158,6 @@ package_check <- function(pkg_name,
   # custom install msg
   if (!is.null(custom_msg)) {
     print_fun(custom_msg)
-
   } else { # default install msg
 
     # header
@@ -197,8 +197,6 @@ package_check <- function(pkg_name,
 
     print_fun(inst_msg)
   }
-
-
 }
 
 
@@ -207,8 +205,7 @@ package_check <- function(pkg_name,
 # package check functions ####
 # return TRUE if install is needed
 .check_package_handler <- function(name, repo) {
-  switch(
-    repo,
+  switch(repo,
     "pip" = .check_package_py(name),
     .check_package_r(name) # default
   )
@@ -227,7 +224,9 @@ package_check <- function(pkg_name,
 
 # vectorized install prints ####
 .msg_github_install <- function(location) {
-  if (length(location) == 0L) return(NULL)
+  if (length(location) == 0L) {
+    return(NULL)
+  }
   sprintf(
     "devtools::install_github(\"%s\")\n",
     location
@@ -235,7 +234,9 @@ package_check <- function(pkg_name,
 }
 
 .msg_cran_install <- function(location) {
-  if (length(location) == 0L) return(NULL)
+  if (length(location) == 0L) {
+    return(NULL)
+  }
   locs_string <- paste0(location, collapse = "\", \"")
 
   sprintf(
@@ -245,7 +246,9 @@ package_check <- function(pkg_name,
 }
 
 .msg_bitbucket_install <- function(location) {
-  if (length(location) == 0L) return(NULL)
+  if (length(location) == 0L) {
+    return(NULL)
+  }
   sprintf(
     "devtools::install_bitbucket(\"%s\")\n",
     location
@@ -253,7 +256,9 @@ package_check <- function(pkg_name,
 }
 
 .msg_bioc_install <- function(location) {
-  if (length(location) == 0L) return(NULL)
+  if (length(location) == 0L) {
+    return(NULL)
+  }
   locs_string <- paste0(location, collapse = "\", \"")
 
   sprintf(
@@ -263,7 +268,9 @@ package_check <- function(pkg_name,
 }
 
 .msg_pip_install <- function(location) { # nocov start
-  if (length(location) == 0L) return(NULL)
+  if (length(location) == 0L) {
+    return(NULL)
+  }
   header_msg <- "# instructions for python pkg install to default Giotto miniconda environment\n"
 
   inst_msg <- sprintf(

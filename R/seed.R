@@ -1,4 +1,3 @@
-
 #' @title Set a random seed
 #' @name random_seed
 #' @param set.seed Whether to apply the random seed. Defaults to TRUE
@@ -11,8 +10,7 @@
 #' having applied it.
 #' @return The seed value is returned invisibly
 #' @export
-random_seed = function (set.seed = TRUE)
-{
+random_seed <- function(set.seed = TRUE) {
   digits <- 9
   newSeed <- as.numeric(Sys.time()) * 10^(digits - 3)
   newSeed <- as.integer(round(newSeed, -digits) - newSeed)

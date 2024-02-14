@@ -12,29 +12,27 @@
 #' @keywords internal
 #' @export
 depth <- function(this,
-                  method = c('max', 'min'),
-                  sig = 'data.frame') {
-
-  method = match.arg(arg = method, choices = c('max', 'min'))
+                  method = c("max", "min"),
+                  sig = "data.frame") {
+  method <- match.arg(arg = method, choices = c("max", "min"))
 
   # Stop conditions:
 
   # Stop if matches signature to search for
-  if(inherits(this, sig)) {
+  if (inherits(this, sig)) {
     return(0L)
   }
   # Stop if an empty list is discovered
-  if(inherits(this, 'list') && length(this) == 0L) {
+  if (inherits(this, "list") && length(this) == 0L) {
     return(0L)
   }
   # Stop if object is not a list AND recurse if it is.
   # Report minimum or maximum depth depending on method
-  if(method == 'max') {
-    ifelse(inherits(this, 'list'), 1L + max(sapply(this, function(x) depth(x, method = method, sig = sig))), 0L)
-  } else if(method == 'min') {
-    ifelse(inherits(this, 'list'), 1L + min(sapply(this, function(x) depth(x, method = method, sig = sig))), 0L)
+  if (method == "max") {
+    ifelse(inherits(this, "list"), 1L + max(sapply(this, function(x) depth(x, method = method, sig = sig))), 0L)
+  } else if (method == "min") {
+    ifelse(inherits(this, "list"), 1L + min(sapply(this, function(x) depth(x, method = method, sig = sig))), 0L)
   }
-
 }
 
 
@@ -49,20 +47,16 @@ depth <- function(this,
 #' @param count do not use
 #' @export
 require_depth <- function(x, dnames = NULL, min_depth = 1L, count = 1L) {
-
   x_depth <- depth(x)
 
   # if not null, dnames must be a character vector with length that covers the min_depth
-  if(!is.null(dnames)) checkmate::assert_character(dnames, len = min_depth + count - x_depth - 1L)
+  if (!is.null(dnames)) checkmate::assert_character(dnames, len = min_depth + count - x_depth - 1L)
 
   if (x_depth < min_depth) {
     depth_name <- dnames[[count]]
     x <- list(x)
     names(x) <- depth_name
-    x = require_depth(x, dnames, min_depth, count = count + 1L)
+    x <- require_depth(x, dnames, min_depth, count = count + 1L)
   }
   x
 }
-
-
-

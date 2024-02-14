@@ -2,7 +2,7 @@
 test_that("Existing package is checked without issue", {
   # with the assumption that no development code on this package will be behind
   # what is available on github
-  expect_no_error(check_github_suite_ver('GiottoUtils'))
+  expect_no_error(check_github_suite_ver("GiottoUtils"))
 })
 
 test_that("Non-existing package throws error", {

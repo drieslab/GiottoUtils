@@ -10,7 +10,7 @@ test_that("file_extension returns the correct file extension", {
   expect_equal(actual, expected)
 
   # Test on file with multiple dots in name
-  expected <- c('with', 'multiple', 'dots', 'csv')
+  expected <- c("with", "multiple", "dots", "csv")
   actual <- file_extension("path/to/file.with.multiple.dots.csv")
   expect_equal(actual, expected)
 })

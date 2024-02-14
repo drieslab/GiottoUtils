@@ -24,6 +24,3 @@ test_that("depth returns the correct depth", {
   actual <- depth(list(list(data.frame()), list(data.frame())))
   expect_equal(actual, expected)
 })
-
-
-

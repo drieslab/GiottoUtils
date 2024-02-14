@@ -1,5 +1,3 @@
-
-
 # mock matrix
 m <- matrix(data = 0L, nrow = 400, ncol = 300)
 m[sample(400, 100), sample(300, 100)] <- runif(100, max = 10)

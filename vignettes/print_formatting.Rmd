@@ -126,7 +126,7 @@ foo <- function(x, y) {
 }
 
 bar <- function() {
-  foo(1,2)
+  foo(1, 2)
 }
 
 bar()
