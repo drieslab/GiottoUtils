@@ -5,8 +5,8 @@ m <- matrix(data = 0L, nrow = 400, ncol = 300)
 m[sample(400, 100), sample(300, 100)] <- runif(100, max = 10)
 
 dgc <- Matrix::rsparsematrix(nrow = 400L, ncol = 300L, density = 0.1)
-dgr <- Matrix::sparseMatrix(i = dgc@i + 1L, p = dgc@p, x = dgc@x, repr = "R")
-dgt <- Matrix::sparseMatrix(i = dgc@i + 1L, p = dgc@p, x = dgc@x, repr = "T")
+dgr <- as(dgc, "RsparseMatrix")
+dgt <- as(dgc, "TsparseMatrix")
 
 # setup py class checks
 expect_scipy_sparse_c <- function(object, ...) {
