@@ -5,6 +5,8 @@
 #' Only 100 unique colors will be supplied after which they are recycled.
 #' @param n number of colors wanted
 #' @return character vector of hexadecimal rainbow colors
+#' @examples
+#' getRainbowColors(100)
 #' @export
 #' @family basic color palette functions
 getRainbowColors <- function(n) {
@@ -23,25 +25,40 @@ getRainbowColors <- function(n) {
     }
 }
 
+
+
+
+
 #' @title getDistinctColors
-#' @description Returns a number of distinct colors based on the RGB scale
+#' @description Returns a number of distinct colors based on the RGB scale.
+#' When fewer than 444 colors are requested, colors are returned in an order
+#' that maximizes differences. When more than 444 colors are requested,
+#' a recycled sampling of the available colors is returned.
 #' @param n number of colors wanted
 #' @param seed seed to use when randomizing color order. Default is 1234
 #' @return character vector of hexadecimal distinct colors
 #' @export
+#' @examples
+#' getDistinctColors(500)
+#' getDistinctColors(500, seed = 1)
 #' @family basic color palette functions
 getDistinctColors <- function(n, seed = 1234) {
     package_check("RColorBrewer")
     if (n < 1) .gstop("'n' colors wanted must be at least 1\n")
 
-    qual_col_pals <- RColorBrewer::brewer.pal.info[RColorBrewer::brewer.pal.info$category == "qual", ]
-    col_vector <- unique(unlist(mapply(RColorBrewer::brewer.pal, qual_col_pals$maxcolors, rownames(qual_col_pals))))
+    qual_col_pals <- RColorBrewer::brewer.pal.info[
+      RColorBrewer::brewer.pal.info$category == "qual", ]
+    col_vector <- unique(unlist(mapply(RColorBrewer::brewer.pal,
+                                       qual_col_pals$maxcolors,
+                                       rownames(qual_col_pals))))
 
     if (n > length(col_vector)) {
         # get all possible colors
         all_colors <- grDevices::colors()
-        all_colors_no_grey <- grep(x = all_colors, pattern = "grey|gray", value = T, invert = T)
-        grey_colors <- grep(x = all_colors, pattern = "grey", value = T, invert = F)
+        all_colors_no_grey <- grep(x = all_colors, pattern = "grey|gray",
+                                   value = TRUE, invert = TRUE)
+        grey_colors <- grep(x = all_colors, pattern = "grey",
+                            value = TRUE, invert = FALSE)
         admitted_grey_colors <- grey_colors[seq(1, 110, 10)]
         broad_colors <- c(all_colors_no_grey, admitted_grey_colors)
 
@@ -79,6 +96,8 @@ getDistinctColors <- function(n, seed = 1234) {
 #' @param col hexadecimal color to scale scale towards
 #' @param n number of colors to request in monochrome palette
 #' @inheritDotParams grDevices::colorRampPalette -colors
+#' @examples
+#' getMonochromeColors("green", n = 100)
 #' @export
 #' @family basic color palette functions
 getMonochromeColors <- function(col, n = 256L, ...) {

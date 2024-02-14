@@ -20,6 +20,9 @@ getMonochromeColors(col, n = 256L, ...)
 \description{
 Create color scaling for a single color starting from black
 }
+\examples{
+getMonochromeColors("green", n = 100)
+}
 \seealso{
 Other basic color palette functions: 
 \code{\link{getDistinctColors}()},

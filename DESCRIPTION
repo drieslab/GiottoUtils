@@ -69,4 +69,4 @@ Collate:
     'zzz.R'
 VignetteBuilder: knitr
 Config/testthat/edition: 3
-bioViews:
+bioViews: Software, Technology, Spatial

@@ -42,8 +42,8 @@ package_check("installme", repository = "pip")
 
 # vectorized
 package_check(
-  pkg_name = c("faketool", "cooltool"),
-  repository = c("CRAN", "github:johndoe/cooltool")
+    pkg_name = c("faketool", "cooltool"),
+    repository = c("CRAN", "github:johndoe/cooltool")
 )
 }
 }

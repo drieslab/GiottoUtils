@@ -24,3 +24,9 @@ test_that("error thrown when too few colors requested", {
         regexp = error_pattern
     )
 })
+
+test_that("monochrome: n colors are supplied", {
+    expect_no_condition(getMonochromeColors("green", 10))
+    out10 <- getMonochromeColors("green", 10)
+    checkmate::expect_character(out10, unique = TRUE, len = 10L)
+})

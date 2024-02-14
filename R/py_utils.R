@@ -20,6 +20,18 @@
 #' @param transpose whether to transpose the matrix. default is FALSE
 #' @param \dots additional params to pass to `scipy.sparse.cs*_matrix()`
 #' @importFrom methods as
+#' @examples
+#' # example data
+#' m <- matrix(data = 0L, nrow = 400, ncol = 300)
+#' m[sample(400, 100), sample(300, 100)] <- runif(100, max = 10)
+#' dgc <- Matrix::rsparsematrix(nrow = 400L, ncol = 300L, density = 0.1)
+#'
+#' # some conversions
+#' py_m_c <- to_scipy_sparse(m, format = "C")
+#' py_m_r_t <- to_scipy_sparse(m, format = "R", transpose = TRUE)
+#'
+#' py_dgc_c <- to_scipy_sparse(dgc, format = "C")
+#' py_dgc_r <- to_scipy_sparse(dgc, format = "R")
 #' @export
 to_scipy_sparse <- function(x, format = c("C", "R"), transpose = FALSE, ...) {
     format <- match.arg(toupper(format), choices = c("C", "R"))

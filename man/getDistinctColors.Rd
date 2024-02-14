@@ -15,7 +15,14 @@ getDistinctColors(n, seed = 1234)
 character vector of hexadecimal distinct colors
 }
 \description{
-Returns a number of distinct colors based on the RGB scale
+Returns a number of distinct colors based on the RGB scale.
+When fewer than 444 colors are requested, colors are returned in an order
+that maximizes differences. When more than 444 colors are requested,
+a recycled sampling of the available colors is returned.
+}
+\examples{
+getDistinctColors(500)
+getDistinctColors(500, seed = 1)
 }
 \seealso{
 Other basic color palette functions: 
