@@ -20,6 +20,7 @@
 #' for Compressed Sparse Row matrix representations
 #' @param transpose whether to transpose the matrix. default is FALSE
 #' @param \dots additional params to pass to `scipy.sparse.cs*_matrix()`
+#' @importFrom methods as
 #' @export
 to_scipy_sparse <- function(x, format = c("C", "R"), transpose = FALSE, ...) {
 
@@ -58,7 +59,7 @@ to_scipy_sparse <- function(x, format = c("C", "R"), transpose = FALSE, ...) {
   SCP <- reticulate::import("scipy", convert = FALSE)
   if (transpose) x <- Matrix::t(x)
   if (format == "R") {
-    x2 <- .msparse_c2r(x)
+    x2 <- as(x, "RsparseMatrix")
     return(to_scipy_sparse(x2, format = "R", transpose = FALSE, ...))
   }
 
@@ -74,7 +75,7 @@ to_scipy_sparse <- function(x, format = c("C", "R"), transpose = FALSE, ...) {
   SCP <- reticulate::import("scipy", convert = FALSE)
   if (transpose) x <- Matrix::t(x)
   if (format == "C") {
-    x2 <- .msparse_r2c(x)
+    x2 <- as(x, "CsparseMatrix")
     return(to_scipy_sparse(x2, format = "C", transpose = FALSE, ...))
   }
 
@@ -87,36 +88,15 @@ to_scipy_sparse <- function(x, format = c("C", "R"), transpose = FALSE, ...) {
 .to_scipy_sparse_dgt <- function(
     x, format = c("C", "R"), transpose = FALSE, ...
 ) {
-  SCP <- reticulate::import("scipy", convert = FALSE)
   if (transpose) x <- Matrix::t(x)
 
   switch(
     format,
-    "C" = x <- .msparse_t2c(x),
-    "R" = x <- .msparse_t2r(x)
+    "C" = x <- as(x, "CsparseMatrix"),
+    "R" = x <- as(x, "RsparseMatrix")
   )
 
   to_scipy_sparse(x, format = format, transpose = FALSE, ...)
-}
-
-
-
-
-
-.msparse_r2c <- function(x) {
-  Matrix::sparseMatrix(j = x@j + 1, p = x@p, x = x@x, repr = "C")
-}
-
-.msparse_c2r <- function(x) {
-  Matrix::sparseMatrix(i = x@i + 1, p = x@p, x = x@x, repr = "R")
-}
-
-.msparse_t2r <- function(x) {
-  Matrix::sparseMatrix(i = x@i + 1, j = x@j + 1, x = x@x, repr = "R")
-}
-
-.msparse_t2c <- function(x) {
-  Matrix::sparseMatrix(i = x@i + 1, j = x@j + 1, x = x@x, repr = "C")
 }
 
 
