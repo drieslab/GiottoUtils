@@ -54,6 +54,7 @@ Collate:
     'format.R'
     'globals.R'
     'gmatch.R'
+    'infix.R'
     'lapply_flex.R'
     'lifecycle.R'
     'logging.R'

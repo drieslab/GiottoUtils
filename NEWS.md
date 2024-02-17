@@ -1,4 +1,10 @@
 
+# GiottoUtils 0.1.6
+
+## New
+- `%null%`, `%na%`, and `%none%` infix operators for setting a default value when an object is, respectively, NULL, NA, or length of 0.
+
+
 # GiottoUtils 0.1.5 (2024/02/11)
 
 ## Bug Fixes
