@@ -27,17 +27,20 @@ NULL
 #' @rdname set_if
 #' @export
 `%null%` <- function(x, y) {
-  ifelse(is.null(x), y, x)
+  if (is.null(x)) y
+  else x
 }
 
 #' @rdname set_if
 #' @export
 `%na%` <- function(x, y) {
-  ifelse(is.na(x), y, x)
+  if (is.na(x)) y
+  else x
 }
 
 #' @rdname set_if
 #' @export
 `%none%` <- function(x, y) {
-  ifelse(length(x) == 0L, y, x)
+  if (length(x) == 0L) y
+  else x
 }
