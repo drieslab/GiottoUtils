@@ -43,7 +43,7 @@ jobs:
           _R_CHECK_RD_XREFS: false
         with:
           dependencies: '"hard"' # do not use suggested dependencies
-          extra-packages: any::rcmdcheck, any::testthat, any::RColorBrewer, any::reticulate, any::checkmate
+          extra-packages: any::rcmdcheck, any::testthat, any::RColorBrewer, any::reticulate, any::checkmate, any::knitr
 
       - uses: actions/setup-python@v4
         with:
