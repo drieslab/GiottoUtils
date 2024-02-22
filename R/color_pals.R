@@ -62,8 +62,7 @@ getDistinctColors <- function(n, seed = 1234) {
         admitted_grey_colors <- grey_colors[seq(1, 110, 10)]
         broad_colors <- c(all_colors_no_grey, admitted_grey_colors)
 
-        set.seed(seed = seed)
-        on.exit(random_seed())
+        local_seed(seed)
         # if too many colors requested, warn about recycling
         if (n > length(broad_colors)) {
             warning("\n not enough unique colors in R, maximum = 444 \n")
