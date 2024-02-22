@@ -24,10 +24,6 @@ jobs:
 
     steps:
 
-      - name: Remove vignettes dir
-        run: rm -rf 'vignettes/'
-        shell: bash
-
       - name: Checkout repo for workflow access
         uses: actions/checkout@v3
 
