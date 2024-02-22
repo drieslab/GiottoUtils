@@ -29,7 +29,8 @@ random_seed <- function(set.seed = TRUE) { # TODO deprecate in favor of local_se
 #' @description
 #' When used inside a call, `local_seed()` first records the existing seed
 #' then transiently sets a specific one. When the call exits, the recorded seed
-#' is set again, so that the transient seed setting leaves no effects.
+#' is set again, so that the transient seed setting leaves no effects.\cr
+#' Based on discussion from \url{https://support.bioconductor.org/p/110439/}
 #' @param seed seed value to set
 #' @examples
 #' f <- function() {
