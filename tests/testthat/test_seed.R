@@ -62,7 +62,47 @@ test_that("local_seed() works with no existing seed", {
 })
 
 
+# test to ensure that seed setting is not local to if statement
+# and that it will not end the transient seed before `rnorm()`
+test_that("local_seed() ends when expected", {
+  invisible(rnorm(1)) # set a random seed for convenience
 
+  f1 <- function(seed) {
+    if (TRUE) {
+      local_seed(seed)
+    }
+
+    r_val <- rnorm(1)
+    return(r_val)
+  }
+  f2 <- function(seed) {
+    if (FALSE) {
+      local_seed(seed)
+    }
+
+    r_val <- rnorm(1)
+    return(r_val)
+  }
+
+  s1 <- .Random.seed
+  a <- f1(1)
+  b <- f1(1)
+  s2 <- .Random.seed
+
+  x <- f2(1)
+  s3 <- .Random.seed
+  y <- f2(1)
+  s4 <- .Random.seed
+
+  expect_identical(a, b)
+  expect_identical(s1, s2) # no impact on seed when local_seed is set
+
+  # global random seed and outputs expected to be different when no
+  # local_seed is set
+  expect_false(identical(x, y))
+  expect_false(identical(s2, s3))
+  expect_false(identical(s3, s4))
+})
 
 
 
