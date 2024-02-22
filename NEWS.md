@@ -3,6 +3,7 @@
 
 ## New
 - `%null%`, `%na%`, and `%none%` infix operators for setting a default value when an object is, respectively, NULL, NA, or length of 0.
+- `local_seed()` for transiently setting a seed only for the duration of a function
 
 
 # GiottoUtils 0.1.5 (2024/02/11)
