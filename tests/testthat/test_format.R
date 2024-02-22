@@ -44,11 +44,11 @@ test_that("wrap_txt", {
 
 
 test_that("str_vector", {
-    x <- letters[1:5]
+    x <- letters[seq(5)]
     out1 <- str_vector(x)
     expect_identical(out1, "'a', 'b', 'c', 'd', 'e'")
 
-    y <- 1:6
+    y <- seq(6)
     out2 <- str_vector(y)
     expect_identical(out2, "'1', '2', '3', '4', '5', '6'")
 })

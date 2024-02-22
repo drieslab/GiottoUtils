@@ -41,7 +41,7 @@ dt_sort_combine_two_columns <- function(DT,
 
     # convert characters into numeric values
     uniq_values <- sort(unique(c(DT[[column1]], DT[[column2]])))
-    uniq_values_num <- 1:length(uniq_values)
+    uniq_values_num <- seq_along(uniq_values)
     names(uniq_values_num) <- uniq_values
 
 
