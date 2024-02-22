@@ -5,9 +5,6 @@ name: code coverage
 on:
   push:
     branches: [ "dev" ]
-  pull_request:
-    types: closed
-    branches: [ "main" ]
   schedule:
     - cron: '16 20 * * 2'
 
@@ -22,6 +19,8 @@ jobs:
 
       - name: Checkout repo for workflow access
         uses: actions/checkout@v4
+        with:
+          ref: dev
 
       - name: Set up R environment
         uses: r-lib/actions/setup-r@v2
