@@ -19,6 +19,11 @@
 #' @param index element index
 #' @keywords internal
 #' @return boolean
+#' @examples
+#' a <- list()
+#' length(a) <- 4
+#' list_element_exists(a, 5)
+#' list_element_exists(a, 4)
 #' @export
 list_element_exists <- function(x, index) {
     tryCatch(
@@ -40,24 +45,28 @@ list_element_exists <- function(x, index) {
 #' @title Test if missing or empty character
 #' @description Convenient function to test if a character input is NULL, missing,
 #' or has a length of 0 (empty)
+#' @param x character vector to test (may be NULL or contain NA values)
 #' @keywords internal
+#' @examples
+#' is_empty_char(NULL)
+#' is_empty_char(rep("test", 5))
+#' is_empty_char(c(character(4L), "non-empty")) # example with empty
+#' is_empty_char(c(NA_character_, "non-na")) # example with NA
 #' @export
 is_empty_char <- function(x) {
-    if (is.null(x)) {
-        return(TRUE)
-    }
+    x %null% return(TRUE)
     if (is.character(x) && length(x) == 0L) {
         return(TRUE)
     }
-    if (any(sapply(x, is.na))) {
-        return(sapply(x, is.na))
+
+    nas <- vapply(x, is.na, FUN.VALUE = logical(1L))
+    if (any(nas)) {
+        return(nas)
     }
-    if (any(sapply(x, function(x) {
-        x == ""
-    }))) {
-        return(sapply(x, function(x) {
-            x == ""
-        }))
+
+    nones <- vapply(x, function(x) x == "", FUN.VALUE = logical(1L))
+    if (any(nones)) {
+        return(nones)
     }
 
     FALSE

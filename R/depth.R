@@ -29,9 +29,23 @@ depth <- function(this,
     # Stop if object is not a list AND recurse if it is.
     # Report minimum or maximum depth depending on method
     if (method == "max") {
-        ifelse(inherits(this, "list"), 1L + max(sapply(this, function(x) depth(x, method = method, sig = sig))), 0L)
+      ifelse(
+        inherits(this, "list"),
+        1L + max(vapply(this,
+                        function(x) depth(x, method = method, sig = sig),
+                        FUN.VALUE = integer(1L)
+        )),
+        0L
+      )
     } else if (method == "min") {
-        ifelse(inherits(this, "list"), 1L + min(sapply(this, function(x) depth(x, method = method, sig = sig))), 0L)
+      ifelse(
+        inherits(this, "list"),
+        1L + min(vapply(this,
+                        function(x) depth(x, method = method, sig = sig),
+                        FUN.VALUE = integer(1L)
+        )),
+        0L
+      )
     }
 }
 

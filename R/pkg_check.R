@@ -80,8 +80,14 @@ package_check <- function(pkg_name,
     if (any(no_val)) {
         repository[no_val] <- paste0("CRAN:", pkg_name[no_val])
     }
-    no_split <- !sapply(repository, function(x) grepl(":", x))
-    repository[no_split] <- sprintf("%s:%s", repository[no_split], pkg_name[no_split])
+    no_split <- !vapply(
+      repository,
+      function(x) grepl(":", x),
+      FUN.VALUE = logical(1L)
+    )
+    repository[no_split] <- sprintf(
+      "%s:%s", repository[no_split], pkg_name[no_split]
+    )
 
 
     # handle deprecations
@@ -130,9 +136,13 @@ package_check <- function(pkg_name,
     }
 
     # check missing packages
-    repos_dt[, missing := sapply(seq(.N), function(i) {
+    repos_dt[, missing := vapply(
+      seq(.N),
+      function(i) {
         .check_package_handler(name = name[[i]], repo = repo[[i]])
-    }, USE.NAMES = FALSE)]
+      },
+      FUN.VALUE = logical(1L),
+      USE.NAMES = FALSE)]
 
     install_dt <- repos_dt[(missing), ]
     if (nrow(install_dt) == 0L) {

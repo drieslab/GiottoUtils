@@ -2,26 +2,32 @@
 #' @description guesses how many cores to use
 #' @return numeric
 #' @keywords internal
+#' @examples
+#' determine_cores()
 #' @export
-determine_cores <- function(cores = getOption("giotto.cores", default = NA),
+determine_cores <- function(
+    cores = getOption("giotto.cores", default = NA),
     min_cores = 1,
-    max_cores = 10) {
-    if (is.na(cores) | !is.numeric(cores) | (is.numeric(cores) & cores <= 0)) {
-        package_check("parallel")
-        cores <- parallel::detectCores()
+    max_cores = 10
+) {
+  if (is.na(cores) ||
+      !is.numeric(cores) ||
+      (is.numeric(cores) && cores <= 0)) {
+    package_check("parallel")
+    cores <- parallel::detectCores()
 
-        if (cores <= 2) {
-            cores <- ifelse(cores < min_cores, cores, min_cores)
-        } else {
-            cores <- cores - 2
-            cores <- ifelse(cores > max_cores, max_cores, cores)
-        }
-        options("giotto.cores" = cores)
-        return(cores)
+    if (cores <= 2) {
+      cores <- ifelse(cores < min_cores, cores, min_cores)
     } else {
-        cores <- cores
-        return(cores)
+      cores <- cores - 2
+      cores <- ifelse(cores > max_cores, max_cores, cores)
     }
+    options("giotto.cores" = cores)
+    return(cores)
+  } else {
+    cores <- cores
+    return(cores)
+  }
 }
 
 
@@ -31,6 +37,8 @@ determine_cores <- function(cores = getOption("giotto.cores", default = NA),
 #' @description return the type of operating system, see https://conjugateprior.org/2015/06/identifying-the-os-from-r/
 #' @return character osx, linux or windows
 #' @keywords internal
+#' @examples
+#' get_os()
 #' @export
 get_os <- function() {
     if (.Platform[["OS.type"]] == "windows") {
