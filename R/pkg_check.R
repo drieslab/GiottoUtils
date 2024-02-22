@@ -4,9 +4,13 @@
 #' number to the currently installed.
 #' @param pkg character. Package to check (pattern matches)
 #' @keywords internal
+#' @examples
+#' check_github_suite_ver("GiottoUtils")
 #' @export
 check_github_suite_ver <- function(pkg = "Giotto") {
-    pkg <- g_match_arg(pkg, c("Giotto", "GiottoUtils", "GiottoClass", "GiottoVisuals"))
+    pkg <- g_match_arg(
+        pkg, c("Giotto", "GiottoUtils", "GiottoClass", "GiottoVisuals")
+    )
     repo <- switch(pkg,
         "Giotto" = "Giotto/suite",
         "GiottoUtils" = "GiottoUtils/master",
@@ -20,14 +24,20 @@ check_github_suite_ver <- function(pkg = "Giotto") {
         repo,
         "/DESCRIPTION"
     )
-    # suppress warnings and errors if inaccessible
-    x <- suppressWarnings(try(readLines(url), silent = TRUE))
-    if (!inherits(x, "try-error")) {
+    # Return NULL if any warnings or errors due to inaccessible
+    x <- tryCatch(
+        expr = readLines(url),
+        warning = function(w) NULL,
+        error = function(e) NULL
+    )
+    if (!is.null(x)) {
         gh_ver <- x[grep(pattern = "Version:", x)]
         gh_ver <- gsub(pattern = "Version: ", replacement = "", gh_ver)
         ver_compare <- utils::compareVersion(gh_ver, as.character(current_ver))
 
-        if (ver_compare == 1) wrap_msg("Newer devel version of", pkg, "on GitHub:", gh_ver)
+        if (ver_compare == 1) {
+            wrap_msg("Newer devel version of", pkg, "on GitHub:", gh_ver)
+        }
     }
 }
 
