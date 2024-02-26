@@ -7,3 +7,5 @@ inst/doc
 .vscode/*
 .Rprofile
 docs
+_pkgdown.yml
+codecov.yml

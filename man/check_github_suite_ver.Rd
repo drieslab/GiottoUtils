@@ -13,4 +13,7 @@ check_github_suite_ver(pkg = "Giotto")
 Checks the Giotto Suite github repository and compares the version
 number to the currently installed.
 }
+\examples{
+check_github_suite_ver("GiottoUtils")
+}
 \keyword{internal}

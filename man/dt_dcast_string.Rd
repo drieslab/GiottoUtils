@@ -21,11 +21,11 @@ Data.table dcast using character inputs for formula
 }
 \examples{
 library(data.table)
-ChickWeight = as.data.table(ChickWeight)
+ChickWeight <- as.data.table(ChickWeight)
 setnames(ChickWeight, tolower(names(ChickWeight)))
-DT <- melt(as.data.table(ChickWeight), id=2:4) # calls melt.data.table
+DT <- melt(as.data.table(ChickWeight), id = 2:4) # calls melt.data.table
 
-dt_dcast_string(DT, 'chick', 'time', 'value')
+dt_dcast_string(DT, "chick", "time", "value")
 }
 \seealso{
 \code{\link[data.table:dcast.data.table]{data.table::dcast.data.table()}}

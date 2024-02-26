@@ -39,5 +39,5 @@ lifecycle::deprecate_stop
 #' @family lifecycle
 #' @export
 lifecycle_badge <- function(stage = "stable") {
-  lifecycle::badge(stage)
+    lifecycle::badge(stage)
 }

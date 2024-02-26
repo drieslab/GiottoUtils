@@ -25,15 +25,15 @@ Verbose message handler
 }
 \examples{
 # common usage (.v is logical)
-vmsg('print me', .v = TRUE)
-vmsg('dont print me', .v = FALSE)
+vmsg("print me", .v = TRUE)
+vmsg("dont print me", .v = FALSE)
 
 # debug messages (.v == "debug")
 # flag as a debug message using .is_debug = TRUE
-vmsg('I am a debug message', .is_debug = TRUE, .v = TRUE) # no print
-vmsg('I am a debug message', .is_debug = TRUE, .v = "debug") # prints
+vmsg("I am a debug message", .is_debug = TRUE, .v = TRUE) # no print
+vmsg("I am a debug message", .is_debug = TRUE, .v = "debug") # prints
 
-vmsg('print me', .v = 'debug') # also prints non-debug messages
+vmsg("print me", .v = "debug") # also prints non-debug messages
 
 # with global option
 options("giotto.verbose" = TRUE)

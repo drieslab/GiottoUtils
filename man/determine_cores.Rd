@@ -16,4 +16,7 @@ numeric
 \description{
 guesses how many cores to use
 }
+\examples{
+determine_cores()
+}
 \keyword{internal}

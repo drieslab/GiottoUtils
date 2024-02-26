@@ -16,6 +16,9 @@ character vector of hexadecimal rainbow colors
 Returns a number of rainbow colors spaced around the spectrum.
 Only 100 unique colors will be supplied after which they are recycled.
 }
+\examples{
+getRainbowColors(100)
+}
 \seealso{
 Other basic color palette functions: 
 \code{\link{getDistinctColors}()},

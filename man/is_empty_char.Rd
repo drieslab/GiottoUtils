@@ -6,8 +6,17 @@
 \usage{
 is_empty_char(x)
 }
+\arguments{
+\item{x}{character vector to test (may be NULL or contain NA values)}
+}
 \description{
 Convenient function to test if a character input is NULL, missing,
 or has a length of 0 (empty)
+}
+\examples{
+is_empty_char(NULL)
+is_empty_char(rep("test", 5))
+is_empty_char(c(character(4L), "non-empty")) # example with empty
+is_empty_char(c(NA_character_, "non-na")) # example with NA
 }
 \keyword{internal}

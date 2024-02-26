@@ -1,4 +1,3 @@
-
 #' @importClassesFrom data.table data.table
 NULL
 
@@ -10,10 +9,11 @@ NULL
 #' @description set NA values to 0 in a data.table object
 #' @concept data.table
 #' @export
-dt_remove_na = function(DT) {
-  for (i in names(DT))
-    DT[is.na(get(i)), (i):=0]
-  return(DT)
+dt_remove_na <- function(DT) {
+    for (i in names(DT)) {
+        DT[is.na(get(i)), (i) := 0]
+    }
+    return(DT)
 }
 
 
@@ -26,38 +26,37 @@ dt_remove_na = function(DT) {
 #' @description fast sorting and pasting of 2 character columns in a data.table
 #' @concept data.table
 #' @export
-dt_sort_combine_two_columns = function(DT,
-                                       column1,
-                                       column2,
-                                       myname = 'unif_gene_gene') {
+dt_sort_combine_two_columns <- function(DT,
+    column1,
+    column2,
+    myname = "unif_gene_gene") {
+    # data.table variables
+    values_1_num <- values_2_num <- scolumn_1 <- scolumn_2 <- unif_sort_column <- NULL
 
-  # data.table variables
-  values_1_num = values_2_num = scolumn_1 = scolumn_2 = unif_sort_column = NULL
+    # maybe faster with converting to factors??
 
-  # maybe faster with converting to factors??
+    # make sure columns are character
+    selected_columns <- c(column1, column2)
+    DT[, (selected_columns) := lapply(.SD, as.character), .SDcols = selected_columns]
 
-  # make sure columns are character
-  selected_columns = c(column1, column2)
-  DT[,(selected_columns):= lapply(.SD, as.character), .SDcols = selected_columns]
-
-  # convert characters into numeric values
-  uniq_values = sort(unique(c(DT[[column1]], DT[[column2]])))
-  uniq_values_num = 1:length(uniq_values)
-  names(uniq_values_num) = uniq_values
-
-
-  DT[,values_1_num := uniq_values_num[get(column1)]]
-  DT[,values_2_num := uniq_values_num[get(column2)]]
+    # convert characters into numeric values
+    uniq_values <- sort(unique(c(DT[[column1]], DT[[column2]])))
+    uniq_values_num <- seq_along(uniq_values)
+    names(uniq_values_num) <- uniq_values
 
 
-  DT[, scolumn_1 := ifelse(values_1_num < values_2_num, get(column1), get(column2))]
-  DT[, scolumn_2 := ifelse(values_1_num < values_2_num, get(column2), get(column1))]
+    DT[, values_1_num := uniq_values_num[get(column1)]]
+    DT[, values_2_num := uniq_values_num[get(column2)]]
 
-  DT[, unif_sort_column := paste0(scolumn_1,'--',scolumn_2)]
-  DT[, c('values_1_num', 'values_2_num', 'scolumn_1', 'scolumn_2') := NULL]
-  data.table::setnames(DT, 'unif_sort_column', myname)
 
-  return(DT)
+    DT[, scolumn_1 := ifelse(values_1_num < values_2_num, get(column1), get(column2))]
+    DT[, scolumn_2 := ifelse(values_1_num < values_2_num, get(column2), get(column1))]
+
+    DT[, unif_sort_column := paste0(scolumn_1, "--", scolumn_2)]
+    DT[, c("values_1_num", "values_2_num", "scolumn_1", "scolumn_2") := NULL]
+    data.table::setnames(DT, "unif_sort_column", myname)
+
+    return(DT)
 }
 
 
@@ -70,10 +69,10 @@ dt_sort_combine_two_columns = function(DT,
 #' @concept data.table
 #' @export
 dt_to_matrix <- function(x) {
-  rownames = as.character(x[[1]])
-  mat = methods::as(as.matrix(x[,-1]), 'Matrix')
-  rownames(mat) = rownames
-  return(mat)
+    rownames <- as.character(x[[1]])
+    mat <- methods::as(as.matrix(x[, -1]), "Matrix")
+    rownames(mat) <- rownames
+    return(mat)
 }
 
 
@@ -90,20 +89,20 @@ dt_to_matrix <- function(x) {
 #' @seealso [data.table::dcast.data.table()]
 #' @examples
 #' library(data.table)
-#' ChickWeight = as.data.table(ChickWeight)
+#' ChickWeight <- as.data.table(ChickWeight)
 #' setnames(ChickWeight, tolower(names(ChickWeight)))
-#' DT <- melt(as.data.table(ChickWeight), id=2:4) # calls melt.data.table
+#' DT <- melt(as.data.table(ChickWeight), id = 2:4) # calls melt.data.table
 #'
-#' dt_dcast_string(DT, 'chick', 'time', 'value')
+#' dt_dcast_string(DT, "chick", "time", "value")
 #' @concept data.table
 #' @export
 dt_dcast_string <- function(data, col_name1, col_name2, value.var) {
-  checkmate::assert_data_table(data)
-  data.table::dcast.data.table(
-    data,
-    paste(col_name1, "~", col_name2),
-    value.var = value.var
-  )
+    checkmate::assert_data_table(data)
+    data.table::dcast.data.table(
+        data,
+        paste(col_name1, "~", col_name2),
+        value.var = value.var
+    )
 }
 
 
@@ -115,14 +114,13 @@ dt_dcast_string <- function(data, col_name1, col_name2, value.var) {
 #' @param neworder numerical vector to reorder rows
 #' @export
 #' @concept data.table
-dt_set_row_order = function(x, neworder) {
-  if('.r' %in% colnames(x)) {
-    temp_r = x[, .SD, .SDcols = '.r']
-    data.table::setorderv(temp_r[, eval(call(":=", as.name(".r_alt"), call("order", neworder)))], ".r_alt")[, ".r_alt" := NULL]
-    data.table::setorderv(x[, eval(call(":=", as.name(".r"), call("order", neworder)))], ".r")[, ".r" := NULL]
-    x[, eval(call(':=', as.name('.r'), temp_r$.r))]
-  } else {
-    data.table::setorderv(x[, eval(call(":=", as.name(".r"), call("order", neworder)))], ".r")[, ".r" := NULL]
-  }
-
+dt_set_row_order <- function(x, neworder) {
+    if (".r" %in% colnames(x)) {
+        temp_r <- x[, .SD, .SDcols = ".r"]
+        data.table::setorderv(temp_r[, eval(call(":=", as.name(".r_alt"), call("order", neworder)))], ".r_alt")[, ".r_alt" := NULL]
+        data.table::setorderv(x[, eval(call(":=", as.name(".r"), call("order", neworder)))], ".r")[, ".r" := NULL]
+        x[, eval(call(":=", as.name(".r"), temp_r$.r))]
+    } else {
+        data.table::setorderv(x[, eval(call(":=", as.name(".r"), call("order", neworder)))], ".r")[, ".r" := NULL]
+    }
 }
