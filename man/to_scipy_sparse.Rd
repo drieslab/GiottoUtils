@@ -16,6 +16,9 @@ for Compressed Sparse Row matrix representations}
 
 \item{\dots}{additional params to pass to \verb{scipy.sparse.cs*_matrix()}}
 }
+\value{
+scipy sparse representation
+}
 \description{
 Convert an R \pkg{Matrix} sparse matrix representation to python scipy
 sparse format. Inspired by the implementation in \pkg{nmslibR}. Currently

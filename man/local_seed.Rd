@@ -9,6 +9,9 @@ local_seed(seed)
 \arguments{
 \item{seed}{seed value to set}
 }
+\value{
+set up seed passed to environment
+}
 \description{
 When used inside a call, \code{local_seed()} first records the existing seed
 then transiently sets a specific one. When the call exits, the recorded seed
@@ -17,9 +20,9 @@ Based on discussion from \url{https://support.bioconductor.org/p/110439/}
 }
 \examples{
 f <- function() {
-  local_seed(1234)
-  r_val <- rnorm(1)
-  return(r_val)
+    local_seed(1234)
+    r_val <- rnorm(1)
+    return(r_val)
 }
 
 rnorm(1) # make sure a seed exists (not needed but handy for this example)

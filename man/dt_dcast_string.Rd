@@ -16,6 +16,9 @@ dt_dcast_string(data, col_name1, col_name2, value.var)
 \item{value.var}{character. Name of the column whose values will be filled to
 cast.}
 }
+\value{
+A keyed data.table that has been cast
+}
 \description{
 Data.table dcast using character inputs for formula
 }

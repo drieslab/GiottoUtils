@@ -1,9 +1,10 @@
 #' @title Check for updates to Giotto Suite
 #' @name check_github_suite_ver
-#' @description Checks the Giotto Suite github repository and compares the version
-#' number to the currently installed.
+#' @description Checks the Giotto Suite github repository and compares the 
+#' version number to the currently installed.
 #' @param pkg character. Package to check (pattern matches)
 #' @keywords internal
+#' @returns Message indicating a new version available, otherwise returns NULL
 #' @examples
 #' check_github_suite_ver("GiottoUtils")
 #' @export
@@ -57,6 +58,7 @@ check_github_suite_ver <- function(pkg = "Giotto") {
 #' @param custom_msg custom message to be sent instead of default error or message
 #' @description check if package is available and provide installation instruction if not available
 #' @keywords internal
+#' @returns character
 #' @examples
 #' \dontrun{
 #' package_check("Matrix")
@@ -76,11 +78,12 @@ check_github_suite_ver <- function(pkg = "Giotto") {
 #' )
 #' }
 #' @export
-package_check <- function(pkg_name,
-    repository = NULL,
-    github_repo = NULL,
-    optional = FALSE,
-    custom_msg = NULL) {
+package_check <- function(
+        pkg_name,
+        repository = NULL,
+        github_repo = NULL,
+        optional = FALSE,
+        custom_msg = NULL) {
     # NSE vars
     repo <- location <- name <- NULL
 
@@ -91,12 +94,12 @@ package_check <- function(pkg_name,
         repository[no_val] <- paste0("CRAN:", pkg_name[no_val])
     }
     no_split <- !vapply(
-      repository,
-      function(x) grepl(":", x),
-      FUN.VALUE = logical(1L)
+        repository,
+        function(x) grepl(":", x),
+        FUN.VALUE = logical(1L)
     )
     repository[no_split] <- sprintf(
-      "%s:%s", repository[no_split], pkg_name[no_split]
+        "%s:%s", repository[no_split], pkg_name[no_split]
     )
 
 
@@ -147,12 +150,13 @@ package_check <- function(pkg_name,
 
     # check missing packages
     repos_dt[, missing := vapply(
-      seq(.N),
-      function(i) {
-        .check_package_handler(name = name[[i]], repo = repo[[i]])
-      },
-      FUN.VALUE = logical(1L),
-      USE.NAMES = FALSE)]
+        seq(.N),
+        function(i) {
+            .check_package_handler(name = name[[i]], repo = repo[[i]])
+        },
+        FUN.VALUE = logical(1L),
+        USE.NAMES = FALSE
+    )]
 
     install_dt <- repos_dt[(missing), ]
     if (nrow(install_dt) == 0L) {

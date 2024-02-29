@@ -18,14 +18,23 @@ wrap_txt(
 
 \item{sep}{how to join elements of string (default is one space)}
 
-\item{strWidth}{externally set wrapping width. (default value of 100 is not effected)}
+\item{strWidth}{externally set wrapping width. (default value of 100
+is not effected)}
 
-\item{errWidth}{default = FALSE. Set strWidth to be compatible with error printout}
+\item{errWidth}{default = FALSE. Set strWidth to be compatible
+with error printout}
 
 \item{.prefix}{character. prefix for later lines}
 
 \item{.initial}{character. prefix for first line}
 }
+\value{
+character
+}
 \description{
 Wrap text
+}
+\examples{
+wrap_txt("A text")
+
 }

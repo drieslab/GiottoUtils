@@ -24,6 +24,9 @@ str_quote(x)
 
 \item{qchar}{quote character to use. Either 'single' or "double"}
 }
+\value{
+character
+}
 \description{
 String convenience functions
 }

@@ -23,6 +23,9 @@ get_args_list(toplevel = 1L, ...)
 
 \item{\dots}{additional params to capture}
 }
+\value{
+character
+}
 \description{
 Functions to check the call stack and get aspects of previous
 calls. Used in putting together object histories and error handling.

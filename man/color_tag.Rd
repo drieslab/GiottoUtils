@@ -57,4 +57,28 @@ supported colors checking is modified from \pkg{cli}
 \item \code{emacs_version()}: Determine emacs version
 
 }}
+\examples{
+color_tag()
+
+color_red()
+
+color_green()
+
+color_yellow()
+
+color_blue()
+
+color_purple()
+
+color_teal()
+
+use_color_text()
+
+ansi_colors()
+
+is_emacs_with_color()
+
+emacs_version()
+
+}
 \keyword{internal}

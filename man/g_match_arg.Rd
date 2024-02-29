@@ -13,8 +13,15 @@ g_match_arg(arg, choices, ...)
 
 \item{\dots}{additional params passed to grep}
 }
+\value{
+character
+}
 \description{
-Given an arg to match to, tries to partially match to the provided characeter
+Given an arg to match to, tries to partially match to the provided character
 vector of choices. Matching ignores case and returns the first match.
+}
+\examples{
+g_match_arg("raw", choices = c("raw", "normalized"))
+
 }
 \keyword{internal}

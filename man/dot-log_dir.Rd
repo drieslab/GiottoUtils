@@ -9,6 +9,9 @@
 \arguments{
 \item{logdir}{character. Directory to log to (defaults to tempdir)}
 }
+\value{
+internal setting of option giotto.logdir
+}
 \description{
 Set the Giotto logging directory. New logfiles will be generated here.
 }

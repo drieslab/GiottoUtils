@@ -20,3 +20,7 @@ do not interfere with other aspects of a user's work. May also be called with
 \code{set.seed = TRUE} to simply return a random seed to use, without actually
 having applied it.
 }
+\examples{
+random_seed()
+
+}
