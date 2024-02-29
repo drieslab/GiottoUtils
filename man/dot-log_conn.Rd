@@ -9,6 +9,9 @@
 \arguments{
 \item{filepath}{path to the logfile}
 }
+\value{
+file connection
+}
 \description{
 Create an active file connection object to the logfile to
 write to. Opens it in mode "a+" which allows both appending and reading.

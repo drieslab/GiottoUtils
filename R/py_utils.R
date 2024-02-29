@@ -20,6 +20,7 @@
 #' @param transpose whether to transpose the matrix. default is FALSE
 #' @param \dots additional params to pass to `scipy.sparse.cs*_matrix()`
 #' @importFrom methods as
+#' @returns scipy sparse representation
 #' @examples
 #' # example data
 #' m <- matrix(data = 0L, nrow = 400, ncol = 300)
@@ -55,8 +56,7 @@ to_scipy_sparse <- function(x, format = c("C", "R"), transpose = FALSE, ...) {
 
 # internals ####
 
-.to_scipy_sparse_matrix <- function(
-        x, format, transpose = FALSE, ...) {
+.to_scipy_sparse_matrix <- function(x, format, transpose = FALSE, ...) {
     SCP <- reticulate::import("scipy", convert = FALSE)
     if (transpose) x <- t(x)
     switch(format,
@@ -65,8 +65,8 @@ to_scipy_sparse <- function(x, format = c("C", "R"), transpose = FALSE, ...) {
     )
 }
 
-.to_scipy_sparse_dgc <- function(
-        x, format = c("C", "R"), transpose = FALSE, ...) {
+.to_scipy_sparse_dgc <- function(x, format = c("C", "R"), 
+                                transpose = FALSE, ...) {
     SCP <- reticulate::import("scipy", convert = FALSE)
     if (transpose) x <- Matrix::t(x)
     if (format == "R") {
@@ -80,8 +80,8 @@ to_scipy_sparse <- function(x, format = c("C", "R"), transpose = FALSE, ...) {
     )
 }
 
-.to_scipy_sparse_dgr <- function(
-        x, format = c("C", "R"), transpose = FALSE, ...) {
+.to_scipy_sparse_dgr <- function(x, format = c("C", "R"), 
+                                transpose = FALSE, ...) {
     SCP <- reticulate::import("scipy", convert = FALSE)
     if (transpose) x <- Matrix::t(x)
     if (format == "C") {
@@ -95,8 +95,8 @@ to_scipy_sparse <- function(x, format = c("C", "R"), transpose = FALSE, ...) {
     )
 }
 
-.to_scipy_sparse_dgt <- function(
-        x, format = c("C", "R"), transpose = FALSE, ...) {
+.to_scipy_sparse_dgt <- function(x, format = c("C", "R"), 
+                                transpose = FALSE, ...) {
     if (transpose) x <- Matrix::t(x)
 
     switch(format,

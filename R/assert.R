@@ -2,15 +2,17 @@
 # Assertions #
 # ---------- #
 
-# Assert something is true. If an assertion is false, then a (preferably informative)
-# error should be thrown. These can help guide developers and users about the
+# Assert something is true. If an assertion is false, then a (preferably 
+# informative) error should be thrown. 
+# These can help guide developers and users about the
 # proper usage and limitations of your functions. No values are returned.
 # Use these for guard clauses.
 
 # global for g_assert
 .name <- NULL
 
-# Note that assertions built upon g_assert require that the object asserted againt
+# Note that assertions built upon g_assert require that the object asserted 
+# again
 # MUST be supplied as param from the parent frame
 
 #' @title Assertion framework
@@ -25,30 +27,33 @@
 #' \code{n}
 #' @param n stack frames back in which to evaluate the param
 #' @param ... additional params to pass
+#' @returns A character message
 #' @keywords internal
 #' @examples
-#' \dontrun{
+#' x = data.frame(a = 1:3, b = 5:7)
 #' g_assert(
 #'     x,
 #'     test = inherits(x, "data.table"),
 #'     msg = c(.name, "must be of class data.table, not", class(x))
 #' )
-#' }
 #' @export
 g_assert <- function(x, test, msg = NULL, n = 2L, ...) {
     if (!test) {
         # get name of function where test failed
         fn_name <- deparse(sys.calls()[[sys.nframe() - n]])
         # get name of object that failed test
-        .name <- deparse(eval(call("substitute", as.name(substitute(x)), parent.frame(n = 1L))))
+        .name <- deparse(eval(call("substitute", as.name(substitute(x)), 
+                                parent.frame(n = 1L))))
         .name <- paste0('\"\'', .name, '\'\"')
 
         # compose message
-        msg <- gsub(pattern = "\\.name", replacement = .name, x = deparse(substitute(msg)))
+        msg <- gsub(pattern = "\\.name", replacement = .name, 
+                    x = deparse(substitute(msg)))
         msg <- parse(text = msg)
 
         # send error
-        stop(wrap_txt(fn_name, ":\n", eval(msg, envir = parent.frame(n = 1L)), errWidth = TRUE),
+        stop(wrap_txt(fn_name, ":\n", eval(msg, envir = parent.frame(n = 1L)), 
+                    errWidth = TRUE),
             call. = FALSE
         )
     }
@@ -56,13 +61,19 @@ g_assert <- function(x, test, msg = NULL, n = 2L, ...) {
 
 
 
-#' @describeIn g_assert Test for whether supplied object is a \code{giotto} object
+#' @describeIn g_assert Test for whether supplied object is a \code{giotto} 
+#' object
 #' @param gobject giotto object
 #' @keywords internal
+#' @examples
+#' x = GiottoData::loadGiottoMini("visium")
+#' assert_giotto(x)
+#' 
 #' @export
 assert_giotto <- function(gobject, n = 1L, ...) {
     fn_name <- deparse(sys.calls()[[sys.nframe() - n]])
-    orig_name <- deparse(eval(call("substitute", as.name(substitute(gobject)), parent.frame())))
+    orig_name <- deparse(eval(call("substitute", as.name(substitute(gobject)), 
+                                parent.frame())))
     if (!methods::hasArg(gobject)) {
         stop(
             wrap_txt(fn_name, ":\ngiotto object must be given",
@@ -84,6 +95,10 @@ assert_giotto <- function(gobject, n = 1L, ...) {
 
 
 #' @describeIn g_assert Test whether input is a data.table object
+#' @examples
+#' x = data.table::data.table(x = 1:3, y = 1:3)
+#' assert_dt(x)
+#' 
 #' @export
 assert_dt <- function(x) {
     g_assert(
@@ -96,6 +111,10 @@ assert_dt <- function(x) {
 
 # NOTE: this currently overrides the checkmate function of the same name
 #' @describeIn g_assert Test whether input is an existing file
+#' @examples
+#' x = "my_file.txt"
+#' assert_file(x)
+#' 
 #' @export
 assert_file <- function(x) {
     g_assert(
@@ -112,6 +131,10 @@ assert_file <- function(x) {
 
 # NOTE: this currently overrides the checkmate function of the same name
 #' @describeIn g_assert Test whether input is of class numeric
+#' @examples
+#' x = 1
+#' assert_numeric(x)
+#' 
 #' @export
 assert_numeric <- function(x) {
     g_assert(

@@ -33,6 +33,9 @@ will send the name of object being tested in the stack frame referenced by
 
 \item{gobject}{giotto object}
 }
+\value{
+A character message
+}
 \description{
 Framework to perform assertions and provide informative errors
 about both the input object and the test that was performed. Functions for
@@ -40,7 +43,8 @@ specific checks and messages can be built using this base function.
 }
 \section{Functions}{
 \itemize{
-\item \code{assert_giotto()}: Test for whether supplied object is a \code{giotto} object
+\item \code{assert_giotto()}: Test for whether supplied object is a \code{giotto}
+object
 
 \item \code{assert_dt()}: Test whether input is a data.table object
 
@@ -50,12 +54,23 @@ specific checks and messages can be built using this base function.
 
 }}
 \examples{
-\dontrun{
+x = data.frame(a = 1:3, b = 5:7)
 g_assert(
     x,
     test = inherits(x, "data.table"),
     msg = c(.name, "must be of class data.table, not", class(x))
 )
-}
+x = GiottoData::loadGiottoMini("visium")
+assert_giotto(x)
+
+x = data.table::data.table(x = 1:3, y = 1:3)
+assert_dt(x)
+
+x = "my_file.txt"
+assert_file(x)
+
+x = 1
+assert_numeric(x)
+
 }
 \keyword{internal}

@@ -9,7 +9,16 @@ dt_remove_na(DT)
 \arguments{
 \item{DT}{datatable}
 }
+\value{
+A data.table
+}
 \description{
 set NA values to 0 in a data.table object
+}
+\examples{
+x = data.table::data.table(x = 1:3, y = c(1,NA,2))
+dt_remove_na(x)
+x
+
 }
 \concept{data.table}

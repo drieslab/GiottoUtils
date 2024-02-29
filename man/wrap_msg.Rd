@@ -11,6 +11,13 @@ wrap_msg(..., sep = " ")
 
 \item{sep}{how to join elements of string (default is one space)}
 }
+\value{
+character
+}
 \description{
 Wrap message
+}
+\examples{
+wrap_msg("A message")
+
 }

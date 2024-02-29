@@ -16,6 +16,9 @@ if previous does not exist.)}
 
 \item{main}{character. Title to assign log entry}
 }
+\value{
+character
+}
 \description{
 Write to log file
 }

@@ -1,5 +1,3 @@
-
-
 #' @title Set if
 #' @name set_if
 #' @aliases `%null%`, `%none%`, `%na%`
@@ -27,20 +25,29 @@ NULL
 #' @rdname set_if
 #' @export
 `%null%` <- function(x, y) {
-  if (is.null(x)) y
-  else x
+    if (is.null(x)) {
+        y
+    } else {
+        x
+    }
 }
 
 #' @rdname set_if
 #' @export
 `%na%` <- function(x, y) {
-  if (is.na(x)) y
-  else x
+    if (is.na(x)) {
+        y
+    } else {
+        x
+    }
 }
 
 #' @rdname set_if
 #' @export
 `%none%` <- function(x, y) {
-  if (length(x) == 0L) y
-  else x
+    if (length(x) == 0L) {
+        y
+    } else {
+        x
+    }
 }

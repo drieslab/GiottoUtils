@@ -22,9 +22,11 @@ gstop(
 
 \item{sep}{how to join elements of string (default is one space)}
 
-\item{strWidth}{externally set wrapping width. (default value of 100 is not effected)}
+\item{strWidth}{externally set wrapping width.
+(default value of 100 is not effected)}
 
-\item{errWidth}{default = FALSE. Set strWidth to be compatible with error printout}
+\item{errWidth}{default = FALSE. Set strWidth to be
+compatible with error printout}
 
 \item{.module}{character. Giotto module to send the error from}
 
@@ -40,10 +42,17 @@ location where the error was. Default is TRUE}
 \item{.warn_nstack}{logica. whether to warn when there are insufficient
 stackframes for requested .n (default = FALSE)}
 }
+\value{
+character message
+}
 \description{
 Send an error message formatted with \code{wrap_txt()}. Prepends the Giotto
 module from which the error was triggered. This function should not be used
 directly, but instead an internal \code{.gstop()} function should be created using
 this framework for each module using it. The \code{.n} param should be incremented
 to 2L for this wrapper function
+}
+\examples{
+gstop("My stop message", .module = "GiottoUtils")
+
 }

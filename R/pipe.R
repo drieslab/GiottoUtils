@@ -9,5 +9,6 @@
 #' @export
 #' @importFrom magrittr %>%
 #' @usage lhs \%>\% rhs
+#' @returns pipe operator
 NULL
 # nocov end

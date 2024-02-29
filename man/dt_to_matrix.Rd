@@ -9,7 +9,15 @@ dt_to_matrix(x)
 \arguments{
 \item{x}{data.table object}
 }
+\value{
+A matrix
+}
 \description{
 converts data.table to matrix
+}
+\examples{
+x = data.table::data.table(x = c("a","b","c"), y = 1:3, z = 5:7)
+dt_to_matrix(x)
+
 }
 \concept{data.table}

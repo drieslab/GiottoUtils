@@ -8,6 +8,12 @@ NULL
 #' @param DT datatable
 #' @description set NA values to 0 in a data.table object
 #' @concept data.table
+#' @returns A data.table
+#' @examples
+#' x = data.table::data.table(x = 1:3, y = c(1,NA,2))
+#' dt_remove_na(x)
+#' x
+#' 
 #' @export
 dt_remove_na <- function(DT) {
     for (i in names(DT)) {
@@ -25,19 +31,28 @@ dt_remove_na <- function(DT) {
 #' @param myname name of combined column to generate
 #' @description fast sorting and pasting of 2 character columns in a data.table
 #' @concept data.table
+#' @returns A data.table
+#' @examples
+#' x = data.table::data.table(x = 1:3, y = 5:7)
+#' dt_sort_combine_two_columns(x, column1 = "x", column2 = "y")
+#' x
+#' 
 #' @export
-dt_sort_combine_two_columns <- function(DT,
-    column1,
-    column2,
-    myname = "unif_gene_gene") {
+dt_sort_combine_two_columns <- function(
+        DT,
+        column1,
+        column2,
+        myname = "unif_gene_gene") {
     # data.table variables
-    values_1_num <- values_2_num <- scolumn_1 <- scolumn_2 <- unif_sort_column <- NULL
+    values_1_num <- values_2_num <- scolumn_1 <- scolumn_2 <- 
+        unif_sort_column <- NULL
 
     # maybe faster with converting to factors??
 
     # make sure columns are character
     selected_columns <- c(column1, column2)
-    DT[, (selected_columns) := lapply(.SD, as.character), .SDcols = selected_columns]
+    DT[, (selected_columns) := lapply(.SD, as.character), 
+    .SDcols = selected_columns]
 
     # convert characters into numeric values
     uniq_values <- sort(unique(c(DT[[column1]], DT[[column2]])))
@@ -49,8 +64,10 @@ dt_sort_combine_two_columns <- function(DT,
     DT[, values_2_num := uniq_values_num[get(column2)]]
 
 
-    DT[, scolumn_1 := ifelse(values_1_num < values_2_num, get(column1), get(column2))]
-    DT[, scolumn_2 := ifelse(values_1_num < values_2_num, get(column2), get(column1))]
+    DT[, scolumn_1 := ifelse(values_1_num < values_2_num, get(column1), 
+                            get(column2))]
+    DT[, scolumn_2 := ifelse(values_1_num < values_2_num, get(column2), 
+                            get(column1))]
 
     DT[, unif_sort_column := paste0(scolumn_1, "--", scolumn_2)]
     DT[, c("values_1_num", "values_2_num", "scolumn_1", "scolumn_2") := NULL]
@@ -67,6 +84,11 @@ dt_sort_combine_two_columns <- function(DT,
 #' @description converts data.table to matrix
 #' @param x data.table object
 #' @concept data.table
+#' @returns A matrix
+#' @examples
+#' x = data.table::data.table(x = c("a","b","c"), y = 1:3, z = 5:7)
+#' dt_to_matrix(x)
+#' 
 #' @export
 dt_to_matrix <- function(x) {
     rownames <- as.character(x[[1]])
@@ -86,6 +108,7 @@ dt_to_matrix <- function(x) {
 #' @param col_name2 character. RHS of cast formula
 #' @param value.var character. Name of the column whose values will be filled to
 #' cast.
+#' @returns A keyed data.table that has been cast
 #' @seealso [data.table::dcast.data.table()]
 #' @examples
 #' library(data.table)
@@ -107,20 +130,30 @@ dt_dcast_string <- function(data, col_name1, col_name2, value.var) {
 
 
 
-# Based on https://stackoverflow.com/questions/37878620/reorder-rows-in-data-table-in-a-specific-order
+# Based on https://stackoverflow.com/questions/37878620/
 #' @title Set specific data.table row order
 #' @name dt_set_row_order
 #' @param x data.table
 #' @param neworder numerical vector to reorder rows
+#' 
+#' @returns A data.table
+#' @examples
+#' x = data.table::data.table(x = c("a","b","c"), y = 1:3, z = 5:7)
+#' dt_set_row_order(x, neworder = c(1,3,2))
+#' x
+#' 
 #' @export
 #' @concept data.table
 dt_set_row_order <- function(x, neworder) {
     if (".r" %in% colnames(x)) {
         temp_r <- x[, .SD, .SDcols = ".r"]
-        data.table::setorderv(temp_r[, eval(call(":=", as.name(".r_alt"), call("order", neworder)))], ".r_alt")[, ".r_alt" := NULL]
-        data.table::setorderv(x[, eval(call(":=", as.name(".r"), call("order", neworder)))], ".r")[, ".r" := NULL]
+        data.table::setorderv(temp_r[, eval(call(":=", as.name(".r_alt"), 
+                    call("order", neworder)))], ".r_alt")[, ".r_alt" := NULL]
+        data.table::setorderv(x[, eval(call(":=", as.name(".r"), 
+                    call("order", neworder)))], ".r")[, ".r" := NULL]
         x[, eval(call(":=", as.name(".r"), temp_r$.r))]
     } else {
-        data.table::setorderv(x[, eval(call(":=", as.name(".r"), call("order", neworder)))], ".r")[, ".r" := NULL]
+        data.table::setorderv(x[, eval(call(":=", as.name(".r"), 
+                    call("order", neworder)))], ".r")[, ".r" := NULL]
     }
 }

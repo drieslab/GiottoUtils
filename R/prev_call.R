@@ -14,9 +14,10 @@ get_prev_call <- function(toplevel = 1L) {
 }
 
 
-# Determine the name of the function n levels above the current evaluation frame,
-# where n is toplevel - 1
+# Determine the name of the function n levels above the current evaluation 
+# frame, where n is toplevel - 1
 #' @describeIn prev_call Get previous call function name
+#' @returns character
 #' @export
 get_prev_fname <- function(toplevel = 3L) {
     as.character(sys.call(-toplevel)[[1]])
