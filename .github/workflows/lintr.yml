@@ -49,6 +49,7 @@ jobs:
           _R_CHECK_RD_XREFS: false
         with:
           dependencies: '"hard"' # do not use suggested dependencies
+          install-pandoc: false
           extra-packages: any::lintr, any::jsonlite, local::.
           needs: lint
 

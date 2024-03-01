@@ -34,6 +34,7 @@ jobs:
           _R_CHECK_RD_XREFS: false
         with:
           dependencies: '"hard"' # do not use suggested dependencies
+          install-pandoc: false
           extra-packages: any::rcmdcheck, any::testthat, any::covr, any::RColorBrewer, any::reticulate
           needs: coverage
 
