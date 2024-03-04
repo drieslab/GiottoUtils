@@ -322,8 +322,9 @@ color_tag <- function() {
 }
 
 #' @rdname color_tag
+#' @param x text to color
 #' @examples
-#' color_red()
+#' color_red("My text")
 #' 
 #' @export
 color_red <- function(x) {
@@ -336,8 +337,9 @@ color_red <- function(x) {
 }
 
 #' @rdname color_tag
+#' @param x text to color
 #' @examples
-#' color_green()
+#' color_green("My text")
 #' 
 #' @export
 color_green <- function(x) {
@@ -350,8 +352,9 @@ color_green <- function(x) {
 }
 
 #' @rdname color_tag
+#' @param x text to color
 #' @examples
-#' color_yellow()
+#' color_yellow("My text")
 #' 
 #' @export
 color_yellow <- function(x) {
@@ -364,8 +367,9 @@ color_yellow <- function(x) {
 }
 
 #' @rdname color_tag
+#' @param x text to color
 #' @examples
-#' color_blue()
+#' color_blue("My text")
 #' 
 #' @export
 color_blue <- function(x) {
@@ -378,8 +382,9 @@ color_blue <- function(x) {
 }
 
 #' @rdname color_tag
+#' @param x text to color
 #' @examples
-#' color_purple()
+#' color_purple("My text")
 #' 
 #' @export
 color_purple <- function(x) {
@@ -392,8 +397,9 @@ color_purple <- function(x) {
 }
 
 #' @rdname color_tag
+#' @param x text to color
 #' @examples
-#' color_teal()
+#' color_teal("My text")
 #' 
 #' @export
 color_teal <- function(x) {
