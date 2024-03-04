@@ -92,7 +92,7 @@ dt_sort_combine_two_columns <- function(
 #' @export
 dt_to_matrix <- function(x) {
     rownames <- as.character(x[[1]])
-    mat <- methods::as(as.matrix(x[, -1]), "Matrix")
+    mat <- Matrix::as.matrix(x[, -1])
     rownames(mat) <- rownames
     return(mat)
 }
