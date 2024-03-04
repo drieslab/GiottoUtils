@@ -54,7 +54,7 @@ object
 
 }}
 \examples{
-x <- data.frame(a = 1:3, b = 5:7)
+x <- data.table::data.table(a = 1:3, b = 5:7)
 g_assert(
     x,
     test = inherits(x, "data.table"),
@@ -64,19 +64,14 @@ g_assert(
 x <- GiottoData::loadGiottoMini("visium")
 assert_giotto(x, n = 0)
 
-x <- data.frame(a = 1:3, b = 5:7) 
-assert_giotto(x, n = 0)
-
 x = data.table::data.table(x = 1:3, y = 1:3)
 assert_dt(x, n = 0)
 
+write.table(data.frame(x = 1, y = 1), "my_file.txt")
 x <- "my_file.txt"
 assert_file(x, n = 0)
 
 x <- 1
-assert_numeric(x, n = 0)
-
-x <- "a"
 assert_numeric(x, n = 0)
 
 }

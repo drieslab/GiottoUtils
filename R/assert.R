@@ -30,7 +30,7 @@
 #' @returns A character message
 #' @keywords internal
 #' @examples
-#' x <- data.frame(a = 1:3, b = 5:7)
+#' x <- data.table::data.table(a = 1:3, b = 5:7)
 #' g_assert(
 #'     x,
 #'     test = inherits(x, "data.table"),
@@ -68,9 +68,6 @@ g_assert <- function(x, test, msg = NULL, n = 2L, ...) {
 #' @keywords internal
 #' @examples
 #' x <- GiottoData::loadGiottoMini("visium")
-#' assert_giotto(x, n = 0)
-#' 
-#' x <- data.frame(a = 1:3, b = 5:7) 
 #' assert_giotto(x, n = 0)
 #' 
 #' @export
@@ -117,6 +114,7 @@ assert_dt <- function(x, n = 2L) {
 # NOTE: this currently overrides the checkmate function of the same name
 #' @describeIn g_assert Test whether input is an existing file
 #' @examples
+#' write.table(data.frame(x = 1, y = 1), "my_file.txt")
 #' x <- "my_file.txt"
 #' assert_file(x, n = 0)
 #' 
@@ -140,9 +138,6 @@ assert_file <- function(x, n = 2L) {
 #' @describeIn g_assert Test whether input is of class numeric
 #' @examples
 #' x <- 1
-#' assert_numeric(x, n = 0)
-#' 
-#' x <- "a"
 #' assert_numeric(x, n = 0)
 #' 
 #' @export
