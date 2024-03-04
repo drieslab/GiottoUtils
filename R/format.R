@@ -161,7 +161,7 @@ vmsg <- function(..., .v = NULL, .is_debug = FALSE,
 #' stackframes for requested .n (default = FALSE)
 #' @returns character message
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' gstop("My stop message", .module = "GiottoUtils")
 #' }
 #' 
