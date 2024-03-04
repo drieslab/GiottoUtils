@@ -66,9 +66,6 @@ g_assert <- function(x, test, msg = NULL, n = 2L, ...) {
 #' object
 #' @param gobject giotto object
 #' @keywords internal
-#' @examples
-#' x <- GiottoData::loadGiottoMini("visium")
-#' assert_giotto(x, n = 0)
 #' 
 #' @export
 assert_giotto <- function(gobject, n = 1L, ...) {
