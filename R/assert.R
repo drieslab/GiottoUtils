@@ -142,6 +142,9 @@ assert_file <- function(x, n = 2L) {
 #' x <- 1
 #' assert_numeric(x, n = 0)
 #' 
+#' x <- "a"
+#' assert_numeric(x, n = 0)
+#' 
 #' @export
 assert_numeric <- function(x, n = 2L) {
     g_assert(
