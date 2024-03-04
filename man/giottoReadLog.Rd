@@ -17,7 +17,7 @@ character
 Read from the last generated log file
 }
 \examples{
+log_write(x = "my content")
 giottoReadLog()
-giottoReadLog("my_path_to_log")
 
 }

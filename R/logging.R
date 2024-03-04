@@ -6,8 +6,8 @@
 #' last created log (will not work after a crash)
 #' @returns character
 #' @examples
+#' log_write(x = "my content")
 #' giottoReadLog()
-#' giottoReadLog("my_path_to_log")
 #' 
 #' @export
 giottoReadLog <- function(filepath = getOption("giotto.last_logpath", NULL)) {
@@ -129,6 +129,9 @@ giottoNewLog <- function(logdir) {
 #' @param collapse character. Collapse to use with `x`
 #' @param main character. Title to assign log entry
 #' @returns character
+#' @examples
+#' log_write(x = "my content")
+#' 
 #' @export
 log_write <- function(file_conn = .log_conn(), x = "", 
                     collapse = " ", main = NULL) {
