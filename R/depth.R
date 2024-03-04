@@ -67,6 +67,7 @@ depth <- function(
 #' are ignored.
 #' @param count do not use
 #' @returns list
+#' @import checkmate
 #' @examples
 #' x = list(a = 1)
 #' require_depth(x, min_depth = 2L)

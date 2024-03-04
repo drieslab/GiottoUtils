@@ -29,6 +29,7 @@ wrap_msg <- function(..., sep = " ") {
 #' with error printout
 #' @param .initial character. prefix for first line
 #' @param .prefix character. prefix for later lines
+#' @import utils
 #' @returns character
 #' @examples
 #' wrap_txt("A text")
