@@ -31,9 +31,10 @@ Imports:
     gtools,
     lifecycle,
     magrittr,
-    methods
-Suggests:
+    methods,
     checkmate,
+    utils (>= 3.5.0)
+Suggests:
     future.apply,
     Matrix,
     knitr,
@@ -41,8 +42,7 @@ Suggests:
     RColorBrewer,
     reticulate,
     testthat (>= 3.0.0),
-    covr,
-    utils (>= 3.5.0)
+    covr
 Collate: 
     'DT_helpers.R'
     'assert.R'
