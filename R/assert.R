@@ -30,11 +30,12 @@
 #' @returns A character message
 #' @keywords internal
 #' @examples
-#' x = data.frame(a = 1:3, b = 5:7)
+#' x <- data.frame(a = 1:3, b = 5:7)
 #' g_assert(
 #'     x,
 #'     test = inherits(x, "data.table"),
-#'     msg = c(.name, "must be of class data.table, not", class(x))
+#'     msg = c(.name, "must be of class data.table, not", class(x)),
+#'     n = 0
 #' )
 #' @export
 g_assert <- function(x, test, msg = NULL, n = 2L, ...) {
@@ -66,8 +67,11 @@ g_assert <- function(x, test, msg = NULL, n = 2L, ...) {
 #' @param gobject giotto object
 #' @keywords internal
 #' @examples
-#' x = GiottoData::loadGiottoMini("visium")
-#' assert_giotto(x)
+#' x <- GiottoData::loadGiottoMini("visium")
+#' assert_giotto(x, n = 0)
+#' 
+#' x <- data.frame(a = 1:3, b = 5:7) 
+#' assert_giotto(x, n = 0)
 #' 
 #' @export
 assert_giotto <- function(gobject, n = 1L, ...) {
@@ -97,14 +101,15 @@ assert_giotto <- function(gobject, n = 1L, ...) {
 #' @describeIn g_assert Test whether input is a data.table object
 #' @examples
 #' x = data.table::data.table(x = 1:3, y = 1:3)
-#' assert_dt(x)
+#' assert_dt(x, n = 0)
 #' 
 #' @export
-assert_dt <- function(x) {
+assert_dt <- function(x, n = 2L) {
     g_assert(
         x,
         test = inherits(x, "data.table"),
-        msg = c(.name, "must be of class data.table, not", class(x))
+        msg = c(.name, "must be of class data.table, not", class(x)),
+        n = n
     )
 }
 
@@ -112,34 +117,37 @@ assert_dt <- function(x) {
 # NOTE: this currently overrides the checkmate function of the same name
 #' @describeIn g_assert Test whether input is an existing file
 #' @examples
-#' x = "my_file.txt"
-#' assert_file(x)
+#' x <- "my_file.txt"
+#' assert_file(x, n = 0)
 #' 
 #' @export
-assert_file <- function(x) {
+assert_file <- function(x, n = 2L) {
     g_assert(
         x,
         test = is.character(x),
-        msg = c(.name, "must be a character vector filepath")
+        msg = c(.name, "must be a character vector filepath"),
+        n = n
     )
     g_assert(
         x,
         test = file.exists(x),
-        msg = c(.name, "is not an existing file")
+        msg = c(.name, "is not an existing file"),
+        n = n
     )
 }
 
 # NOTE: this currently overrides the checkmate function of the same name
 #' @describeIn g_assert Test whether input is of class numeric
 #' @examples
-#' x = 1
-#' assert_numeric(x)
+#' x <- 1
+#' assert_numeric(x, n = 0)
 #' 
 #' @export
-assert_numeric <- function(x) {
+assert_numeric <- function(x, n = 2L) {
     g_assert(
         x,
         test = is.numeric(x),
-        msg = c(.name, "must be of class numeric, not", class(x))
+        msg = c(.name, "must be of class numeric, not", class(x)),
+        n = n
     )
 }
