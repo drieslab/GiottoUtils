@@ -22,3 +22,7 @@ character
 \description{
 Write to log file
 }
+\examples{
+log_write(x = "my content")
+
+}

@@ -12,11 +12,11 @@ g_assert(x, test, msg = NULL, n = 2L, ...)
 
 assert_giotto(gobject, n = 1L, ...)
 
-assert_dt(x)
+assert_dt(x, n = 2L)
 
-assert_file(x)
+assert_file(x, n = 2L)
 
-assert_numeric(x)
+assert_numeric(x, n = 2L)
 }
 \arguments{
 \item{x}{object to test}
@@ -54,23 +54,22 @@ object
 
 }}
 \examples{
-x = data.frame(a = 1:3, b = 5:7)
+x <- data.table::data.table(a = 1:3, b = 5:7)
 g_assert(
     x,
     test = inherits(x, "data.table"),
-    msg = c(.name, "must be of class data.table, not", class(x))
+    msg = c(.name, "must be of class data.table, not", class(x)),
+    n = 0
 )
-x = GiottoData::loadGiottoMini("visium")
-assert_giotto(x)
-
 x = data.table::data.table(x = 1:3, y = 1:3)
-assert_dt(x)
+assert_dt(x, n = 0)
 
-x = "my_file.txt"
-assert_file(x)
+write.table(data.frame(x = 1, y = 1), "my_file.txt")
+x <- "my_file.txt"
+assert_file(x, n = 0)
 
-x = 1
-assert_numeric(x)
+x <- 1
+assert_numeric(x, n = 0)
 
 }
 \keyword{internal}
