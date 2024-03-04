@@ -53,7 +53,7 @@ this framework for each module using it. The \code{.n} param should be increment
 to 2L for this wrapper function
 }
 \examples{
-\donttest{
+\dontrun{
 gstop("My stop message", .module = "GiottoUtils")
 }
 
