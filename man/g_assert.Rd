@@ -76,5 +76,8 @@ assert_file(x, n = 0)
 x <- 1
 assert_numeric(x, n = 0)
 
+x <- "a"
+assert_numeric(x, n = 0)
+
 }
 \keyword{internal}
