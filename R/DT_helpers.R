@@ -81,18 +81,57 @@ dt_sort_combine_two_columns <- function(
 
 
 #' @title dt_to_matrix
-#' @description converts data.table to matrix
+#' @description converts `data.table` to `Matrix`
 #' @param x data.table object
 #' @concept data.table
-#' @returns A matrix
+#' @details
+#' When matrices are very large, `Matrix::Matrix(x)` and `as(x, "Matrix")` may
+#' throw `Error: vector memory exhausted (limit reached?)`. To get around
+#' this, we chunk the conversion to `Matrix` by chunks of up to roughly 2e+08
+#' matrix cells.
+#' @returns A `Matrix`
 #' @examples
 #' x = data.table::data.table(x = c("a","b","c"), y = 1:3, z = 5:7)
 #' dt_to_matrix(x)
 #' 
 #' @export
 dt_to_matrix <- function(x) {
+    package_check("Matrix", repository = "CRAN")
+    
     rownames <- as.character(x[[1]])
-    mat <- Matrix::as.matrix(x[, -1])
+    x <- x[, -1]
+
+    # chunking (to avoid vector mem error)
+    #  -- Error was found on a macbook with a 48944 x 21731 matrix
+    #  
+    # Chunk size
+    # 10,000 * 20,000 = 2e+08 (matrix cells / chunk)
+    chunk_ncells <- 2e+08
+    nchunk <- ceiling(prod(dim(x)) / chunk_ncells)
+    total_nr <- nrow(x)
+    nc <- ncol(x)
+    # expected number of rows needed for 2e+08 cells based on ncol
+    chunk_rows <- ceiling(chunk_ncells / nc)
+    
+    last <- 0L
+    mlist <- list()
+    for (i in seq_len(nchunk)) {
+        rstart <- last + 1L
+        rend <- rstart + chunk_rows
+        last <- rend
+        
+        chunk <- x[rstart:min(rend, total_nr),]
+        
+        # automatically sparsifies if more than half of entries are 0
+        mat <- Matrix::Matrix(as.matrix(chunk))
+        mlist <- c(mlist, mat)
+    }
+
+    mat <- do.call("rbind", mlist)
+    if (!identical(dim(mat), dim(x))) {
+        stop("Matrix chunked sparsification failed")
+    }
+    
     rownames(mat) <- rownames
     return(mat)
 }
@@ -111,12 +150,14 @@ dt_to_matrix <- function(x) {
 #' @returns A keyed data.table that has been cast
 #' @seealso [data.table::dcast.data.table()]
 #' @examples
-#' library(data.table)
-#' ChickWeight <- as.data.table(ChickWeight)
-#' setnames(ChickWeight, tolower(names(ChickWeight)))
-#' DT <- melt(as.data.table(ChickWeight), id = 2:4) # calls melt.data.table
-#'
-#' dt_dcast_string(DT, "chick", "time", "value")
+#' x <- data.table::data.table(
+#'     col1 = c(rep("a", 3), rep("b", 3)),
+#'     col2 = rep(LETTERS[1:3], 2),
+#'     value = c(1:6)
+#' )
+#' force(x)
+#' y <- dt_dcast_string(x, "col1", "col2", "value")
+#' force(y)
 #' @concept data.table
 #' @export
 dt_dcast_string <- function(data, col_name1, col_name2, value.var) {

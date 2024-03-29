@@ -35,7 +35,13 @@ jobs:
         with:
           dependencies: '"hard"' # do not use suggested dependencies
           install-pandoc: false
-          extra-packages: any::rcmdcheck, any::testthat, any::covr, any::RColorBrewer, any::reticulate
+          extra-packages: |
+            any::rcmdcheck
+            any::testthat
+            any::covr
+            any::RColorBrewer
+            any::reticulate
+            any::Matrix
           needs: coverage
 
       - uses: actions/setup-python@v5
