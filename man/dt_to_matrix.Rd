@@ -4,10 +4,12 @@
 \alias{dt_to_matrix}
 \title{dt_to_matrix}
 \usage{
-dt_to_matrix(x)
+dt_to_matrix(x, chunked = FALSE)
 }
 \arguments{
 \item{x}{data.table object}
+
+\item{chunked}{logical. Whether to chunk the ingestion to \code{Matrix}}
 }
 \value{
 A \code{Matrix}
@@ -24,6 +26,7 @@ matrix cells.
 \examples{
 x = data.table::data.table(x = c("a","b","c"), y = 1:3, z = 5:7)
 dt_to_matrix(x)
+dt_to_matrix(x, chunked = TRUE)
 
 }
 \concept{data.table}

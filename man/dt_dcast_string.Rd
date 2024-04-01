@@ -23,12 +23,14 @@ A keyed data.table that has been cast
 Data.table dcast using character inputs for formula
 }
 \examples{
-library(data.table)
-ChickWeight <- as.data.table(ChickWeight)
-setnames(ChickWeight, tolower(names(ChickWeight)))
-DT <- melt(as.data.table(ChickWeight), id = 2:4) # calls melt.data.table
-
-dt_dcast_string(DT, "chick", "time", "value")
+x <- data.table::data.table(
+    col1 = c(rep("a", 3), rep("b", 3)),
+    col2 = rep(LETTERS[1:3], 2),
+    value = c(1:6)
+)
+force(x)
+y <- dt_dcast_string(x, "col1", "col2", "value")
+force(y)
 }
 \seealso{
 \code{\link[data.table:dcast.data.table]{data.table::dcast.data.table()}}

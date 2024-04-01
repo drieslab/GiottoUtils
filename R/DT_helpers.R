@@ -83,6 +83,7 @@ dt_sort_combine_two_columns <- function(
 #' @title dt_to_matrix
 #' @description converts `data.table` to `Matrix`
 #' @param x data.table object
+#' @param chunked logical. Whether to chunk the ingestion to `Matrix`
 #' @concept data.table
 #' @details
 #' When matrices are very large, `Matrix::Matrix(x)` and `as(x, "Matrix")` may
@@ -93,43 +94,54 @@ dt_sort_combine_two_columns <- function(
 #' @examples
 #' x = data.table::data.table(x = c("a","b","c"), y = 1:3, z = 5:7)
 #' dt_to_matrix(x)
+#' dt_to_matrix(x, chunked = TRUE)
 #' 
 #' @export
-dt_to_matrix <- function(x) {
+dt_to_matrix <- function(x, chunked = FALSE) {
     package_check("Matrix", repository = "CRAN")
     
     rownames <- as.character(x[[1]])
     x <- x[, -1]
-
-    # chunking (to avoid vector mem error)
-    #  -- Error was found on a macbook with a 48944 x 21731 matrix
-    #  
-    # Chunk size
-    # 10,000 * 20,000 = 2e+08 (matrix cells / chunk)
-    chunk_ncells <- 2e+08
-    nchunk <- ceiling(prod(dim(x)) / chunk_ncells)
-    total_nr <- nrow(x)
-    nc <- ncol(x)
-    # expected number of rows needed for 2e+08 cells based on ncol
-    chunk_rows <- ceiling(chunk_ncells / nc)
     
-    last <- 0L
-    mlist <- list()
-    for (i in seq_len(nchunk)) {
-        rstart <- last + 1L
-        rend <- rstart + chunk_rows
-        last <- rend
+    if (!chunked) {
+        vmsg(.v = NULL, .is_debug = TRUE, "dt_to_matrix: nochunk")
+        mat <- Matrix::Matrix(as.matrix(x))
+    } else {
+        vmsg(.v = NULL, .is_debug = TRUE, "dt_to_matrix: chunked")
+        # chunking (to avoid vector mem error)
+        #  -- Error was found on a macbook with a 48944 x 21731 matrix
+        #  
+        # Chunk size
+        # 10,000 * 20,000 = 2e+08 (matrix cells / chunk)
+        chunk_ncells <- 2e+08
+        nchunk <- ceiling(prod(dim(x)) / chunk_ncells)
+        total_nr <- nrow(x)
+        nc <- ncol(x)
+        # expected number of rows needed for 2e+08 cells based on ncol
+        chunk_rows <- ceiling(chunk_ncells / nc)
         
-        chunk <- x[rstart:min(rend, total_nr),]
+        last <- 0L
+        mlist <- list()
+        for (i in seq_len(nchunk)) {
+            vmsg(.v = NULL, .is_debug = TRUE, 
+                 "dt_to_matrix: chunk", i, "of", nchunk)
+            rstart <- last + 1L
+            rend <- rstart + chunk_rows
+            last <- rend
+            
+            chunk <- x[rstart:min(rend, total_nr),]
+            vmsg(.v = NULL, .is_debug = TRUE, 
+                 "dt_to_matrix: chunkdims:", paste(dim(chunk)))
+            
+            # automatically sparsifies if more than half of entries are 0
+            mat <- Matrix::Matrix(as.matrix(chunk))
+            mlist <- c(mlist, mat)
+        }
         
-        # automatically sparsifies if more than half of entries are 0
-        mat <- Matrix::Matrix(as.matrix(chunk))
-        mlist <- c(mlist, mat)
-    }
-
-    mat <- do.call("rbind", mlist)
-    if (!identical(dim(mat), dim(x))) {
-        stop("Matrix chunked sparsification failed")
+        mat <- do.call("rbind", mlist)
+        if (!identical(dim(mat), dim(x))) {
+            stop("Matrix chunked ingestion failed")
+        }
     }
     
     rownames(mat) <- rownames
