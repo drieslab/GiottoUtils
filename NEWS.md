@@ -7,6 +7,7 @@
 
 ## Enhancement
 - `dt_to_matrix()` now chunks the conversion to `Matrix` to avoid memory issues
+- `get_args_list()` now has `keep` param for granular control over which params to capture
 
 
 # GiottoUtils 0.1.5 (2024/02/11)

@@ -14,12 +14,15 @@ get_prev_fname(toplevel = 3L)
 
 get_args(toplevel = 2L, verbose = FALSE)
 
-get_args_list(toplevel = 1L, ...)
+get_args_list(toplevel = 1L, keep = NULL, ...)
 }
 \arguments{
 \item{toplevel}{integer. Relative stack where the function call was made.}
 
 \item{verbose}{be verbose}
+
+\item{keep}{character. When NULL, all params are captured. If not NULL,
+specifies which params to capture.}
 
 \item{\dots}{additional params to capture}
 }
@@ -41,3 +44,10 @@ calls. Used in putting together object histories and error handling.
 \item \code{get_args_list()}: Get call args as named list
 
 }}
+\examples{
+a <- function(x = 1, y = 2, ...) {
+    get_args_list(...)
+}
+
+a(z = 3, keep = "y")
+}

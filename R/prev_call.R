@@ -91,11 +91,22 @@ get_args <- function(toplevel = 2L, verbose = FALSE) {
 }
 
 #' @describeIn prev_call Get call args as named list
+#' @param keep character. When NULL, all params are captured. If not NULL, 
+#' specifies which params to capture.
 #' @param \dots additional params to capture
+#' @examples
+#' a <- function(x = 1, y = 2, ...) {
+#'     get_args_list(...)
+#' }
+#' 
+#' a(z = 3, keep = "y")
 #' @export
-get_args_list <- function(toplevel = 1L, ...) {
-    c(
-        as.list(as.environment(parent.frame(toplevel))),
-        list(...)
-    )
+get_args_list <- function(toplevel = 1L, keep = NULL, ...) {
+    args <- as.list(as.environment(parent.frame(toplevel)))
+    
+    if (!is.null(keep)) {
+        args <- args[names(args) %in% keep]
+    }
+    
+    c(args, list(...))
 }
