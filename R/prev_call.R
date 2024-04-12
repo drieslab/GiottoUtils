@@ -102,11 +102,11 @@ get_args <- function(toplevel = 2L, verbose = FALSE) {
 #' a(z = 3, keep = "y")
 #' @export
 get_args_list <- function(toplevel = 1L, keep = NULL, ...) {
-    args <- as.list(as.environment(parent.frame(toplevel)))
+    a <- as.list(as.environment(parent.frame(toplevel)))
     
     if (!is.null(keep)) {
-        args <- args[names(args) %in% keep]
+        a <- a[names(a) %in% keep]
     }
     
-    c(args, list(...))
+    c(a, list(...))
 }
