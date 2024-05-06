@@ -1,7 +1,7 @@
 #' @name special_characters
 #' @title Special characters
 #' @description
-#' Framework and functions for printing with special characters within R 
+#' Framework and functions for printing with special characters within R
 #' packages.
 #' @returns boolean
 NULL
@@ -16,7 +16,7 @@ NULL
 #' @keywords internal
 #' @examples
 #' is_latex_output()
-#' 
+#'
 #' @export
 is_latex_output <- function() {
     if (!("knitr" %in% loadedNamespaces())) {
@@ -30,7 +30,7 @@ is_latex_output <- function() {
 #' @keywords internal
 #' @examples
 #' is_utf8_output()
-#' 
+#'
 #' @export
 is_utf8_output <- function() {
     opt <- getOption("cli.unicode", default = NULL)
@@ -56,14 +56,14 @@ is_utf8_output <- function() {
 
 
 #' @title Box characters
-#' @describeIn special_characters Helper function to print unicode box 
+#' @describeIn special_characters Helper function to print unicode box
 #' characters using escape codes.
 #' @keywords internal
 #' @details Much inspiration taken from \pkg{fs} \href{https://rdrr.io/cran/fs/src/R/tree.R}{tree.R}
 #' These are derived from: \href{https://github.com/r-lib/cli/blob/e9acc82b0d20fa5c64dd529400b622c0338374ed/R/tree.R#L111}{code}
 #' @examples
 #' box_chars()
-#' 
+#'
 #' @export
 box_chars <- function() {
     if (is_utf8_output()) {

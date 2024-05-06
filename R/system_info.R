@@ -5,10 +5,9 @@
 #' @examples
 #' determine_cores()
 #' @export
-determine_cores <- function(
-        cores = getOption("giotto.cores", default = NA),
-        min_cores = 1,
-        max_cores = 10) {
+determine_cores <- function(cores = getOption("giotto.cores", default = NA),
+    min_cores = 1,
+    max_cores = 10) {
     if (is.na(cores) ||
         !is.numeric(cores) ||
         (is.numeric(cores) && cores <= 0)) {
@@ -33,7 +32,7 @@ determine_cores <- function(
 
 
 #' @title get_os
-#' @description return the type of operating system, 
+#' @description return the type of operating system,
 #' see https://conjugateprior.org/2015/06/identifying-the-os-from-r/
 #' @return character osx, linux or windows
 #' @keywords internal

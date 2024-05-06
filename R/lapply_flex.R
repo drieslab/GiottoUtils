@@ -13,15 +13,14 @@
 #' @returns list
 #' @examples
 #' lapply_flex(list(x = 1, y = 2), FUN = log)
-#' 
+#'
 #' @export
-lapply_flex <- function(
-        X,
-        FUN,
-        cores = NA,
-        future.seed = TRUE,
-        fun = NULL,
-        ...) {
+lapply_flex <- function(X,
+    FUN,
+    cores = NA,
+    future.seed = TRUE,
+    fun = NULL,
+    ...) {
     # a simple wrapper for future.apply::future_lapply
     # probably does not need any additional changes
 
@@ -42,8 +41,10 @@ lapply_flex <- function(
     cores <- determine_cores(cores)
 
     # future_lapply call
-    save_list <- future.apply::future_lapply(X = X, FUN = FUN, 
-                                            future.seed = future.seed, ...)
+    save_list <- future.apply::future_lapply(
+        X = X, FUN = FUN,
+        future.seed = future.seed, ...
+    )
 
     # if(os == 'unix') {
     #  save_list = parallel::mclapply(X = X, mc.cores = cores,

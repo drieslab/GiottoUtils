@@ -11,9 +11,9 @@
 #' @return The seed value is returned invisibly
 #' @examples
 #' random_seed()
-#' 
+#'
 #' @export
-random_seed <- function(set.seed = TRUE) { 
+random_seed <- function(set.seed = TRUE) {
     # TODO deprecate in favor of local_seed
     digits <- 9
     newSeed <- as.numeric(Sys.time()) * 10^(digits - 3)
@@ -67,7 +67,7 @@ local_seed <- function(seed) {
     }
 
     .gutils_prev_seed <- NULL
-    assign(".gutils_prev_seed", prev_seed, sys.frame(-1)) 
+    assign(".gutils_prev_seed", prev_seed, sys.frame(-1))
     # send to prev stack frame
 
     set.seed(seed)

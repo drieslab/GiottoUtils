@@ -1,5 +1,5 @@
 
-# GiottoUtils 0.1.6
+# GiottoUtils 0.1.6 (2024/05/06)
 
 ## New
 - `%null%`, `%na%`, and `%none%` infix operators for setting a default value when an object is, respectively, NULL, NA, or length of 0.
@@ -7,7 +7,7 @@
 
 ## Enhancement
 - `dt_to_matrix()` now chunks the conversion to `Matrix` to avoid memory issues
-- `get_args_list()` now has `keep` param for granular control over which params to capture
+- `get_args_list()` now has a `keep` param that allows selection of which collected args to keep
 
 
 # GiottoUtils 0.1.5 (2024/02/11)

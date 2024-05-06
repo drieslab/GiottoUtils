@@ -12,14 +12,13 @@
 #' @keywords internal
 #' @returns numeric
 #' @examples
-#' x = list(a = 1)
+#' x <- list(a = 1)
 #' depth(x)
-#' 
+#'
 #' @export
-depth <- function(
-        this,
-        method = c("max", "min"),
-        sig = "data.frame") {
+depth <- function(this,
+    method = c("max", "min"),
+    sig = "data.frame") {
     method <- match.arg(arg = method, choices = c("max", "min"))
 
     # Stop conditions:
@@ -60,8 +59,8 @@ depth <- function(
 #' @name require_depth
 #' @title Coerce to AT LEAST specified nesting depth
 #' @param x object to evaluate
-#' @param dnames character. vector of names to apply per depth level if 
-#' not already named the name entries should match the depth they are 
+#' @param dnames character. vector of names to apply per depth level if
+#' not already named the name entries should match the depth they are
 #' intended for. NULL values
 #' @param min_depth required minimum nesting depth
 #' are ignored.
@@ -69,17 +68,20 @@ depth <- function(
 #' @returns list
 #' @import checkmate
 #' @examples
-#' x = list(a = 1)
+#' x <- list(a = 1)
 #' require_depth(x, min_depth = 2L)
-#' 
+#'
 #' @export
 require_depth <- function(x, dnames = NULL, min_depth = 1L, count = 1L) {
     x_depth <- depth(x)
 
-    # if not null, dnames must be a character vector with length that covers 
-    #the min_depth
-    if (!is.null(dnames)) checkmate::assert_character(dnames, 
-                                        len = min_depth + count - x_depth - 1L)
+    # if not null, dnames must be a character vector with length that covers
+    # the min_depth
+    if (!is.null(dnames)) {
+        checkmate::assert_character(dnames,
+            len = min_depth + count - x_depth - 1L
+        )
+    }
 
     if (x_depth < min_depth) {
         depth_name <- dnames[[count]]

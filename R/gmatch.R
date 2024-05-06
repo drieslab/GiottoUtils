@@ -10,7 +10,7 @@
 #' @returns character
 #' @examples
 #' g_match_arg("raw", choices = c("raw", "normalized"))
-#' 
+#'
 #' @export
 g_match_arg <- function(arg, choices, ...) {
     args_list <- list(...)
@@ -24,8 +24,10 @@ g_match_arg <- function(arg, choices, ...) {
         silent = TRUE
     )
     if (inherits(try_val, "try-error")) {
-        stop("'arg' should be one of ", 
-            paste0('"', choices, '"', collapse = ", "))
+        stop(
+            "'arg' should be one of ",
+            paste0('"', choices, '"', collapse = ", ")
+        )
     }
     try_val
 }

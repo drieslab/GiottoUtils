@@ -65,8 +65,8 @@ to_scipy_sparse <- function(x, format = c("C", "R"), transpose = FALSE, ...) {
     )
 }
 
-.to_scipy_sparse_dgc <- function(x, format = c("C", "R"), 
-                                transpose = FALSE, ...) {
+.to_scipy_sparse_dgc <- function(x, format = c("C", "R"),
+    transpose = FALSE, ...) {
     SCP <- reticulate::import("scipy", convert = FALSE)
     if (transpose) x <- Matrix::t(x)
     if (format == "R") {
@@ -80,8 +80,8 @@ to_scipy_sparse <- function(x, format = c("C", "R"), transpose = FALSE, ...) {
     )
 }
 
-.to_scipy_sparse_dgr <- function(x, format = c("C", "R"), 
-                                transpose = FALSE, ...) {
+.to_scipy_sparse_dgr <- function(x, format = c("C", "R"),
+    transpose = FALSE, ...) {
     SCP <- reticulate::import("scipy", convert = FALSE)
     if (transpose) x <- Matrix::t(x)
     if (format == "C") {
@@ -95,8 +95,8 @@ to_scipy_sparse <- function(x, format = c("C", "R"), transpose = FALSE, ...) {
     )
 }
 
-.to_scipy_sparse_dgt <- function(x, format = c("C", "R"), 
-                                transpose = FALSE, ...) {
+.to_scipy_sparse_dgt <- function(x, format = c("C", "R"),
+    transpose = FALSE, ...) {
     if (transpose) x <- Matrix::t(x)
 
     switch(format,

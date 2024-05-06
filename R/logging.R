@@ -8,7 +8,7 @@
 #' @examples
 #' log_write(x = "my content")
 #' giottoReadLog()
-#' 
+#'
 #' @export
 giottoReadLog <- function(filepath = getOption("giotto.last_logpath", NULL)) {
     if (is.null(filepath)) {
@@ -28,7 +28,7 @@ giottoReadLog <- function(filepath = getOption("giotto.last_logpath", NULL)) {
 #' @returns a log file
 #' @examples
 #' giottoNewLog("my_log_directory")
-#' 
+#'
 #' @export
 giottoNewLog <- function(logdir) {
     # if logdir is provided, create a new log file in the specified logdir
@@ -44,10 +44,9 @@ giottoNewLog <- function(logdir) {
 # Unique .txt filename creator. Creates a base of YYYYMMDD_I on top of which a
 # prefix and suffix can be attached. The I stands for the I-th file existing
 # that was generated on this date.
-.unique_filename <- function(
-        filedir = tempdir(),
-        prefix = "giotto_",
-        suffix = NULL) {
+.unique_filename <- function(filedir = tempdir(),
+    prefix = "giotto_",
+    suffix = NULL) {
     logfile_base <- Sys.Date() %>%
         gsub(pattern = "-", replacement = "")
 
@@ -58,8 +57,10 @@ giottoNewLog <- function(logdir) {
     # loop until an unused name is found
     while (file.exists(full_path)) {
         i <- i + 1 # increment
-        full_path <- .combine_filename(filedir, logfile_base, 
-                                    prefix, suffix, i = i)
+        full_path <- .combine_filename(
+            filedir, logfile_base, prefix, suffix,
+            i = i
+        )
     }
 
     return(full_path)
@@ -131,10 +132,10 @@ giottoNewLog <- function(logdir) {
 #' @returns character
 #' @examples
 #' log_write(x = "my content")
-#' 
+#'
 #' @export
-log_write <- function(file_conn = .log_conn(), x = "", 
-                    collapse = " ", main = NULL) {
+log_write <- function(file_conn = .log_conn(), x = "",
+    collapse = " ", main = NULL) {
     on.exit(close(file_conn), add = TRUE)
 
     if (!is.null(main)) main <- str_bracket(main)

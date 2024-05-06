@@ -1,6 +1,6 @@
 #' @title Check for updates to Giotto Suite
 #' @name check_github_suite_ver
-#' @description Checks the Giotto Suite github repository and compares the 
+#' @description Checks the Giotto Suite github repository and compares the
 #' version number to the currently installed.
 #' @param pkg character. Package to check (pattern matches)
 #' @keywords internal

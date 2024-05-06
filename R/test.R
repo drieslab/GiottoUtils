@@ -43,7 +43,7 @@ list_element_exists <- function(x, index) {
 # Returns TRUE for all cases
 #' @name is_empty_char
 #' @title Test if missing or empty character
-#' @description Convenient function to test if a character input is NULL, 
+#' @description Convenient function to test if a character input is NULL,
 #' missing, or has a length of 0 (empty)
 #' @param x character vector to test (may be NULL or contain NA values)
 #' @keywords internal

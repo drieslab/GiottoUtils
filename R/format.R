@@ -12,7 +12,7 @@ NULL
 #' @returns character
 #' @examples
 #' wrap_msg("A message")
-#' 
+#'
 #' @export
 wrap_msg <- function(..., sep = " ") {
     message(wrap_txt(..., sep = sep))
@@ -23,9 +23,9 @@ wrap_msg <- function(..., sep = " ") {
 #' @name wrap_txt
 #' @param ... additional params to pass
 #' @param sep how to join elements of string (default is one space)
-#' @param strWidth externally set wrapping width. (default value of 100 
+#' @param strWidth externally set wrapping width. (default value of 100
 #' is not effected)
-#' @param errWidth default = FALSE. Set strWidth to be compatible 
+#' @param errWidth default = FALSE. Set strWidth to be compatible
 #' with error printout
 #' @param .initial character. prefix for first line
 #' @param .prefix character. prefix for later lines
@@ -33,16 +33,18 @@ wrap_msg <- function(..., sep = " ") {
 #' @returns character
 #' @examples
 #' wrap_txt("A text")
-#' 
+#'
 #' @export
-wrap_txt <- function(...,
-    sep = " ",
-    strWidth = 100,
-    errWidth = FALSE,
-    .prefix = " ",
-    .initial = "") {
-    custom_width <- ifelse(is.null(match.call()$strWidth), 
-                        yes = FALSE, no = TRUE)
+wrap_txt <- function(
+        ...,
+        sep = " ",
+        strWidth = 100,
+        errWidth = FALSE,
+        .prefix = " ",
+        .initial = "") {
+    custom_width <- ifelse(is.null(match.call()$strWidth),
+        yes = FALSE, no = TRUE
+    )
     if (!isTRUE(custom_width)) {
         if (isTRUE(errWidth)) strWidth <- getOption("width") - 6
     }
@@ -50,7 +52,7 @@ wrap_txt <- function(...,
     cat(..., sep = sep) %>%
         utils::capture.output() %>%
         strwrap(
-            prefix = .prefix, initial = .initial, # indent later lines, 
+            prefix = .prefix, initial = .initial, # indent later lines,
             # no indent first line
             width = min(80, getOption("width"), strWidth)
         ) %>%
@@ -61,10 +63,10 @@ wrap_txt <- function(...,
 #' @title Verbose message handler
 #' @name vmsg
 #' @param ... additional strings and/or elements to pass to wrap_msg
-#' @param .v verbose flag to pass. Will check options through .vopt 
-#' if NULL (default). This param is intended for passing function-level 
+#' @param .v verbose flag to pass. Will check options through .vopt
+#' if NULL (default). This param is intended for passing function-level
 #' verbose flags
-#' @param .is_debug flag as a debug print 
+#' @param .is_debug flag as a debug print
 #' (only prints when .v or .vopt is 'debug')
 #' @param .vopt global verbosity option to pull from
 #' @returns character
@@ -86,11 +88,11 @@ wrap_txt <- function(...,
 #'
 #' options("giotto.verbose" = FALSE)
 #' vmsg("Do not print by default")
-#' vmsg("Do not print by default", .v = TRUE) 
+#' vmsg("Do not print by default", .v = TRUE)
 #' # function level input overrides global option
 #' @export
-vmsg <- function(..., .v = NULL, .is_debug = FALSE, 
-                 .vopt = getOption("giotto.verbose", TRUE)) {
+vmsg <- function(..., .v = NULL, .is_debug = FALSE,
+    .vopt = getOption("giotto.verbose", TRUE)) {
     # if function-level flag is provided, override global option
     if (!is.null(.v)) {
         .vopt <- .v
@@ -147,9 +149,9 @@ vmsg <- function(..., .v = NULL, .is_debug = FALSE,
 #' to 2L for this wrapper function
 #' @param ... additional strings and/or elements to pass to wrap_msg
 #' @param sep how to join elements of string (default is one space)
-#' @param strWidth externally set wrapping width. 
+#' @param strWidth externally set wrapping width.
 #' (default value of 100 is not effected)
-#' @param errWidth default = FALSE. Set strWidth to be 
+#' @param errWidth default = FALSE. Set strWidth to be
 #' compatible with error printout
 #' @param .module character. Giotto module to send the error from
 #' @param .initial character. prefix for first line
@@ -164,25 +166,24 @@ vmsg <- function(..., .v = NULL, .is_debug = FALSE,
 #' \dontrun{
 #' gstop("My stop message", .module = "GiottoUtils")
 #' }
-#' 
+#'
 #' @export
-gstop <- function(
-        ...,
-        sep = " ",
-        strWidth = 100,
-        errWidth = FALSE,
-        .module,
-        .prefix = " ",
-        .initial = "",
-        .n = 1L,
-        .call = TRUE,
-        .warn_nstack = getOption("giotto.warn_gstop_nstack", FALSE)) {
+gstop <- function(...,
+    sep = " ",
+    strWidth = 100,
+    errWidth = FALSE,
+    .module,
+    .prefix = " ",
+    .initial = "",
+    .n = 1L,
+    .call = TRUE,
+    .warn_nstack = getOption("giotto.warn_gstop_nstack", FALSE)) {
     nf <- sys.nframe()
     if (.n > nf) {
         # send message and automatically limit to max nframes
         if (.warn_nstack) {
-            warning("[gstop] .n of ", .n, 
-                    " is greater than number of stackframes ", nf,
+            warning("[gstop] .n of ", .n,
+                " is greater than number of stackframes ", nf,
                 call. = FALSE
             )
         }
@@ -217,14 +218,15 @@ gstop <- function(
 
 
 # Use this function internal to this package
-.gstop <- function(...,
-    sep = " ",
-    strWidth = 100,
-    errWidth = FALSE,
-    .prefix = " ",
-    .initial = "",
-    .n = 1L,
-    .call = TRUE) {
+.gstop <- function(
+        ...,
+        sep = " ",
+        strWidth = 100,
+        errWidth = FALSE,
+        .prefix = " ",
+        .initial = "",
+        .n = 1L,
+        .call = TRUE) {
     gstop(...,
         sep = sep,
         strWidth = strWidth,
@@ -310,7 +312,7 @@ str_quote <- function(x) {
 #' @returns named list of characters
 #' @examples
 #' color_tag()
-#' 
+#'
 #' @export
 color_tag <- function() {
     list(
@@ -328,7 +330,7 @@ color_tag <- function() {
 #' @param x text to color
 #' @examples
 #' color_red("My text")
-#' 
+#'
 #' @export
 color_red <- function(x) {
     ct <- color_tag()
@@ -343,7 +345,7 @@ color_red <- function(x) {
 #' @param x text to color
 #' @examples
 #' color_green("My text")
-#' 
+#'
 #' @export
 color_green <- function(x) {
     ct <- color_tag()
@@ -358,7 +360,7 @@ color_green <- function(x) {
 #' @param x text to color
 #' @examples
 #' color_yellow("My text")
-#' 
+#'
 #' @export
 color_yellow <- function(x) {
     ct <- color_tag()
@@ -373,7 +375,7 @@ color_yellow <- function(x) {
 #' @param x text to color
 #' @examples
 #' color_blue("My text")
-#' 
+#'
 #' @export
 color_blue <- function(x) {
     ct <- color_tag()
@@ -388,7 +390,7 @@ color_blue <- function(x) {
 #' @param x text to color
 #' @examples
 #' color_purple("My text")
-#' 
+#'
 #' @export
 color_purple <- function(x) {
     ct <- color_tag()
@@ -403,7 +405,7 @@ color_purple <- function(x) {
 #' @param x text to color
 #' @examples
 #' color_teal("My text")
-#' 
+#'
 #' @export
 color_teal <- function(x) {
     ct <- color_tag()
@@ -421,7 +423,7 @@ color_teal <- function(x) {
 #' @keywords internal
 #' @examples
 #' use_color_text()
-#' 
+#'
 #' @export
 use_color_text <- function() {
     opt <- getOption("giotto.color_show", default = NULL)
@@ -448,7 +450,7 @@ use_color_text <- function() {
 #' @keywords internal
 #' @examples
 #' ansi_colors()
-#' 
+#'
 #' @export
 ansi_colors <- function() {
     # options
@@ -520,7 +522,7 @@ ansi_colors <- function() {
 #' @keywords internal
 #' @examples
 #' is_emacs_with_color()
-#' 
+#'
 #' @export
 is_emacs_with_color <- function() {
     (Sys.getenv("EMACS") != "" || Sys.getenv("INSIDE_EMACS") !=
@@ -534,7 +536,7 @@ is_emacs_with_color <- function() {
 #' @keywords internal
 #' @examples
 #' emacs_version()
-#' 
+#'
 #' @export
 emacs_version <- function() {
     ver <- Sys.getenv("INSIDE_EMACS")
@@ -596,7 +598,7 @@ degrees <- function(rad) {
 #' @returns character
 #' @examples
 #' time_format(90)
-#' 
+#'
 #' @export
 time_format <- function(secs) {
     if (secs > 60) {

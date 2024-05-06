@@ -6,7 +6,7 @@
 #' @returns character
 #' @examples
 #' file_extension("my_file.txt")
-#' 
+#'
 #' @export
 file_extension <- function(file) {
     ex <- strsplit(basename(file), split = ".", fixed = TRUE)[[1L]]
@@ -26,19 +26,18 @@ file_extension <- function(file) {
 #' @returns A data.table
 #' @examples
 #' \dontrun{
-#' x = data.frame(a = c("a","b","c"), b = 1:3, c = 5:7)
+#' x <- data.frame(a = c("a", "b", "c"), b = 1:3, c = 5:7)
 #' write.csv(x, "my_file.csv")
-#' fread_colmatch("my_file.csv", col = "a", values_to_match = c(1,3))
+#' fread_colmatch("my_file.csv", col = "a", values_to_match = c(1, 3))
 #' }
-#' 
+#'
 #' @export
-fread_colmatch <- function(
-        file,
-        col,
-        sep = NULL,
-        values_to_match,
-        verbose = FALSE,
-        ...) {
+fread_colmatch <- function(file,
+    col,
+    sep = NULL,
+    values_to_match,
+    verbose = FALSE,
+    ...) {
     package_check("data.table", repository = "CRAN")
 
     # get colnames
@@ -59,8 +58,10 @@ fread_colmatch <- function(
 
     # create grep search
     pattern <- paste(values_to_match, collapse = "|")
-    gpat <- paste0("'", strrep(x = sep, times = col_num - 1), 
-                "(", pattern, "),' ")
+    gpat <- paste0(
+        "'", strrep(x = sep, times = col_num - 1),
+        "(", pattern, "),' "
+    )
     fread_cmd <- paste0("grep -E ", gpat, file)
     if (isTRUE(verbose)) print(fread_cmd)
 
