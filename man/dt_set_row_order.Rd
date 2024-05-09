@@ -18,8 +18,8 @@ A data.table
 Set specific data.table row order
 }
 \examples{
-x = data.table::data.table(x = c("a","b","c"), y = 1:3, z = 5:7)
-dt_set_row_order(x, neworder = c(1,3,2))
+x <- data.table::data.table(x = c("a", "b", "c"), y = 1:3, z = 5:7)
+dt_set_row_order(x, neworder = c(1, 3, 2))
 x
 
 }

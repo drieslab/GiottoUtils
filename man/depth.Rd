@@ -25,7 +25,7 @@ being layer 0
 https://stackoverflow.com/questions/13432863/
 }
 \examples{
-x = list(a = 1)
+x <- list(a = 1)
 depth(x)
 
 }

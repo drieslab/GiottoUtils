@@ -2,9 +2,19 @@
 % Please edit documentation in R/format.R
 \name{wrap_txt}
 \alias{wrap_txt}
+\alias{wrap_txtf}
 \title{Wrap text}
 \usage{
 wrap_txt(
+  ...,
+  sep = " ",
+  strWidth = 100,
+  errWidth = FALSE,
+  .prefix = " ",
+  .initial = ""
+)
+
+wrap_txtf(
   ...,
   sep = " ",
   strWidth = 100,
@@ -35,6 +45,24 @@ character
 Wrap text
 }
 \examples{
-wrap_txt("A text")
+cat(wrap_txt("A text"))
+cat(wrap_txt(
+    "Newlines are obeyed.
+    The first line is not indented by default.
+    later lines are indented by default.
+    
+    The text is also wrapped to either a default max width of 100 char
+    or the width of the console, whichever is smaller.
+    
+    More than one item passed will be concatenated in the same way
+    that cat() does."
+))
+
+cat(wrap_txtf(
+    "This function works the same way as \%s, but instead
+    of concatenating all elements in the way that \%s usually
+    does, it uses \%s formatting.",
+    "wrap_txt()", "cat()", "sprintf()"
+))
 
 }

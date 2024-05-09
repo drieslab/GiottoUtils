@@ -22,7 +22,7 @@ A data.table
 fast sorting and pasting of 2 character columns in a data.table
 }
 \examples{
-x = data.table::data.table(x = 1:3, y = 5:7)
+x <- data.table::data.table(x = 1:3, y = 5:7)
 dt_sort_combine_two_columns(x, column1 = "x", column2 = "y")
 x
 

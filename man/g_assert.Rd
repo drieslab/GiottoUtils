@@ -61,7 +61,7 @@ g_assert(
     msg = c(.name, "must be of class data.table, not", class(x)),
     n = 0
 )
-x = data.table::data.table(x = 1:3, y = 1:3)
+x <- data.table::data.table(x = 1:3, y = 1:3)
 assert_dt(x, n = 0)
 
 write.table(data.frame(x = 1, y = 1), "my_file.txt")

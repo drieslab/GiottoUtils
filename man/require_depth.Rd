@@ -25,7 +25,7 @@ list
 Coerce to AT LEAST specified nesting depth
 }
 \examples{
-x = list(a = 1)
+x <- list(a = 1)
 require_depth(x, min_depth = 2L)
 
 }

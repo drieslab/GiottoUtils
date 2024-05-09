@@ -47,6 +47,6 @@ vmsg("Print by default")
 
 options("giotto.verbose" = FALSE)
 vmsg("Do not print by default")
-vmsg("Do not print by default", .v = TRUE) 
+vmsg("Do not print by default", .v = TRUE)
 # function level input overrides global option
 }
