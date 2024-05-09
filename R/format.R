@@ -32,7 +32,18 @@ wrap_msg <- function(..., sep = " ") {
 #' @import utils
 #' @returns character
 #' @examples
-#' wrap_txt("A text")
+#' cat(wrap_txt("A text"))
+#' cat(wrap_txt(
+#'     "Newlines are obeyed.
+#'     The first line is not indented by default.
+#'     later lines are indented by default.
+#'     
+#'     The text is also wrapped to either a default max width of 100 char
+#'     or the width of the console, whichever is smaller.
+#'     
+#'     More than one item passed will be concatenated in the same way
+#'     that cat() does."
+#' ))
 #'
 #' @export
 wrap_txt <- function(
@@ -50,6 +61,41 @@ wrap_txt <- function(
     }
 
     cat(..., sep = sep) %>%
+        utils::capture.output() %>%
+        strwrap(
+            prefix = .prefix, initial = .initial, # indent later lines,
+            # no indent first line
+            width = min(80, getOption("width"), strWidth)
+        ) %>%
+        paste(collapse = "\n")
+}
+
+#' @rdname wrap_txt
+#' @examples
+#' cat(wrap_txtf(
+#'     "This function works the same way as %s, but instead
+#'     of concatenating all elements in the way that %s usually
+#'     does, it uses %s formatting.",
+#'     "wrap_txt()", "cat()", "sprintf()"
+#' ))
+#' 
+#' @export
+wrap_txtf <- function(
+        ...,
+        sep = " ",
+        strWidth = 100,
+        errWidth = FALSE,
+        .prefix = " ",
+        .initial = ""
+) {
+    custom_width <- ifelse(is.null(match.call()$strWidth),
+                           yes = FALSE, no = TRUE
+    )
+    if (!isTRUE(custom_width)) {
+        if (isTRUE(errWidth)) strWidth <- getOption("width") - 6
+    }
+    
+    cat(sprintf(...), sep = sep) %>%
         utils::capture.output() %>%
         strwrap(
             prefix = .prefix, initial = .initial, # indent later lines,

@@ -1,9 +1,10 @@
 
-# GiottoUtils 0.1.6 (2024/05/06)
+# GiottoUtils 0.1.6 (2024/05/08)
 
 ## New
 - `%null%`, `%na%`, and `%none%` infix operators for setting a default value when an object is, respectively, NULL, NA, or length of 0.
 - `local_seed()` for transiently setting a seed only for the duration of a function
+- `wrap_txtf()` variant of `wrap_txt()` that uses `sprintf()` formatting
 
 ## Enhancement
 - `dt_to_matrix()` now chunks the conversion to `Matrix` to avoid memory issues
