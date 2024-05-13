@@ -17,6 +17,9 @@ getMonochromeColors(col, n = 256L, ...)
     \item{\code{}}{}
   }}
 }
+\value{
+character vector
+}
 \description{
 Create color scaling for a single color starting from black
 }

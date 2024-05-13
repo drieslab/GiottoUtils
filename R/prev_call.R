@@ -14,9 +14,10 @@ get_prev_call <- function(toplevel = 1L) {
 }
 
 
-# Determine the name of the function n levels above the current evaluation frame,
-# where n is toplevel - 1
+# Determine the name of the function n levels above the current evaluation
+# frame, where n is toplevel - 1
 #' @describeIn prev_call Get previous call function name
+#' @returns character
 #' @export
 get_prev_fname <- function(toplevel = 3L) {
     as.character(sys.call(-toplevel)[[1]])
@@ -90,11 +91,22 @@ get_args <- function(toplevel = 2L, verbose = FALSE) {
 }
 
 #' @describeIn prev_call Get call args as named list
+#' @param keep character. When NULL, all params are captured. If not NULL,
+#' specifies which params to capture.
 #' @param \dots additional params to capture
+#' @examples
+#' a <- function(x = 1, y = 2, ...) {
+#'     get_args_list(...)
+#' }
+#'
+#' a(z = 3, keep = "y")
 #' @export
-get_args_list <- function(toplevel = 1L, ...) {
-    c(
-        as.list(as.environment(parent.frame(toplevel))),
-        list(...)
-    )
+get_args_list <- function(toplevel = 1L, keep = NULL, ...) {
+    a <- as.list(as.environment(parent.frame(toplevel)))
+
+    if (!is.null(keep)) {
+        a <- a[names(a) %in% keep]
+    }
+
+    c(a, list(...))
 }

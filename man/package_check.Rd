@@ -25,6 +25,9 @@ and only \code{message()} will be sent if FALSE.}
 
 \item{custom_msg}{custom message to be sent instead of default error or message}
 }
+\value{
+character
+}
 \description{
 check if package is available and provide installation instruction if not available
 }

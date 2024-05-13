@@ -36,6 +36,9 @@ is_emacs_with_color()
 
 emacs_version()
 }
+\arguments{
+\item{x}{text to color}
+}
 \value{
 named list of characters
 }
@@ -57,4 +60,28 @@ supported colors checking is modified from \pkg{cli}
 \item \code{emacs_version()}: Determine emacs version
 
 }}
+\examples{
+color_tag()
+
+color_red("My text")
+
+color_green("My text")
+
+color_yellow("My text")
+
+color_blue("My text")
+
+color_purple("My text")
+
+color_teal("My text")
+
+use_color_text()
+
+ansi_colors()
+
+is_emacs_with_color()
+
+emacs_version()
+
+}
 \keyword{internal}

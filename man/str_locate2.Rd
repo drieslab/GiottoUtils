@@ -7,7 +7,8 @@
 str_locate2(string, pattern)
 }
 \arguments{
-\item{string}{Input vector. Either a character vector, or something coercible to one.}
+\item{string}{Input vector. Either a character vector, or something
+coercible to one.}
 
 \item{pattern}{Pattern to look for.}
 }

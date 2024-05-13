@@ -7,7 +7,8 @@
 #' match, and the second column, end, gives the position of the end.
 #' @description
 #' Implementation of \pkg{stringr}'s `str_locate` with base R.
-#' @param string Input vector. Either a character vector, or something coercible to one.
+#' @param string Input vector. Either a character vector, or something
+#' coercible to one.
 #' @param pattern Pattern to look for.
 #' @examples
 #' fruit <- c("apple", "banana", "pear", "pineapple")
@@ -25,13 +26,21 @@ str_locate2 <- function(string, pattern) {
     }
 
     # recycle
-    if (length(pattern) != length(string)) pattern <- rep(pattern, length(string))
+    if (length(pattern) != length(string)) {
+        pattern <- rep(
+            pattern,
+            length(string)
+        )
+    }
 
     out <- lapply(seq_along(string), function(i) {
         res <- regexpr(pattern = pattern[[i]], text = string[[i]])
         .start <- res[1]
         .end <- attr(res, "match.length") - 1L + .start
-        matrix(c(.start, .end), ncol = 2, dimnames = list(NULL, c("start", "end")))
+        matrix(c(.start, .end), ncol = 2, dimnames = list(
+            NULL,
+            c("start", "end")
+        ))
     })
 
     out <- Reduce(rbind, out)

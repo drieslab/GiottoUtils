@@ -9,9 +9,12 @@ is_empty_char(x)
 \arguments{
 \item{x}{character vector to test (may be NULL or contain NA values)}
 }
+\value{
+boolean
+}
 \description{
-Convenient function to test if a character input is NULL, missing,
-or has a length of 0 (empty)
+Convenient function to test if a character input is NULL,
+missing, or has a length of 0 (empty)
 }
 \examples{
 is_empty_char(NULL)

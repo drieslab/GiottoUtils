@@ -13,12 +13,20 @@ depth(this, method = c("max", "min"), sig = "data.frame")
 
 \item{sig}{signature or class to check for. Default is 'data.frame'}
 }
+\value{
+numeric
+}
 \description{
 Recursively determines how many max or min layers of subnesting
 there is, with the end object (defined by param sig or a list of length 0)
 being layer 0
 }
 \details{
-https://stackoverflow.com/questions/13432863/determine-level-of-nesting-in-r
+https://stackoverflow.com/questions/13432863/
+}
+\examples{
+x <- list(a = 1)
+depth(x)
+
 }
 \keyword{internal}

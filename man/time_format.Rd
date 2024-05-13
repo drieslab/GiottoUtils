@@ -9,9 +9,16 @@ time_format(secs)
 \arguments{
 \item{secs}{numeric. seconds}
 }
+\value{
+character
+}
 \description{
 Format time for printing
 }
 \details{
 Code from \code{\link[data.table]{timetaken}}
+}
+\examples{
+time_format(90)
+
 }

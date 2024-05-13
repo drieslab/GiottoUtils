@@ -9,6 +9,9 @@ lifecycle_badge(stage = "stable")
 \arguments{
 \item{stage}{character. 'stable', 'experimental', 'deprecated', or 'superseded'}
 }
+\value{
+markdown
+}
 \description{
 Generate markdown needed for lifecycle badges that help communicate stability
 of functions in documentation when added in backticks as shown below.

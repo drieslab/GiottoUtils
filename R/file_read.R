@@ -1,8 +1,12 @@
-#' @name file_extention
-#' @title Get file extention
+#' @name file_extension
+#' @title Get file extension
 #' @description
-#' Get the file extention from a provided filepath
+#' Get the file extension from a provided filepath
 #' @param file character. Filepath
+#' @returns character
+#' @examples
+#' file_extension("my_file.txt")
+#'
 #' @export
 file_extension <- function(file) {
     ex <- strsplit(basename(file), split = ".", fixed = TRUE)[[1L]]
@@ -19,6 +23,14 @@ file_extension <- function(file) {
 #' @param verbose whether to print the grep command
 #' @param ... additional parameters to pass to \code{\link[data.table]{fread}}
 #' @keywords internal
+#' @returns A data.table
+#' @examples
+#' \dontrun{
+#' x <- data.frame(a = c("a", "b", "c"), b = 1:3, c = 5:7)
+#' write.csv(x, "my_file.csv")
+#' fread_colmatch("my_file.csv", col = "a", values_to_match = c(1, 3))
+#' }
+#'
 #' @export
 fread_colmatch <- function(file,
     col,
@@ -46,7 +58,10 @@ fread_colmatch <- function(file,
 
     # create grep search
     pattern <- paste(values_to_match, collapse = "|")
-    gpat <- paste0("'", strrep(x = sep, times = col_num - 1), "(", pattern, "),' ")
+    gpat <- paste0(
+        "'", strrep(x = sep, times = col_num - 1),
+        "(", pattern, "),' "
+    )
     fread_cmd <- paste0("grep -E ", gpat, file)
     if (isTRUE(verbose)) print(fread_cmd)
 

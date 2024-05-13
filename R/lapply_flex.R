@@ -10,6 +10,10 @@
 #' @param fun deprecated. Backwards compatibility for FUN
 #' @param ... other arguments to pass
 #' @keywords internal
+#' @returns list
+#' @examples
+#' lapply_flex(list(x = 1, y = 2), FUN = log)
+#'
 #' @export
 lapply_flex <- function(X,
     FUN,
@@ -37,7 +41,10 @@ lapply_flex <- function(X,
     cores <- determine_cores(cores)
 
     # future_lapply call
-    save_list <- future.apply::future_lapply(X = X, FUN = FUN, future.seed = future.seed, ...)
+    save_list <- future.apply::future_lapply(
+        X = X, FUN = FUN,
+        future.seed = future.seed, ...
+    )
 
     # if(os == 'unix') {
     #  save_list = parallel::mclapply(X = X, mc.cores = cores,

@@ -11,6 +11,21 @@
 \alias{mixedsort}
 \alias{mixedorder}
 \title{Objects exported from other packages}
+\value{
+argument marked as deprecated
+
+boolean
+
+NULL, invisibly.
+
+NULL, invisibly.
+
+NULL, invisibly.
+
+A sorted vector
+
+vector giving the sort order of the input elements
+}
 \seealso{
 Other lifecycle: 
 \code{\link{lifecycle_badge}()}

@@ -4,6 +4,11 @@
 #' @title Read from the last generated log file
 #' @param filepath character. filepath to log file. If omitted, tries to find the
 #' last created log (will not work after a crash)
+#' @returns character
+#' @examples
+#' log_write(x = "my content")
+#' giottoReadLog()
+#'
 #' @export
 giottoReadLog <- function(filepath = getOption("giotto.last_logpath", NULL)) {
     if (is.null(filepath)) {
@@ -20,6 +25,10 @@ giottoReadLog <- function(filepath = getOption("giotto.last_logpath", NULL)) {
 #' @param logdir (optional) specific directory in which to generate logfiles.
 #' If not provided, will choose a directory based on
 #' `getOption("giotto.logdir", tempdir())`
+#' @returns a log file
+#' @examples
+#' giottoNewLog("my_log_directory")
+#'
 #' @export
 giottoNewLog <- function(logdir) {
     # if logdir is provided, create a new log file in the specified logdir
@@ -48,7 +57,10 @@ giottoNewLog <- function(logdir) {
     # loop until an unused name is found
     while (file.exists(full_path)) {
         i <- i + 1 # increment
-        full_path <- .combine_filename(filedir, logfile_base, prefix, suffix, i = i)
+        full_path <- .combine_filename(
+            filedir, logfile_base, prefix, suffix,
+            i = i
+        )
     }
 
     return(full_path)
@@ -66,6 +78,7 @@ giottoNewLog <- function(logdir) {
 #' @description
 #' Set the Giotto logging directory. New logfiles will be generated here.
 #' @param logdir character. Directory to log to (defaults to tempdir)
+#' @returns internal setting of option giotto.logdir
 #' @keywords internal
 .log_dir <- function(logdir = tempdir()) {
     options("giotto.logdir" = logdir)
@@ -79,6 +92,7 @@ giottoNewLog <- function(logdir) {
 #' is provided, it defaults to `tempdir()`, but a specific one can be provided
 #' by setting it to the "giotto.logdir" option or using `.log_dir()`.
 #' The filepath is additionally written to the option 'giotto.last_logpath'.
+#' @returns file 'log.txt'
 #' @keywords internal
 .log_create <- function(filedir = getOption("giotto.logdir", tempdir())) {
     if (!dir.exists(filedir)) dir.create(filedir, recursive = TRUE)
@@ -96,6 +110,7 @@ giottoNewLog <- function(logdir) {
 #' @param filepath path to the logfile
 #' @description Create an active file connection object to the logfile to
 #' write to. Opens it in mode "a+" which allows both appending and reading.
+#' @returns file connection
 #' @keywords internal
 .log_conn <- function(filepath = getOption("giotto.last_logpath", NULL)) {
     if (is.null(filepath)) {
@@ -114,8 +129,13 @@ giottoNewLog <- function(logdir) {
 #' @param x character vector. Content to write
 #' @param collapse character. Collapse to use with `x`
 #' @param main character. Title to assign log entry
+#' @returns character
+#' @examples
+#' log_write(x = "my content")
+#'
 #' @export
-log_write <- function(file_conn = .log_conn(), x = "", collapse = " ", main = NULL) {
+log_write <- function(file_conn = .log_conn(), x = "",
+    collapse = " ", main = NULL) {
     on.exit(close(file_conn), add = TRUE)
 
     if (!is.null(main)) main <- str_bracket(main)
