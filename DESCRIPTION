@@ -33,7 +33,7 @@ Imports:
     magrittr,
     methods,
     checkmate,
-    utils (>= 4.4.0)
+    utils (>= 3.5.0)
 Suggests:
     future.apply,
     Matrix,
