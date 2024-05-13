@@ -7,7 +7,7 @@
 - `wrap_txtf()` variant of `wrap_txt()` that uses `sprintf()` formatting
 
 ## Enhancement
-- `dt_to_matrix()` now chunks the conversion to `Matrix` to avoid memory issues
+- `dt_to_matrix()` can now chunk the conversion to `Matrix` to avoid memory issues
 - `get_args_list()` now has a `keep` param that allows selection of which collected args to keep
 
 
