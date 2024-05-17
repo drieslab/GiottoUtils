@@ -37,6 +37,11 @@ cat(wrap_txt("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ei
              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."))
 ```
 
+You can also use sprintf formatting using `wrap_txtf`
+```{r}
+wrap_txtf("%s morning", "good")
+```
+
 <details> <summary>See base behavior</summary>
 Base functions for console prints lack text wrapping. Linebreaks also require usage of "\\n" to be formatted as expected.
 
