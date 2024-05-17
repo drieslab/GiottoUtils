@@ -9,8 +9,14 @@ check_github_suite_ver(pkg = "Giotto")
 \arguments{
 \item{pkg}{character. Package to check (pattern matches)}
 }
+\value{
+Message indicating a new version available, otherwise returns NULL
+}
 \description{
-Checks the Giotto Suite github repository and compares the version
-number to the currently installed.
+Checks the Giotto Suite github repository and compares the
+version number to the currently installed.
+}
+\examples{
+check_github_suite_ver("GiottoUtils")
 }
 \keyword{internal}

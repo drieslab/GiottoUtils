@@ -14,26 +14,32 @@ vmsg(
 \arguments{
 \item{...}{additional strings and/or elements to pass to wrap_msg}
 
-\item{.v}{verbose flag to pass. Will check options through .vopt if NULL (default).}
+\item{.v}{verbose flag to pass. Will check options through .vopt
+if NULL (default). This param is intended for passing function-level
+verbose flags}
 
-\item{.is_debug}{flag as a debug print (only prints when .v or .vopt is 'debug')}
+\item{.is_debug}{flag as a debug print
+(only prints when .v or .vopt is 'debug')}
 
 \item{.vopt}{global verbosity option to pull from}
+}
+\value{
+character
 }
 \description{
 Verbose message handler
 }
 \examples{
 # common usage (.v is logical)
-vmsg('print me', .v = TRUE)
-vmsg('dont print me', .v = FALSE)
+vmsg("print me", .v = TRUE)
+vmsg("dont print me", .v = FALSE)
 
 # debug messages (.v == "debug")
 # flag as a debug message using .is_debug = TRUE
-vmsg('I am a debug message', .is_debug = TRUE, .v = TRUE) # no print
-vmsg('I am a debug message', .is_debug = TRUE, .v = "debug") # prints
+vmsg("I am a debug message", .is_debug = TRUE, .v = TRUE) # no print
+vmsg("I am a debug message", .is_debug = TRUE, .v = "debug") # prints
 
-vmsg('print me', .v = 'debug') # also prints non-debug messages
+vmsg("print me", .v = "debug") # also prints non-debug messages
 
 # with global option
 options("giotto.verbose" = TRUE)
@@ -41,5 +47,6 @@ vmsg("Print by default")
 
 options("giotto.verbose" = FALSE)
 vmsg("Do not print by default")
-vmsg("Do not print by default", .v = TRUE) # function level input overrides global option
+vmsg("Do not print by default", .v = TRUE)
+# function level input overrides global option
 }

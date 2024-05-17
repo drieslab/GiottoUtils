@@ -10,44 +10,49 @@
 #' @param fun deprecated. Backwards compatibility for FUN
 #' @param ... other arguments to pass
 #' @keywords internal
+#' @returns list
+#' @examples
+#' lapply_flex(list(x = 1, y = 2), FUN = log)
+#'
 #' @export
-lapply_flex = function(X,
-                       FUN,
-                       cores = NA,
-                       future.seed = TRUE,
-                       fun = NULL,
-                       ...) {
+lapply_flex <- function(X,
+    FUN,
+    cores = NA,
+    future.seed = TRUE,
+    fun = NULL,
+    ...) {
+    # a simple wrapper for future.apply::future_lapply
+    # probably does not need any additional changes
 
-  # a simple wrapper for future.apply::future_lapply
-  # probably does not need any additional changes
-
-  # potential addition:
-  # check if future::plan() was already set by user
-  # if not, set plan(multisession, workers = cores) by default
+    # potential addition:
+    # check if future::plan() was already set by user
+    # if not, set plan(multisession, workers = cores) by default
 
 
-  # backwards compatible with previous version
-  if(!is.null(fun)) {
-    FUN = fun
-  }
+    # backwards compatible with previous version
+    if (!is.null(fun)) {
+        FUN <- fun
+    }
 
-  # get type of os
-  os = .Platform$OS.type
+    # get type of os
+    os <- .Platform$OS.type
 
-  # set number of cores automatically, but with limit of 10
-  cores = determine_cores(cores)
+    # set number of cores automatically, but with limit of 10
+    cores <- determine_cores(cores)
 
-  # future_lapply call
-  save_list = future.apply::future_lapply(X = X, FUN = FUN, future.seed = future.seed, ...)
+    # future_lapply call
+    save_list <- future.apply::future_lapply(
+        X = X, FUN = FUN,
+        future.seed = future.seed, ...
+    )
 
-  #if(os == 'unix') {
-  #  save_list = parallel::mclapply(X = X, mc.cores = cores,
-  #                                 FUN = fun, ...)
-  #} else if(os == 'windows') {
-  #  save_list = parallel::mclapply(X = X, mc.cores = 1,
-  #                                 FUN = fun, ...)
-  #}
+    # if(os == 'unix') {
+    #  save_list = parallel::mclapply(X = X, mc.cores = cores,
+    #                                 FUN = fun, ...)
+    # } else if(os == 'windows') {
+    #  save_list = parallel::mclapply(X = X, mc.cores = 1,
+    #                                 FUN = fun, ...)
+    # }
 
-  return(save_list)
+    return(save_list)
 }
-

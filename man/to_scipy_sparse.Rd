@@ -16,8 +16,24 @@ for Compressed Sparse Row matrix representations}
 
 \item{\dots}{additional params to pass to \verb{scipy.sparse.cs*_matrix()}}
 }
+\value{
+scipy sparse representation
+}
 \description{
 Convert an R \pkg{Matrix} sparse matrix representation to python scipy
 sparse format. Inspired by the implementation in \pkg{nmslibR}. Currently
 works only for \code{matrix}, \code{dgCMatrix}, \code{dgRMatrix}, and \code{dgTMatrix}
+}
+\examples{
+# example data
+m <- matrix(data = 0L, nrow = 400, ncol = 300)
+m[sample(400, 100), sample(300, 100)] <- runif(100, max = 10)
+dgc <- Matrix::rsparsematrix(nrow = 400L, ncol = 300L, density = 0.1)
+
+# some conversions
+py_m_c <- to_scipy_sparse(m, format = "C")
+py_m_r_t <- to_scipy_sparse(m, format = "R", transpose = TRUE)
+
+py_dgc_c <- to_scipy_sparse(dgc, format = "C")
+py_dgc_r <- to_scipy_sparse(dgc, format = "R")
 }

@@ -12,11 +12,11 @@ g_assert(x, test, msg = NULL, n = 2L, ...)
 
 assert_giotto(gobject, n = 1L, ...)
 
-assert_dt(x)
+assert_dt(x, n = 2L)
 
-assert_file(x)
+assert_file(x, n = 2L)
 
-assert_numeric(x)
+assert_numeric(x, n = 2L)
 }
 \arguments{
 \item{x}{object to test}
@@ -33,6 +33,9 @@ will send the name of object being tested in the stack frame referenced by
 
 \item{gobject}{giotto object}
 }
+\value{
+A character message
+}
 \description{
 Framework to perform assertions and provide informative errors
 about both the input object and the test that was performed. Functions for
@@ -40,7 +43,8 @@ specific checks and messages can be built using this base function.
 }
 \section{Functions}{
 \itemize{
-\item \code{assert_giotto()}: Test for whether supplied object is a \code{giotto} object
+\item \code{assert_giotto()}: Test for whether supplied object is a \code{giotto}
+object
 
 \item \code{assert_dt()}: Test whether input is a data.table object
 
@@ -50,12 +54,22 @@ specific checks and messages can be built using this base function.
 
 }}
 \examples{
-\dontrun{
+x <- data.table::data.table(a = 1:3, b = 5:7)
 g_assert(
-  x,
-  test = inherits(x, "data.table"),
-  msg = c(.name, "must be of class data.table, not", class(x))
+    x,
+    test = inherits(x, "data.table"),
+    msg = c(.name, "must be of class data.table, not", class(x)),
+    n = 0
 )
-}
+x <- data.table::data.table(x = 1:3, y = 1:3)
+assert_dt(x, n = 0)
+
+write.table(data.frame(x = 1, y = 1), "my_file.txt")
+x <- "my_file.txt"
+assert_file(x, n = 0)
+
+x <- 1
+assert_numeric(x, n = 0)
+
 }
 \keyword{internal}

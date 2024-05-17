@@ -9,6 +9,9 @@
 \arguments{
 \item{filedir}{character. Directory to create a logfile}
 }
+\value{
+file 'log.txt'
+}
 \description{
 Creates a file called 'log.txt' at the specified directory. If no directory
 is provided, it defaults to \code{tempdir()}, but a specific one can be provided

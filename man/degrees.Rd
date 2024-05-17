@@ -14,6 +14,9 @@ degrees(rad)
 
 \item{rad}{radians}
 }
+\value{
+numeric
+}
 \description{
 Convert radians to degrees and vice versa
 }

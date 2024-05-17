@@ -13,8 +13,12 @@ is_utf8_output()
 
 box_chars()
 }
+\value{
+boolean
+}
 \description{
-Framework and functions for printing with special characters within R packages.
+Framework and functions for printing with special characters within R
+packages.
 }
 \details{
 Much inspiration taken from \pkg{fs} \href{https://rdrr.io/cran/fs/src/R/tree.R}{tree.R}
@@ -26,7 +30,16 @@ These are derived from: \href{https://github.com/r-lib/cli/blob/e9acc82b0d20fa5c
 
 \item \code{is_utf8_output()}: Determine if system is using UTF-8 encoding
 
-\item \code{box_chars()}: Helper function to print unicode box characters using escape codes.
+\item \code{box_chars()}: Helper function to print unicode box
+characters using escape codes.
 
 }}
+\examples{
+is_latex_output()
+
+is_utf8_output()
+
+box_chars()
+
+}
 \keyword{internal}

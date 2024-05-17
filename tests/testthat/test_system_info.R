@@ -1,4 +1,3 @@
-
 # test_that("get_os returns the correct operating system", {
 #   # Test on Windows
 #   if (.Platform$OS.type == "windows") {

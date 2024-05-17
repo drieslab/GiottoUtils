@@ -19,7 +19,18 @@ fread_colmatch(file, col, sep = NULL, values_to_match, verbose = FALSE, ...)
 
 \item{...}{additional parameters to pass to \code{\link[data.table]{fread}}}
 }
+\value{
+A data.table
+}
 \description{
 Fread specific rows based on column matches
+}
+\examples{
+\dontrun{
+x <- data.frame(a = c("a", "b", "c"), b = 1:3, c = 5:7)
+write.csv(x, "my_file.csv")
+fread_colmatch("my_file.csv", col = "a", values_to_match = c(1, 3))
+}
+
 }
 \keyword{internal}

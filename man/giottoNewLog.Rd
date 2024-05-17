@@ -11,6 +11,13 @@ giottoNewLog(logdir)
 If not provided, will choose a directory based on
 \code{getOption("giotto.logdir", tempdir())}}
 }
+\value{
+a log file
+}
 \description{
 Create a new Giotto log
+}
+\examples{
+giottoNewLog("my_log_directory")
+
 }

@@ -1,9 +1,9 @@
 Package: GiottoUtils
 Title: Giotto Suite Utilities
-Version: 0.1.5
+Version: 0.1.7
 Authors@R: c(
 	person("Ruben", "Dries", email = "rubendries@gmail.com",
-		 role = c("aut", "cre")),
+		 role = c("aut", "cre"), comment = c(ORCID = "0000-0001-7650-7754")),
 	person("Jiaji", "George Chen", email = "jiajic@bu.edu",
 		 role = c("aut")),
 	person("Joselyn C.", "Chávez-Fuentes", email = "joselynchavezf@gmail.com",
@@ -15,27 +15,26 @@ Authors@R: c(
 	person("Edward", "Ruiz", email = "ecruiz@bu.edu",
 		 role = c("aut"))
 	)
-Maintainer: Ruben Dries <rubendries@gmail.com>
 Description: Utility functions and imports for Giotto Suite.
-License: GPL (>= 3)
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 URL: https://drieslab.github.io/Giotto/, https://github.com/drieslab/Giotto, https://drieslab.github.io/GiottoUtils/
 BugReports: https://github.com/drieslab/Giotto/issues
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Depends:
     base (>= 3.5.0),
     R (>= 3.5.0)
 Imports:
-    checkmate,
     data.table,
     gtools,
     lifecycle,
     magrittr,
     methods,
+    checkmate,
     utils (>= 3.5.0)
-Suggests: 
+Suggests:
     future.apply,
     Matrix,
     knitr,
@@ -54,6 +53,7 @@ Collate:
     'format.R'
     'globals.R'
     'gmatch.R'
+    'infix.R'
     'lapply_flex.R'
     'lifecycle.R'
     'logging.R'
@@ -69,3 +69,4 @@ Collate:
     'zzz.R'
 VignetteBuilder: knitr
 Config/testthat/edition: 3
+biocViews: Software, Technology, Spatial

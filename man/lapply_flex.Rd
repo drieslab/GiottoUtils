@@ -19,7 +19,14 @@ lapply_flex(X, FUN, cores = NA, future.seed = TRUE, fun = NULL, ...)
 
 \item{...}{other arguments to pass}
 }
+\value{
+list
+}
 \description{
 lapply_flex
+}
+\examples{
+lapply_flex(list(x = 1, y = 2), FUN = log)
+
 }
 \keyword{internal}

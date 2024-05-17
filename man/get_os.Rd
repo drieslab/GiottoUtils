@@ -8,8 +8,14 @@ get_os()
 }
 \value{
 character osx, linux or windows
+
+character
 }
 \description{
-return the type of operating system, see https://conjugateprior.org/2015/06/identifying-the-os-from-r/
+return the type of operating system,
+see https://conjugateprior.org/2015/06/identifying-the-os-from-r/
+}
+\examples{
+get_os()
 }
 \keyword{internal}

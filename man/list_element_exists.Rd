@@ -17,4 +17,10 @@ boolean
 \description{
 Test if nth element of list exists
 }
+\examples{
+a <- list()
+length(a) <- 4
+list_element_exists(a, 5)
+list_element_exists(a, 4)
+}
 \keyword{internal}
