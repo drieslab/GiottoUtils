@@ -4,6 +4,9 @@
     <loc>https://drieslab.github.io/GiottoUtils/404.html</loc>
   </url>
   <url>
+    <loc>https://drieslab.github.io/GiottoUtils/LICENSE-text.html</loc>
+  </url>
+  <url>
     <loc>https://drieslab.github.io/GiottoUtils/LICENSE.html</loc>
   </url>
   <url>
@@ -61,7 +64,7 @@
     <loc>https://drieslab.github.io/GiottoUtils/reference/dt_to_matrix.html</loc>
   </url>
   <url>
-    <loc>https://drieslab.github.io/GiottoUtils/reference/file_extention.html</loc>
+    <loc>https://drieslab.github.io/GiottoUtils/reference/file_extension.html</loc>
   </url>
   <url>
     <loc>https://drieslab.github.io/GiottoUtils/reference/fread_colmatch.html</loc>
@@ -109,6 +112,9 @@
     <loc>https://drieslab.github.io/GiottoUtils/reference/list_element_exists.html</loc>
   </url>
   <url>
+    <loc>https://drieslab.github.io/GiottoUtils/reference/local_seed.html</loc>
+  </url>
+  <url>
     <loc>https://drieslab.github.io/GiottoUtils/reference/log_write.html</loc>
   </url>
   <url>
@@ -128,6 +134,9 @@
   </url>
   <url>
     <loc>https://drieslab.github.io/GiottoUtils/reference/require_depth.html</loc>
+  </url>
+  <url>
+    <loc>https://drieslab.github.io/GiottoUtils/reference/set_if.html</loc>
   </url>
   <url>
     <loc>https://drieslab.github.io/GiottoUtils/reference/special_characters.html</loc>
