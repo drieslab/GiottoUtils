@@ -1,8 +1,9 @@
 
-# GiottoUtils 0.1.7 (2024/05/13)
+# GiottoUtils 0.1.8 (2024/05/22)
 
 ## New
 - `wrap_txtf()` variant of `wrap_txt()` that uses `sprintf()` formatting
+- `init_option()` for setting an option if it does not exist
 
 ## Enhancement
 - `dt_to_matrix()` can now chunk the conversion to `Matrix` to avoid memory issues
