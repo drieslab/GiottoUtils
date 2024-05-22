@@ -21,4 +21,9 @@
         if (hasDT) data.table::setDTthreads(threads = cores)
         options("giotto.check_core" = FALSE)
     }
+
+    # options #
+    init_option("giotto.verbose", TRUE)
+    init_option("giotto.logdir", tempdir())
+
 }
