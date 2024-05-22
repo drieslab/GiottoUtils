@@ -58,6 +58,7 @@ Collate:
     'lifecycle.R'
     'logging.R'
     'mixedsort.R'
+    'options.R'
     'pipe.R'
     'pkg_check.R'
     'prev_call.R'

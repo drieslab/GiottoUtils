@@ -12,7 +12,7 @@
 #' @returns NULL invisibly
 #' @export
 init_option <- function(x, value) {
-    if (!is.null(options(x))) {
+    if (x %in% names(options())) {
         return(invisible())
     }
 
