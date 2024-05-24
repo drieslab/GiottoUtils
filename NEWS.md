@@ -1,4 +1,9 @@
 
+# GiottoUtils 0.1.9
+
+## New
+- `deprecate_param()` utility function for streamlining code
+
 # GiottoUtils 0.1.8 (2024/05/22)
 
 ## New
