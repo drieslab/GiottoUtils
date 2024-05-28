@@ -39,7 +39,7 @@ compatible with error printout}
 \item{.call}{logical, whether to include the call selected through .n as the
 location where the error was. Default is TRUE}
 
-\item{.warn_nstack}{logica. whether to warn when there are insufficient
+\item{.warn_nstack}{logical. whether to warn when there are insufficient
 stackframes for requested .n (default = FALSE)}
 }
 \value{
@@ -53,8 +53,8 @@ this framework for each module using it. The \code{.n} param should be increment
 to 2L for this wrapper function
 }
 \examples{
-\dontrun{
-gstop("My stop message", .module = "GiottoUtils")
-}
-
+try(
+    gstop("My stop message", .module = "GiottoUtils"),
+    silent = TRUE
+)
 }
