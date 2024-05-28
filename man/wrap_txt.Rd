@@ -50,10 +50,10 @@ cat(wrap_txt(
     "Newlines are obeyed.
     The first line is not indented by default.
     later lines are indented by default.
-    
+
     The text is also wrapped to either a default max width of 100 char
     or the width of the console, whichever is smaller.
-    
+
     More than one item passed will be concatenated in the same way
     that cat() does."
 ))

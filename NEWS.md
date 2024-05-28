@@ -3,6 +3,7 @@
 
 ## New
 - `deprecate_param()` utility function for streamlining code
+- `print_list()` for pretty printing of list-like objects
 
 ## Changes
 - newer github version checking refactored into `new_github_ver_avail()`
