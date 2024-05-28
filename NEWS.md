@@ -4,6 +4,9 @@
 ## New
 - `deprecate_param()` utility function for streamlining code
 
+## Changes
+- newer github version checking refactored into `new_github_ver_avail()`
+
 # GiottoUtils 0.1.8 (2024/05/22)
 
 ## New
