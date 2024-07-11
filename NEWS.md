@@ -4,6 +4,7 @@
 ## New
 - `deprecate_param()` utility function for streamlining code
 - `print_list()` for pretty printing of list-like objects
+- `from_scipy_sparse()` for conversion from scipy `csr` and `csc` to Matrix `dgCMatrix` and `dgRMatrix`
 
 ## Changes
 - newer github version checking refactored into `new_github_ver_avail()`
