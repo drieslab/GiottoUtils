@@ -37,10 +37,10 @@ wrap_msg <- function(..., sep = " ") {
 #'     "Newlines are obeyed.
 #'     The first line is not indented by default.
 #'     later lines are indented by default.
-#'     
+#'
 #'     The text is also wrapped to either a default max width of 100 char
 #'     or the width of the console, whichever is smaller.
-#'     
+#'
 #'     More than one item passed will be concatenated in the same way
 #'     that cat() does."
 #' ))
@@ -78,7 +78,7 @@ wrap_txt <- function(
 #'     does, it uses %s formatting.",
 #'     "wrap_txt()", "cat()", "sprintf()"
 #' ))
-#' 
+#'
 #' @export
 wrap_txtf <- function(
         ...,
@@ -94,7 +94,7 @@ wrap_txtf <- function(
     if (!isTRUE(custom_width)) {
         if (isTRUE(errWidth)) strWidth <- getOption("width") - 6
     }
-    
+
     cat(sprintf(...), sep = sep) %>%
         utils::capture.output() %>%
         strwrap(
@@ -205,14 +205,14 @@ vmsg <- function(..., .v = NULL, .is_debug = FALSE,
 #' @param .n stack frames back where the error happened
 #' @param .call logical, whether to include the call selected through .n as the
 #' location where the error was. Default is TRUE
-#' @param .warn_nstack logica. whether to warn when there are insufficient
+#' @param .warn_nstack logical. whether to warn when there are insufficient
 #' stackframes for requested .n (default = FALSE)
 #' @returns character message
 #' @examples
-#' \dontrun{
-#' gstop("My stop message", .module = "GiottoUtils")
-#' }
-#'
+#' try(
+#'     gstop("My stop message", .module = "GiottoUtils"),
+#'     silent = TRUE
+#' )
 #' @export
 gstop <- function(...,
     sep = " ",
@@ -341,6 +341,44 @@ str_double_quote <- function(x) {
 str_quote <- function(x) {
     paste0("\'", x, "\'")
 }
+
+
+
+#' @name print_list
+#' @title Pretty print formatting for lists and vectors
+#' @param x list of items to print. All entries must be named and have
+#' `as.character()` methods
+#' @param pre character. Optional characters to place at the head of each line
+#' @examples
+#' print_list(list())
+#' print_list(c())
+#'
+#' testvec <- seq(3)
+#' names(testvec) <- LETTERS[seq(3)]
+#' print_list(testvec)
+#'
+#' test <- list(
+#'     name1 = "1",
+#'     longername2 = "test_char",
+#'     thirdname = factor("this will be converted with as.character()")
+#' )
+#' print_list(test)
+#' print_list(test, pre = "* ")
+#' @export
+print_list <- function(x, pre = "") {
+    if (length(x) == 0) {
+        cat("<empty>\n")
+    }
+    ns <- names(x)
+    if (length(ns) != length(x)) {
+        stop("all elements must be named")
+    }
+    x <- lapply(x, as.character)
+    cat(sprintf("%s%s : %s", pre, format(ns), x), sep = "\n")
+    invisible(x)
+}
+
+
 
 
 

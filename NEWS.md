@@ -1,4 +1,14 @@
 
+# GiottoUtils 0.1.9 (2024/07/12)
+
+## New
+- `deprecate_param()` utility function for streamlining code
+- `print_list()` for pretty printing of list-like objects
+- `from_scipy_sparse()` for conversion from scipy `csr` and `csc` to Matrix `dgCMatrix` and `dgRMatrix`
+
+## Changes
+- newer github version checking refactored into `new_github_ver_avail()`
+
 # GiottoUtils 0.1.8 (2024/05/22)
 
 ## New

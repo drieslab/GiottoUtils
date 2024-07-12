@@ -20,32 +20,62 @@ check_github_suite_ver <- function(pkg = "Giotto") {
     )
 
     current_ver <- utils::packageVersion(pkg)
-    url <- paste0(
-        "https://raw.githubusercontent.com/drieslab/",
-        repo,
-        "/DESCRIPTION"
+    url <- sprintf(
+        "https://raw.githubusercontent.com/drieslab/%s/DESCRIPTION", repo
     )
-    # Return NULL if any warnings or errors due to inaccessible
-    x <- tryCatch(
-        expr = readLines(url),
-        warning = function(w) NULL,
-        error = function(e) NULL
-    )
-    if (!is.null(x)) {
-        gh_ver <- x[grep(pattern = "Version:", x)]
-        gh_ver <- gsub(pattern = "Version: ", replacement = "", gh_ver)
-        ver_compare <- utils::compareVersion(gh_ver, as.character(current_ver))
 
-        if (ver_compare == 1) {
-            wrap_msg("Newer devel version of", pkg, "on GitHub:", gh_ver)
-        }
+    new_avail <- new_github_ver_avail(
+        url = url, current_ver = current_ver
+    )
+
+    if (!is.null(new_avail)) {
+        wrap_msg("Newer devel version of", pkg, "on GitHub:", new_avail)
     }
 }
 
 
+#' @title Check if a package has newer github version
+#' @name new_github_ver_avail
+#' @description
+#' This function works by downloading the DESCRIPTION file from a github
+#' repo and then comparing the verison number with a provided value. If
+#' the download fails or the github version is not newer than what is
+#' installed, then it silently returns NULL. If the github version is newer,
+#' the new version number will be returned
+#' @param url character. url to the package to check's DESCRIPTION file.
+#' @param current_ver character. Current version to check against
+#' @examples
+#' url <- "https://raw.githubusercontent.com/drieslab/GiottoData/master/DESCRIPTION"
+#' new_github_ver_avail(url, 0.2)
+#' @returns character. Version number
+#' @export
+new_github_ver_avail <- function(
+        url, current_ver = NULL
+) {
+    # Return NULL if any warnings or errors due to inaccessible
+    descfile <- tryCatch(
+        expr = readLines(url),
+        warning = function(w) NULL,
+        error = function(e) NULL
+    )
+    # silently return NULL if not found
+    if (is.null(descfile)) return(invisible())
+
+    # parse github version number
+    gh_ver <- descfile[grep(pattern = "Version:", descfile)]
+    gh_ver <- gsub(pattern = "Version: ", replacement = "", gh_ver)
+    # see if GH version is newer
+    ver_compare <- utils::compareVersion(gh_ver, as.character(current_ver))
+
+    # silently return NULL if not newer
+    if (ver_compare != 1) return(invisible())
+
+    # return newer version number
+    return(gh_ver)
+}
 
 
-# TODO This is more similar to an assertion
+
 
 #' @title package_check
 #' @name package_check
