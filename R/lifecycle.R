@@ -62,6 +62,10 @@ lifecycle_badge <- function(stage = "stable") {
 #' @param fun character. Name of function
 #' @param when character. Version number in which the deprecation happened.
 #' @param check character. Method to check if deprecated param was used
+#' @param always If FALSE, the default, will warn every 8 hours. If TRUE, will
+#'  always warn in direct usages. Indirect usages keep warning every 8 hours to
+#'  avoid disrupting users who can't fix the issue. Only use always = TRUE
+#'  after at least one release with the default.
 #' @returns final value to be used
 #' @examples
 #' foo <- function(dep = deprecated(), sup = 10) {
@@ -97,7 +101,7 @@ lifecycle_badge <- function(stage = "stable") {
 #'
 #' @export
 deprecate_param <- function(
-        x, y, fun, when, check = c("deprecated", "null")
+        x, y, fun, when, check = c("deprecated", "null"), always = FALSE
 ) {
     # checkmate::assert_character(from)
     check <- match.arg(check, choices = c("deprecated", "null"))
@@ -117,7 +121,7 @@ deprecate_param <- function(
         with = sprintf("%s(%s)", fun, ychar),
         env = parent.frame(2),
         user_env = parent.frame(3),
-        always = TRUE
+        always = always
     )
     return(x)
 }
