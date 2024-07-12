@@ -4,7 +4,14 @@
 \alias{deprecate_param}
 \title{Deprecate a parameter}
 \usage{
-deprecate_param(x, y, fun, when, check = c("deprecated", "null"))
+deprecate_param(
+  x,
+  y,
+  fun,
+  when,
+  check = c("deprecated", "null"),
+  always = FALSE
+)
 }
 \arguments{
 \item{x}{name. Deprecated param}
@@ -16,6 +23,11 @@ deprecate_param(x, y, fun, when, check = c("deprecated", "null"))
 \item{when}{character. Version number in which the deprecation happened.}
 
 \item{check}{character. Method to check if deprecated param was used}
+
+\item{always}{If FALSE, the default, will warn every 8 hours. If TRUE, will
+always warn in direct usages. Indirect usages keep warning every 8 hours to
+avoid disrupting users who can't fix the issue. Only use always = TRUE
+after at least one release with the default.}
 }
 \value{
 final value to be used
