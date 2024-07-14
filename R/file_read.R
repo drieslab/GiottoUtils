@@ -14,6 +14,52 @@ file_extension <- function(file) {
 }
 
 
+#' @title Generate file manifest list from a directory
+#' @name dir_manifest
+#' @description Create a `list` of full filepaths (character) that are named
+#' by with the respective `[basename()]`. Allows easy `$` exploration and
+#' indexing of items.\cr
+#' All params are directly passed to `[list.files()]` except
+#' for `full.names`. `[list.files()]` also normally returns both actual files
+#' and directories when `recursive = FALSE`, but this function specifically
+#' tests if items are existing files and not directories with
+#' `utils::file_test(op = -f)` and fully obeys that flag in all cases.
+#' @param path a character vector of full path names; the default corresponds
+#' to the working directory, `[getwd()]`. Tilde expansion (see [path.expand])
+#' and [`normalizePath()`] are performed. Missing values will be ignored.
+#' Elements with a marked encoding  will be converted to the native encoding
+#' (and if that fails, considered non-existent).
+#' @param pattern an optional regular expression. Only file names which match
+#' the regular expression will be returned.
+#' @param all.files a logical value. If `FALSE`, only the names of visible
+#' files are returned (following Unix-style visibility, that is files whose
+#' name does not start with a dot). If `TRUE`, all file names will be returned.
+#' @param recursive logical. Should the listing recurse into directories?
+#' @param ignore.case logical. Should pattern-matching be case-insensitive?
+#' @param include.dirs logical. Should subdirectory names be included in
+#' recursive listings?
+#' @param no.. logical. Should both `"."` and `".."` be excluded also from
+#' non-recursive listings?
+#' @examples
+#' dir_manifest()
+#' @export
+dir_manifest <- function(
+        path = ".", pattern = NULL, all.files = FALSE, recursive = FALSE,
+        ignore.case = FALSE, include.dirs = FALSE, no.. = FALSE
+) {
+    a <- get_args_list()
+    a$full.names = TRUE
+    fullpaths <- do.call("list.files", args = a)
+    fullpaths <- normalizePath(fullpaths)
+    if (include.dirs == FALSE) {
+        is_file <- utils::file_test(op = "-f", x = fullpaths)
+        fullpaths <- fullpaths[is_file]
+    }
+    names(fullpaths) <- basename(fullpaths)
+    return(as.list(fullpaths))
+}
+
+
 #' @title Fread specific rows based on column matches
 #' @name fread_colmatch
 #' @param file path to file to load
