@@ -40,14 +40,21 @@ file_extension <- function(file) {
 #' recursive listings?
 #' @param no.. logical. Should both `"."` and `".."` be excluded also from
 #' non-recursive listings?
+#' @param as.list logical. Should output be a list or a named character vector
 #' @examples
 #' dir_manifest()
+#' @returns full and normalized filepaths named by the file basename as either
+#' a list (default) or if `as.list = FALSE`, a character vector.
 #' @export
 dir_manifest <- function(
         path = ".", pattern = NULL, all.files = FALSE, recursive = FALSE,
-        ignore.case = FALSE, include.dirs = FALSE, no.. = FALSE
+        ignore.case = FALSE, include.dirs = FALSE, no.. = FALSE,
+        as.list = TRUE
 ) {
-    a <- get_args_list()
+    a <- get_args_list(keep = c(
+        "path", "pattern", "all.files", "recursive", "ignore.case",
+        "include.dirs", "no.."
+    ))
     a$full.names = TRUE
     fullpaths <- do.call("list.files", args = a)
     fullpaths <- normalizePath(fullpaths)
@@ -56,7 +63,8 @@ dir_manifest <- function(
         fullpaths <- fullpaths[is_file]
     }
     names(fullpaths) <- basename(fullpaths)
-    return(as.list(fullpaths))
+    if (as.list) fullpaths <- as.list(fullpaths)
+    return(fullpaths)
 }
 
 

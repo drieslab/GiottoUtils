@@ -11,7 +11,8 @@ dir_manifest(
   recursive = FALSE,
   ignore.case = FALSE,
   include.dirs = FALSE,
-  no.. = FALSE
+  no.. = FALSE,
+  as.list = TRUE
 )
 }
 \arguments{
@@ -37,6 +38,12 @@ recursive listings?}
 
 \item{no..}{logical. Should both \code{"."} and \code{".."} be excluded also from
 non-recursive listings?}
+
+\item{as.list}{logical. Should output be a list or a named character vector}
+}
+\value{
+full and normalized filepaths named by the file basename as either
+a list (default) or if \code{as.list = FALSE}, a character vector.
 }
 \description{
 Create a \code{list} of full filepaths (character) that are named
