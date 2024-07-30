@@ -1,5 +1,10 @@
 
-# GiottoUtils 0.1.9
+# GiottoUtils 0.1.10 (2024/07/26)
+
+## New
+- `dir_manifest()` for creating a named `list` of files within a directory. Mostly wraps `list.files()`
+
+# GiottoUtils 0.1.9 (2024/07/12)
 
 ## New
 - `deprecate_param()` utility function for streamlining code
