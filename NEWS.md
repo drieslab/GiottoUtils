@@ -1,4 +1,10 @@
 
+# GiottoUtils 0.1.11
+
+## Enhancement
+- `package_check()` now works for pip github installs
+- `package_check()` now reports which conda environment is being activated and what python version it is.
+
 # GiottoUtils 0.1.10 (2024/07/26)
 
 ## New
