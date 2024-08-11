@@ -81,6 +81,33 @@ from_scipy_sparse <- function(x, format = c("C", "R"), transpose = FALSE, ...) {
 }
 
 
+#' @title Active python environment
+#' @name py_active_env
+#' @description Check for an active python environment without initialization.
+#' If none initialized, `FALSE` is returned. If an initialized environment
+#' is found, the env name based on [reticulate::conda_list()] will be returned
+#' @export
+py_active_env <- function() {
+    if (!reticulate::py_available()) {
+        options("giotto.py_active_env" = FALSE)
+        return(FALSE)
+    }
+
+    env_cache <- getOption("giotto.py_active_env", FALSE)
+    if (is.character(env_cache)) return(env_cache)
+
+    py_conf <- reticulate::py_config()
+    py_path <- py_conf$python
+    py_ver <- py_conf$version
+    py_tab <- data.table::setDT(reticulate::conda_list())
+    py_name <- py_tab[dirname(python) == dirname(py_path), name]
+
+    options("giotto.py_active_env" = py_name)
+    options("giotto.py_active_ver" = py_ver)
+    return(py_name)
+}
+
+
 # internals ####
 
 ## sparse matrices ####
@@ -156,7 +183,6 @@ from_scipy_sparse <- function(x, format = c("C", "R"), transpose = FALSE, ...) {
 }
 
 
-## python env ####
 
 .from_scipy_sparse_csc <- function(x, format = c("C", "R"),
     transpose = FALSE, ...) {
@@ -177,25 +203,7 @@ from_scipy_sparse <- function(x, format = c("C", "R"), transpose = FALSE, ...) {
     )
 }
 
-.py_active_env <- function() {
-    if (!reticulate::py_available()) {
-        options("giotto.py_active_env" = FALSE)
-        return(FALSE)
-    }
 
-    env_cache <- getOption("giotto.py_active_env", FALSE)
-    if (is.character(env_cache)) return(env_cache)
-
-    py_conf <- reticulate::py_config()
-    py_path <- py_conf$python
-    py_ver <- py_conf$version
-    py_tab <- data.table::setDT(reticulate::conda_list())
-    py_name <- py_tab[dirname(python) == dirname(py_path), name]
-
-    options("giotto.py_active_env" = py_name)
-    options("giotto.py_active_ver" = py_ver)
-    return(py_name)
-}
 
 
 

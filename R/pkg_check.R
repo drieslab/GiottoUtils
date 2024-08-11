@@ -341,7 +341,7 @@ package_check <- function(
         return(NULL)
     }
 
-    py <- .py_active_env()
+    py <- py_active_env()
     header_msg <- sprintf(
         "## active python env: '%s' \n## python version: %s\n%s %s\n",
         py, getOption("giotto.py_active_ver"),
