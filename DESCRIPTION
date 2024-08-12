@@ -27,12 +27,13 @@ Depends:
     base (>= 4.4.0),
     R (>= 4.4.0)
 Imports:
+    checkmate,
     data.table,
     gtools,
     lifecycle,
     magrittr,
     methods,
-    checkmate,
+    R.utils,
     utils (>= 4.4.0)
 Suggests:
     future.apply,
