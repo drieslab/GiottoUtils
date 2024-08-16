@@ -1,4 +1,15 @@
 
+# GiottoUtils 0.1.11
+
+## New
+- `py_active_env()` utility function for detecting any active python environment without initializing
+
+## Enhancement
+- `package_check()` now works for pip github installs
+- `package_check()` now reports which conda environment is being activated and what python version it is.
+
+
+
 # GiottoUtils 0.1.10 (2024/07/26)
 
 ## New
