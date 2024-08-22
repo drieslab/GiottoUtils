@@ -1,5 +1,5 @@
 
-# GiottoUtils 0.1.11
+# GiottoUtils 0.1.11 (2024/08/22)
 
 ## New
 - `py_active_env()` utility function for detecting any active python environment without initializing
