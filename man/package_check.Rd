@@ -20,33 +20,46 @@ Bioc, and pip repos. format repo:johndoe/cooltool for github or bitbucket)}
 
 \item{github_repo}{name of github repository if needed}
 
-\item{optional}{whether the package is optional. \code{stop()} is used if TRUE
+\item{optional}{whether the package is optional. If \code{TRUE}, an error is
+thrown. If \code{FALSE}, a warning is sent
 and only \code{message()} will be sent if FALSE.}
 
-\item{custom_msg}{custom message to be sent instead of default error or message}
+\item{custom_msg}{custom message to be sent instead of default error or
+message}
 }
 \value{
 character
 }
 \description{
-check if package is available and provide installation instruction if not available
+check if package is available and provide installation
+instruction if not available. pip installations can accept github links.
+For pip links, the \code{repo:link} format is always preferred especially since
+the link cannot be used as the python package name to check the isntallation
+status of.
 }
 \examples{
 \dontrun{
 package_check("Matrix")
 package_check("BiocSingular", repository = "Bioc")
 # (only expected to work when giottoenv is loaded)
-package_check("leidenalg", repository = "pip")
+package_check("leidenalg", repository = "pip:leidenalg")
 
 # expected to fail
 package_check("faketool")
 package_check("faketool", repository = "Bioc")
-package_check("installme", repository = "pip")
+package_check("installme", repository = "pip:installme")
 
 # vectorized
 package_check(
     pkg_name = c("faketool", "cooltool"),
     repository = c("CRAN", "github:johndoe/cooltool")
+)
+
+# github pip checks
+package_check(
+    pkg_name = "pysodb",
+    repository =
+        "pip:git+https://github.com/TencentAILabHealthcare/pysodb.git"
 )
 }
 }

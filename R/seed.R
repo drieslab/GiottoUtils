@@ -1,3 +1,8 @@
+#' @importFrom R.utils withSeed
+#' @export
+R.utils::withSeed
+
+
 #' @title Set a random seed
 #' @name random_seed
 #' @param set.seed Whether to apply the random seed. Defaults to TRUE
