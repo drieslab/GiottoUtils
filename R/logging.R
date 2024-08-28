@@ -44,9 +44,10 @@ giottoNewLog <- function(logdir) {
 # Unique .txt filename creator. Creates a base of YYYYMMDD_I on top of which a
 # prefix and suffix can be attached. The I stands for the I-th file existing
 # that was generated on this date.
-.unique_filename <- function(filedir = tempdir(),
-    prefix = "giotto_",
-    suffix = NULL) {
+.unique_filename <- function(
+        filedir = tempdir(),
+        prefix = "giotto_",
+        suffix = NULL) {
     logfile_base <- Sys.Date() %>%
         gsub(pattern = "-", replacement = "")
 
@@ -134,8 +135,9 @@ giottoNewLog <- function(logdir) {
 #' log_write(x = "my content")
 #'
 #' @export
-log_write <- function(file_conn = .log_conn(), x = "",
-    collapse = " ", main = NULL) {
+log_write <- function(
+        file_conn = .log_conn(), x = "",
+        collapse = " ", main = NULL) {
     on.exit(close(file_conn), add = TRUE)
 
     if (!is.null(main)) main <- str_bracket(main)

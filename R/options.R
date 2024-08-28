@@ -1,5 +1,3 @@
-
-
 #' @name init_option
 #' @title Initialize an option
 #' @description Set an option only if it does not exist yet.
@@ -23,6 +21,3 @@ init_option <- function(x, value) {
 
     return(invisible())
 }
-
-
-
