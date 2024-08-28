@@ -8,19 +8,24 @@
 
 
 
-#' @name to_scipy_sparse
-#' @title Convert R sparse matrix to scipy sparse representation
+#' @name scipy_sparse
+#' @title Convert between Matrix and scipy sparse representations
 #' @description
-#' Convert an R \pkg{Matrix} sparse matrix representation to python scipy
-#' sparse format. Inspired by the implementation in \pkg{nmslibR}. Currently
-#' works only for `matrix`, `dgCMatrix`, `dgRMatrix`, and `dgTMatrix`
+#' Convert between R \pkg{Matrix} sparse matrix representation and python scipy
+#' sparse formats. Inspired by the implementation in \pkg{nmslibR}. Currently
+#' compatible classes:\cr
+#' * **`to_scipy_sparse()`**: `matrix`, `dgCMatrix`, `dgRMatrix`, `dgTMatrix`
+#' * **`from_scipy_sparse()`**: `scipy.sparse._csr.csr_matrix`,
+#' `scipy.sparse._csc.csc_matrix`
 #' @param x matrix-like object to convert
 #' @param format character. Either "C" for Compressed Sparse Column or "R"
 #' for Compressed Sparse Row matrix representations
 #' @param transpose whether to transpose the matrix. default is FALSE
-#' @param \dots additional params to pass to `scipy.sparse.cs*_matrix()`
+#' @param \dots additional params to pass to `scipy.sparse.cs*_matrix()` or
+#' `Matrix::sparseMatrix` depending on which output is desired.
 #' @importFrom methods as
-#' @returns scipy sparse representation
+#' @returns scipy or Matrix sparse representation depending on 'to' or 'from'
+#' respectively
 #' @examples
 #' # example data
 #' m <- matrix(data = 0L, nrow = 400, ncol = 300)
@@ -33,6 +38,10 @@
 #'
 #' py_dgc_c <- to_scipy_sparse(dgc, format = "C")
 #' py_dgc_r <- to_scipy_sparse(dgc, format = "R")
+#'
+#' dgc_revert <- from_scipy_sparse(py_dgc_c, format = "C")
+#' dgr_revert <- from_scipy_sparse(py_dgc_c, format = "R")
+#' identical(dgc, dgc_revert)
 #' @export
 to_scipy_sparse <- function(x, format = c("C", "R"), transpose = FALSE, ...) {
     format <- match.arg(toupper(format), choices = c("C", "R"))
@@ -50,11 +59,58 @@ to_scipy_sparse <- function(x, format = c("C", "R"), transpose = FALSE, ...) {
         return(.to_scipy_sparse_dgt(x, format, transpose, ...))
     }
 
-    .gstop("No to_scipy_sparse method found for class", class(x))
+    stop("GiottoUtils: No to_scipy_sparse method found for class", class(x))
+}
+
+#' @rdname scipy_sparse
+#' @export
+from_scipy_sparse <- function(x, format = c("C", "R"), transpose = FALSE, ...) {
+    format <- match.arg(toupper(format), choices = c("C", "R"))
+
+    if (!inherits(x, "python.builtin.object")) {
+        stop("sparse input must be in a python native format.\n")
+    }
+    if (inherits(x, "scipy.sparse._csr.csr_matrix")) {
+        return(.from_scipy_sparse_csr(x, format, transpose, ...))
+    }
+    if (inherits(x, "scipy.sparse._csc.csc_matrix")) {
+        return(.from_scipy_sparse_csc(x, format, transpose, ...))
+    }
+
+    stop("GiottoUtils: No from_scipy_sparse method found for class", class(x))
+}
+
+
+#' @title Active python environment
+#' @name py_active_env
+#' @description Check for an active python environment without initialization.
+#' If none initialized, `FALSE` is returned. If an initialized environment
+#' is found, the env name based on [reticulate::conda_list()] will be returned
+#' @export
+py_active_env <- function() {
+    if (!reticulate::py_available()) {
+        options("giotto.py_active_env" = FALSE)
+        return(FALSE)
+    }
+
+    env_cache <- getOption("giotto.py_active_env", FALSE)
+    if (is.character(env_cache)) return(env_cache)
+
+    py_conf <- reticulate::py_config()
+    py_path <- py_conf$python
+    py_ver <- py_conf$version
+    py_tab <- data.table::setDT(reticulate::conda_list())
+    py_name <- py_tab[dirname(python) == dirname(py_path), name]
+
+    options("giotto.py_active_env" = py_name)
+    options("giotto.py_active_ver" = py_ver)
+    return(py_name)
 }
 
 
 # internals ####
+
+## sparse matrices ####
 
 .to_scipy_sparse_matrix <- function(x, format, transpose = FALSE, ...) {
     SCP <- reticulate::import("scipy", convert = FALSE)
@@ -106,3 +162,54 @@ to_scipy_sparse <- function(x, format = c("C", "R"), transpose = FALSE, ...) {
 
     to_scipy_sparse(x, format = format, transpose = FALSE, ...)
 }
+
+.from_scipy_sparse_csr <- function(x, format = c("C", "R"),
+    transpose = FALSE, ...) {
+    if (transpose) {
+        x <- x$transpose()
+        # call again since transpose is accomplished via csr -> csc conversion
+        return(from_scipy_sparse(x, format, transpose = FALSE, ...))
+    }
+
+    Matrix::sparseMatrix(
+        x = as.numeric(x$data),
+        j = as.numeric(x$indices),
+        p = as.numeric(x$indptr),
+        index1 = FALSE, # 0 indexed values
+        dims = dim(x),
+        repr = format,
+        ...
+    )
+}
+
+
+
+.from_scipy_sparse_csc <- function(x, format = c("C", "R"),
+    transpose = FALSE, ...) {
+    if (transpose) {
+        x <- x$transpose()
+        # call again since transpose is accomplished via csc -> csr conversion
+        return(from_scipy_sparse(x, format, transpose = FALSE, ...))
+    }
+
+    Matrix::sparseMatrix(
+        x = as.numeric(x$data),
+        i = as.numeric(x$indices),
+        p = as.numeric(x$indptr),
+        index1 = FALSE, # 0 indexed values
+        dims = dim(x),
+        repr = format,
+        ...
+    )
+}
+
+
+
+
+
+
+
+
+
+
+

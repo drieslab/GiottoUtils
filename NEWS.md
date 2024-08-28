@@ -1,8 +1,37 @@
 
-# GiottoUtils 0.1.7 (2024/05/13)
+# GiottoUtils 0.1.11 (2024/08/22)
+
+## New
+- `py_active_env()` utility function for detecting any active python environment without initializing
+
+## Enhancement
+- `package_check()` now works for pip github installs
+- `package_check()` now reports which conda environment is being activated and what python version it is.
+
+
+
+# GiottoUtils 0.1.10 (2024/07/26)
+
+
+## New
+- `dir_manifest()` for creating a named `list` of files within a directory. Mostly wraps `list.files()`
+
+
+# GiottoUtils 0.1.9 (2024/07/12)
+
+## New
+- `deprecate_param()` utility function for streamlining code
+- `print_list()` for pretty printing of list-like objects
+- `from_scipy_sparse()` for conversion from scipy `csr` and `csc` to Matrix `dgCMatrix` and `dgRMatrix`
+
+## Changes
+- newer github version checking refactored into `new_github_ver_avail()`
+
+# GiottoUtils 0.1.8 (2024/05/22)
 
 ## New
 - `wrap_txtf()` variant of `wrap_txt()` that uses `sprintf()` formatting
+- `init_option()` for setting an option if it does not exist
 
 ## Enhancement
 - `dt_to_matrix()` can now chunk the conversion to `Matrix` to avoid memory issues

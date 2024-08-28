@@ -20,32 +20,62 @@ check_github_suite_ver <- function(pkg = "Giotto") {
     )
 
     current_ver <- utils::packageVersion(pkg)
-    url <- paste0(
-        "https://raw.githubusercontent.com/drieslab/",
-        repo,
-        "/DESCRIPTION"
+    url <- sprintf(
+        "https://raw.githubusercontent.com/drieslab/%s/DESCRIPTION", repo
     )
-    # Return NULL if any warnings or errors due to inaccessible
-    x <- tryCatch(
-        expr = readLines(url),
-        warning = function(w) NULL,
-        error = function(e) NULL
-    )
-    if (!is.null(x)) {
-        gh_ver <- x[grep(pattern = "Version:", x)]
-        gh_ver <- gsub(pattern = "Version: ", replacement = "", gh_ver)
-        ver_compare <- utils::compareVersion(gh_ver, as.character(current_ver))
 
-        if (ver_compare == 1) {
-            wrap_msg("Newer devel version of", pkg, "on GitHub:", gh_ver)
-        }
+    new_avail <- new_github_ver_avail(
+        url = url, current_ver = current_ver
+    )
+
+    if (!is.null(new_avail)) {
+        wrap_msg("Newer devel version of", pkg, "on GitHub:", new_avail)
     }
 }
 
 
+#' @title Check if a package has newer github version
+#' @name new_github_ver_avail
+#' @description
+#' This function works by downloading the DESCRIPTION file from a github
+#' repo and then comparing the verison number with a provided value. If
+#' the download fails or the github version is not newer than what is
+#' installed, then it silently returns NULL. If the github version is newer,
+#' the new version number will be returned
+#' @param url character. url to the package to check's DESCRIPTION file.
+#' @param current_ver character. Current version to check against
+#' @examples
+#' url <- "https://raw.githubusercontent.com/drieslab/GiottoData/master/DESCRIPTION"
+#' new_github_ver_avail(url, 0.2)
+#' @returns character. Version number
+#' @export
+new_github_ver_avail <- function(
+        url, current_ver = NULL
+) {
+    # Return NULL if any warnings or errors due to inaccessible
+    descfile <- tryCatch(
+        expr = readLines(url),
+        warning = function(w) NULL,
+        error = function(e) NULL
+    )
+    # silently return NULL if not found
+    if (is.null(descfile)) return(invisible())
+
+    # parse github version number
+    gh_ver <- descfile[grep(pattern = "Version:", descfile)]
+    gh_ver <- gsub(pattern = "Version: ", replacement = "", gh_ver)
+    # see if GH version is newer
+    ver_compare <- utils::compareVersion(gh_ver, as.character(current_ver))
+
+    # silently return NULL if not newer
+    if (ver_compare != 1) return(invisible())
+
+    # return newer version number
+    return(gh_ver)
+}
 
 
-# TODO This is more similar to an assertion
+
 
 #' @title package_check
 #' @name package_check
@@ -53,10 +83,16 @@ check_github_suite_ver <- function(pkg = "Giotto") {
 #' @param repository where is the package (in format repo:cooltool for CRAN,
 #' Bioc, and pip repos. format repo:johndoe/cooltool for github or bitbucket)
 #' @param github_repo name of github repository if needed
-#' @param optional whether the package is optional. \code{stop()} is used if TRUE
+#' @param optional whether the package is optional. If `TRUE`, an error is
+#' thrown. If `FALSE`, a warning is sent
 #' and only \code{message()} will be sent if FALSE.
-#' @param custom_msg custom message to be sent instead of default error or message
-#' @description check if package is available and provide installation instruction if not available
+#' @param custom_msg custom message to be sent instead of default error or
+#'  message
+#' @description check if package is available and provide installation
+#' instruction if not available. pip installations can accept github links.
+#' For pip links, the `repo:link` format is always preferred especially since
+#' the link cannot be used as the python package name to check the isntallation
+#' status of.
 #' @keywords internal
 #' @returns character
 #' @examples
@@ -64,17 +100,24 @@ check_github_suite_ver <- function(pkg = "Giotto") {
 #' package_check("Matrix")
 #' package_check("BiocSingular", repository = "Bioc")
 #' # (only expected to work when giottoenv is loaded)
-#' package_check("leidenalg", repository = "pip")
+#' package_check("leidenalg", repository = "pip:leidenalg")
 #'
 #' # expected to fail
 #' package_check("faketool")
 #' package_check("faketool", repository = "Bioc")
-#' package_check("installme", repository = "pip")
+#' package_check("installme", repository = "pip:installme")
 #'
 #' # vectorized
 #' package_check(
 #'     pkg_name = c("faketool", "cooltool"),
 #'     repository = c("CRAN", "github:johndoe/cooltool")
+#' )
+#'
+#' # github pip checks
+#' package_check(
+#'     pkg_name = "pysodb",
+#'     repository =
+#'         "pip:git+https://github.com/TencentAILabHealthcare/pysodb.git"
 #' )
 #' }
 #' @export
@@ -134,7 +177,9 @@ package_check <- function(
     repos_dt <- data.table::data.table(
         name = pkg_name,
         repo = lapply(repo_split, function(r) r[1L]),
-        location = lapply(repo_split, function(r) r[2L])
+        location = lapply(
+            repo_split, function(r) paste(r[-1L], collapse = ":")
+        )
     )
 
 
@@ -295,12 +340,19 @@ package_check <- function(
     if (length(location) == 0L) {
         return(NULL)
     }
-    header_msg <- "# instructions for python pkg install to default Giotto miniconda environment\n"
 
-    inst_msg <- sprintf(
-        "reticulate::conda_install(envname = 'giotto_env',packages = '%s',pip = TRUE)\n",
-        location
+    py <- py_active_env()
+    header_msg <- sprintf(
+        "## active python env: '%s' \n## python version: %s\n%s %s\n",
+        py, getOption("giotto.py_active_ver"),
+        "## restart session then use GiottoClass::set_giotto_python_path()",
+        "if this is incorrect"
     )
 
-    c(header_msg, paste0(inst_msg))
+    inst_msg <- sprintf(
+        "reticulate::conda_install(envname = '%s', packages = c('%s'), pip = TRUE)\n",
+        py, paste(location, collapse = "', '")
+    )
+
+    c(header_msg, inst_msg)
 } # nocov end
