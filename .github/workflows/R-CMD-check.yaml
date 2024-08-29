@@ -61,6 +61,7 @@ jobs:
           
       - name: Install BiocCheck
         run: |
+          Rscript -e "install.packages('BiocManager')"
           Rscript -e "BiocManager::install('BiocCheck')"
 
       - name: Run BiocCheck
