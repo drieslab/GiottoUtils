@@ -347,6 +347,7 @@ str_quote <- function(x) {
 #' @param x list of items to print. All entries must be named and have
 #' `as.character()` methods
 #' @param pre character. Optional characters to place at the head of each line
+#' @returns lists and vectors
 #' @examples
 #' print_list(list())
 #' print_list(c())
