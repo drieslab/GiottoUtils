@@ -46,6 +46,15 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
+      - name: Install reticulate
+        run: |
+          Rscript -e "install.packages('reticulate')"
+      
+      - name: Create miniconda
+        run: |
+          Rscript -e "reticulate::install_miniconda()"
+          Rscript -e "reticulate::conda_install(packages = 'scipy')"
+
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
