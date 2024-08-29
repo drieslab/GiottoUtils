@@ -88,6 +88,10 @@ from_scipy_sparse <- function(x, format = c("C", "R"), transpose = FALSE, ...) {
 #' is found, the env name based on [reticulate::conda_list()] will be returned
 #' @export
 py_active_env <- function() {
+    
+    # declare data.table variables to avoid code check NOTE
+    name = python = NULL
+    
     if (!reticulate::py_available()) {
         options("giotto.py_active_env" = FALSE)
         return(FALSE)
@@ -97,7 +101,7 @@ py_active_env <- function() {
     if (is.character(env_cache)) {
         return(env_cache)
     }
-
+    
     py_conf <- reticulate::py_config()
     py_path <- py_conf$python
     py_ver <- py_conf$version
