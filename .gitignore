@@ -1,4 +1,12 @@
 .Rproj.user
 *.Rproj
 .Rhistory
+inst/doc
 .DS_Store
+.git_old
+.vscode/*
+.Rprofile
+docs
+_pkgdown.yml
+codecov.yml
+pkgdown
