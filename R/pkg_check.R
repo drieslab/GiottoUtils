@@ -49,9 +49,7 @@ check_github_suite_ver <- function(pkg = "Giotto") {
 #' new_github_ver_avail(url, 0.2)
 #' @returns character. Version number
 #' @export
-new_github_ver_avail <- function(
-        url, current_ver = NULL
-) {
+new_github_ver_avail <- function(url, current_ver = NULL) {
     # Return NULL if any warnings or errors due to inaccessible
     descfile <- tryCatch(
         expr = readLines(url),
@@ -59,7 +57,9 @@ new_github_ver_avail <- function(
         error = function(e) NULL
     )
     # silently return NULL if not found
-    if (is.null(descfile)) return(invisible())
+    if (is.null(descfile)) {
+        return(invisible())
+    }
 
     # parse github version number
     gh_ver <- descfile[grep(pattern = "Version:", descfile)]
@@ -68,7 +68,9 @@ new_github_ver_avail <- function(
     ver_compare <- utils::compareVersion(gh_ver, as.character(current_ver))
 
     # silently return NULL if not newer
-    if (ver_compare != 1) return(invisible())
+    if (ver_compare != 1) {
+        return(invisible())
+    }
 
     # return newer version number
     return(gh_ver)
@@ -121,12 +123,11 @@ new_github_ver_avail <- function(
 #' )
 #' }
 #' @export
-package_check <- function(
-        pkg_name,
-        repository = NULL,
-        github_repo = NULL,
-        optional = FALSE,
-        custom_msg = NULL) {
+package_check <- function(pkg_name,
+    repository = NULL,
+    github_repo = NULL,
+    optional = FALSE,
+    custom_msg = NULL) {
     # NSE vars
     repo <- location <- name <- NULL
 

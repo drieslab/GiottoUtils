@@ -22,6 +22,7 @@ knitr::opts_chunk$set(
 [![R-CMD-check](https://github.com/drieslab/GiottoUtils/actions/workflows/dev_check.yml/badge.svg)](https://github.com/drieslab/GiottoUtils/actions/workflows/dev_check.yml)
 [![GitHub issues](https://img.shields.io/github/issues/drieslab/Giotto)](https://github.com/drieslab/Giotto/issues)
 [![GitHub pulls](https://img.shields.io/github/issues-pr/drieslab/GiottoUtils)](https://github.com/drieslab/GiottoUtils/pulls)
+[![R-CMD-check](https://github.com/josschavezf/GiottoUtils/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/josschavezf/GiottoUtils/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 GiottoUtils exports functionalities that are called internally by many of the other packages in the Giotto ecosystem. These range from things such as commonly used imports to pretty prints. Users should not need to directly interact with this package.    

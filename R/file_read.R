@@ -46,16 +46,14 @@ file_extension <- function(file) {
 #' @returns full and normalized filepaths named by the file basename as either
 #' a list (default) or if `as.list = FALSE`, a character vector.
 #' @export
-dir_manifest <- function(
-        path = ".", pattern = NULL, all.files = FALSE, recursive = FALSE,
-        ignore.case = FALSE, include.dirs = FALSE, no.. = FALSE,
-        as.list = TRUE
-) {
+dir_manifest <- function(path = ".", pattern = NULL, all.files = FALSE, recursive = FALSE,
+    ignore.case = FALSE, include.dirs = FALSE, no.. = FALSE,
+    as.list = TRUE) {
     a <- get_args_list(keep = c(
         "path", "pattern", "all.files", "recursive", "ignore.case",
         "include.dirs", "no.."
     ))
-    a$full.names = TRUE
+    a$full.names <- TRUE
     fullpaths <- do.call("list.files", args = a)
     fullpaths <- normalizePath(fullpaths)
     if (include.dirs == FALSE) {
@@ -86,12 +84,13 @@ dir_manifest <- function(
 #' }
 #'
 #' @export
-fread_colmatch <- function(file,
-    col,
-    sep = NULL,
-    values_to_match,
-    verbose = FALSE,
-    ...) {
+fread_colmatch <- function(
+        file,
+        col,
+        sep = NULL,
+        values_to_match,
+        verbose = FALSE,
+        ...) {
     package_check("data.table", repository = "CRAN")
 
     # get colnames

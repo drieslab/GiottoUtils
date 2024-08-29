@@ -38,10 +38,11 @@ dt_remove_na <- function(DT) {
 #' x
 #'
 #' @export
-dt_sort_combine_two_columns <- function(DT,
-    column1,
-    column2,
-    myname = "unif_gene_gene") {
+dt_sort_combine_two_columns <- function(
+        DT,
+        column1,
+        column2,
+        myname = "unif_gene_gene") {
     # data.table variables
     values_1_num <- values_2_num <- scolumn_1 <- scolumn_2 <-
         unif_sort_column <- NULL
