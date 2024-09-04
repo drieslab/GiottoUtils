@@ -1,6 +1,6 @@
 Package: GiottoUtils
 Title: Giotto Suite Utilities
-Version: 0.1.11
+Version: 0.1.12
 Authors@R: c(
 	person("Ruben", "Dries", email = "rubendries@gmail.com",
 		 role = c("aut", "cre"), comment = c(ORCID = "0000-0001-7650-7754")),
@@ -29,9 +29,11 @@ Imports:
     checkmate,
     data.table,
     gtools,
+    jsonlite,
     lifecycle,
     magrittr,
     methods,
+    progressr,
     R.utils,
     utils (>= 4.4.0)
 Suggests:
@@ -55,6 +57,7 @@ Collate:
     'globals.R'
     'gmatch.R'
     'infix.R'
+    'json.R'
     'lapply_flex.R'
     'lifecycle.R'
     'logging.R'
@@ -63,7 +66,9 @@ Collate:
     'pipe.R'
     'pkg_check.R'
     'prev_call.R'
+    'progress.R'
     'py_utils.R'
+    'reshape.R'
     'seed.R'
     'string.R'
     'system_info.R'
