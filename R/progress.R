@@ -29,6 +29,7 @@ pbar <- progressr::progressor
 #' The default behavior of displaying progress is more convenient for end
 #' users of packages with many functions. This implementation may shift over
 #' time.
+#' @inheritParams progressr::with_progress
 #' @export
 #' @seealso [pbar()]
 #' @examples
