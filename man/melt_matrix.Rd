@@ -11,6 +11,9 @@ melt_matrix(data, value.name = "value")
 
 \item{value.name}{name of variable used to store values (default = "value")}
 }
+\value{
+\code{data.table} in long format
+}
 \description{
 Simple implementation of melt for matrices to produces results
 similar to that of reshape2's now that it is deprecated. \cr

@@ -7,6 +7,7 @@
 #' @inheritParams progressr::progressor
 #' @export
 #' @seealso [with_pbar()]
+#' @returns a progressr progressor function
 #' @examples
 #' a <- function(x = 10) {
 #'     pb <- pbar(steps = x)
@@ -32,6 +33,7 @@ pbar <- progressr::progressor
 #' @inheritParams progressr::with_progress
 #' @export
 #' @seealso [pbar()]
+#' @returns the result of the evaluated code
 #' @examples
 #' a <- function(x = 10) {
 #'     with_pbar({

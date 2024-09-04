@@ -9,6 +9,7 @@
 #' @param data `matrix` to melt
 #' @param value.name name of variable used to store values (default = "value")
 #' @export
+#' @returns `data.table` in long format
 #' @examples
 #' set.seed(9)
 #' Data <- matrix(round(rnorm(12, 10, 4)), nrow = 4, ncol = 3)

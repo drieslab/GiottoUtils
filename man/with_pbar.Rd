@@ -50,6 +50,9 @@ successive progression updates from handlers.}
 default is to report progress in interactive mode but not batch mode.
 See below for more details.}
 }
+\value{
+the result of the evaluated code
+}
 \description{
 Track progress while evaluating an R expression. This is a wrapper around
 \code{\link[progressr:with_progress]{progressr::with_progress()}}. \pkg{progressr} is useful because it handles
