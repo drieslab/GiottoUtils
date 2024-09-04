@@ -12,6 +12,9 @@
 #' Data <- matrix(round(rnorm(12, 10, 4)), nrow = 4, ncol = 3)
 #' melt_matrix(Data)
 melt_matrix <- function(data, value.name = "value") {
+    # NSE vars
+    Var1 <- Var2 <- NULL
+
     df <- as.data.frame.table(data, responseName = value.name)
     dt <- data.table::as.data.table(df)
 
