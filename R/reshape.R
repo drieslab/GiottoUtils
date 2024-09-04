@@ -6,6 +6,8 @@
 #' @description Simple implementation of melt for matrices to produces results
 #' similar to that of reshape2's now that it is deprecated. \cr
 #' The params `varnames`, `na.rm` and, and `as.is` are not implemented.
+#' @param data `matrix` to melt
+#' @param value.name name of variable used to store values (default = "value")
 #' @export
 #' @examples
 #' set.seed(9)

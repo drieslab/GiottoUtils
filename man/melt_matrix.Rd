@@ -6,6 +6,11 @@
 \usage{
 melt_matrix(data, value.name = "value")
 }
+\arguments{
+\item{data}{\code{matrix} to melt}
+
+\item{value.name}{name of variable used to store values (default = "value")}
+}
 \description{
 Simple implementation of melt for matrices to produces results
 similar to that of reshape2's now that it is deprecated. \cr
