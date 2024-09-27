@@ -70,7 +70,8 @@ lifecycle_badge <- function(stage = "stable") {
 #' @examples
 #' foo <- function(dep = deprecated(), sup = 10) {
 #'     sup <- deprecate_param(
-#'         dep, sup, fun = "foo", when = "0.0.1"
+#'         dep, sup,
+#'         fun = "foo", when = "0.0.1"
 #'     )
 #'     return(sup)
 #' }
@@ -81,10 +82,9 @@ lifecycle_badge <- function(stage = "stable") {
 #'
 #' # convenient nested function when deprecating multiple params
 #' bar <- function(dep1 = deprecated(),
-#'                 dep2 = deprecated(),
-#'                 sup1 = 10,
-#'                 sup2 = 20) {
-#'
+#'     dep2 = deprecated(),
+#'     sup1 = 10,
+#'     sup2 = 20) {
 #'     # internally defined function that streamlines downstream deprecations
 #'     .dep <- function(...) {
 #'         deprecate_param(..., fun = "bar", when = "0.0.2")
@@ -100,9 +100,7 @@ lifecycle_badge <- function(stage = "stable") {
 #' bar(dep1 = 100, dep2 = "hello")
 #'
 #' @export
-deprecate_param <- function(
-        x, y, fun, when, check = c("deprecated", "null"), always = FALSE
-) {
+deprecate_param <- function(x, y, fun, when, check = c("deprecated", "null"), always = FALSE) {
     # checkmate::assert_character(from)
     check <- match.arg(check, choices = c("deprecated", "null"))
     xchar <- as.character(substitute(x))
@@ -112,7 +110,9 @@ deprecate_param <- function(
         "deprecated" = is_present(x)
     )
 
-    if (!used) return(y)
+    if (!used) {
+        return(y)
+    }
 
     ychar <- as.character(substitute(y))
     deprecate_warn(
@@ -125,6 +125,3 @@ deprecate_param <- function(
     )
     return(x)
 }
-
-
-

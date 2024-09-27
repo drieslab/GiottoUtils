@@ -86,15 +86,21 @@ from_scipy_sparse <- function(x, format = c("C", "R"), transpose = FALSE, ...) {
 #' @description Check for an active python environment without initialization.
 #' If none initialized, `FALSE` is returned. If an initialized environment
 #' is found, the env name based on [reticulate::conda_list()] will be returned
+#' @returns boolean
 #' @export
 py_active_env <- function() {
+    # declare data.table variables to avoid code check NOTE
+    name <- python <- NULL
+
     if (!reticulate::py_available()) {
         options("giotto.py_active_env" = FALSE)
         return(FALSE)
     }
 
     env_cache <- getOption("giotto.py_active_env", FALSE)
-    if (is.character(env_cache)) return(env_cache)
+    if (is.character(env_cache)) {
+        return(env_cache)
+    }
 
     py_conf <- reticulate::py_config()
     py_path <- py_conf$python
@@ -121,8 +127,9 @@ py_active_env <- function() {
     )
 }
 
-.to_scipy_sparse_dgc <- function(x, format = c("C", "R"),
-    transpose = FALSE, ...) {
+.to_scipy_sparse_dgc <- function(
+        x, format = c("C", "R"),
+        transpose = FALSE, ...) {
     SCP <- reticulate::import("scipy", convert = FALSE)
     if (transpose) x <- Matrix::t(x)
     if (format == "R") {
@@ -136,8 +143,9 @@ py_active_env <- function() {
     )
 }
 
-.to_scipy_sparse_dgr <- function(x, format = c("C", "R"),
-    transpose = FALSE, ...) {
+.to_scipy_sparse_dgr <- function(
+        x, format = c("C", "R"),
+        transpose = FALSE, ...) {
     SCP <- reticulate::import("scipy", convert = FALSE)
     if (transpose) x <- Matrix::t(x)
     if (format == "C") {
@@ -151,8 +159,9 @@ py_active_env <- function() {
     )
 }
 
-.to_scipy_sparse_dgt <- function(x, format = c("C", "R"),
-    transpose = FALSE, ...) {
+.to_scipy_sparse_dgt <- function(
+        x, format = c("C", "R"),
+        transpose = FALSE, ...) {
     if (transpose) x <- Matrix::t(x)
 
     switch(format,
@@ -163,8 +172,9 @@ py_active_env <- function() {
     to_scipy_sparse(x, format = format, transpose = FALSE, ...)
 }
 
-.from_scipy_sparse_csr <- function(x, format = c("C", "R"),
-    transpose = FALSE, ...) {
+.from_scipy_sparse_csr <- function(
+        x, format = c("C", "R"),
+        transpose = FALSE, ...) {
     if (transpose) {
         x <- x$transpose()
         # call again since transpose is accomplished via csr -> csc conversion
@@ -184,8 +194,9 @@ py_active_env <- function() {
 
 
 
-.from_scipy_sparse_csc <- function(x, format = c("C", "R"),
-    transpose = FALSE, ...) {
+.from_scipy_sparse_csc <- function(
+        x, format = c("C", "R"),
+        transpose = FALSE, ...) {
     if (transpose) {
         x <- x$transpose()
         # call again since transpose is accomplished via csc -> csr conversion
@@ -202,14 +213,3 @@ py_active_env <- function() {
         ...
     )
 }
-
-
-
-
-
-
-
-
-
-
-

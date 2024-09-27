@@ -25,5 +25,4 @@
     # options #
     init_option("giotto.verbose", TRUE)
     init_option("giotto.logdir", tempdir())
-
 }

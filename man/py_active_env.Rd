@@ -6,6 +6,9 @@
 \usage{
 py_active_env()
 }
+\value{
+boolean
+}
 \description{
 Check for an active python environment without initialization.
 If none initialized, \code{FALSE} is returned. If an initialized environment
