@@ -1,5 +1,5 @@
 
-# GiottoUtils 0.1.12
+# GiottoUtils 0.1.12 (2024/09/27)
 
 ## New
 - `pbar()` and `with_pbar()` as progress reporting utils. These are wrappers around *progressr* functionalities.
