@@ -16,6 +16,43 @@ with_pbar(
   enable = NULL
 )
 }
+\arguments{
+\item{expr}{An \R expression to evaluate.}
+
+\item{handlers}{A progression handler or a list of them.
+If NULL or an empty list, progress updates are ignored.}
+
+\item{cleanup}{If TRUE, all progression handlers will be shutdown
+at the end regardless of the progression is complete or not.}
+
+\item{delay_terminal}{If TRUE, output and conditions that may end up in
+the terminal will delayed.}
+
+\item{delay_stdout}{If TRUE, standard output is captured and relayed
+at the end just before any captured conditions are relayed.}
+
+\item{delay_conditions}{A character vector specifying \link[base:conditions]{base::condition}
+classes to be captured and relayed at the end after any captured
+standard output is relayed.}
+
+\item{interrupts}{Controls whether interrupts should be detected or not.
+If TRUE and a interrupt is signaled, progress handlers are asked to
+report on the current amount progress when the evaluation was terminated
+by the interrupt, e.g. when a user pressed Ctrl-C in an interactive session,
+or a batch process was interrupted because it ran out of time.
+Note that it's optional for a progress handler to support this and only
+some do.}
+
+\item{interval}{(numeric) The minimum time (in seconds) between
+successive progression updates from handlers.}
+
+\item{enable}{(logical) If FALSE, then progress is not reported.  The
+default is to report progress in interactive mode but not batch mode.
+See below for more details.}
+}
+\value{
+the result of the evaluated code
+}
 \description{
 Track progress while evaluating an R expression. This is a wrapper around
 \code{\link[progressr:with_progress]{progressr::with_progress()}}. \pkg{progressr} is useful because it handles

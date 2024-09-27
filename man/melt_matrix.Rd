@@ -4,12 +4,27 @@
 \alias{melt_matrix}
 \title{Melt a matrix}
 \usage{
-melt_matrix(data, value.name = "value")
+melt_matrix(data, varnames = NULL, ..., as.is = FALSE, value.name = "value")
+}
+\arguments{
+\item{data}{\code{matrix} to melt}
+
+\item{varnames}{variable names to use in molten \code{data.table}}
+
+\item{\dots}{further arguments passed to or from other methods}
+
+\item{as.is}{if \code{FALSE}, dimnames will be converted to factor or integer etc
+as appropriate. If \code{TRUE}, they will be left as strings.}
+
+\item{value.name}{name of variable used to store values (default = "value")}
+}
+\value{
+\code{data.table} in long format
 }
 \description{
 Simple implementation of melt for matrices to produces results
 similar to that of reshape2's now that it is deprecated. \cr
-The params \code{varnames}, \code{na.rm} and, and \code{as.is} are not implemented.
+The param \code{na.rm} is not implemented.
 }
 \examples{
 set.seed(9)

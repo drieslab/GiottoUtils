@@ -7,6 +7,7 @@
 #' @inheritParams progressr::progressor
 #' @export
 #' @seealso [with_pbar()]
+#' @returns a progressr progressor function
 #' @examples
 #' a <- function(x = 10) {
 #'     pb <- pbar(steps = x)
@@ -29,8 +30,10 @@ pbar <- progressr::progressor
 #' The default behavior of displaying progress is more convenient for end
 #' users of packages with many functions. This implementation may shift over
 #' time.
+#' @inheritParams progressr::with_progress
 #' @export
 #' @seealso [pbar()]
+#' @returns the result of the evaluated code
 #' @examples
 #' a <- function(x = 10) {
 #'     with_pbar({

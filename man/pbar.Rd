@@ -59,6 +59,9 @@ calling the progressor function created by this function.
 If FALSE, no \link[progressr]{progression} conditions is signaled because the progressor
 function is an empty function that does nothing.}
 }
+\value{
+a progressr progressor function
+}
 \description{
 Create a \pkg{progressr} progress tracker. This is a wrapper around
 \code{\link[progressr:progressor]{progressr::progressor()}}.
