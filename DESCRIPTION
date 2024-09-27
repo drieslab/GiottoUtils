@@ -1,6 +1,6 @@
 Package: GiottoUtils
 Title: Giotto Suite Utilities
-Version: 0.1.12
+Version: 0.2.0
 Authors@R: c(
 	person("Ruben", "Dries", email = "rubendries@gmail.com",
 		 role = c("aut", "cre"), comment = c(ORCID = "0000-0001-7650-7754")),
@@ -23,8 +23,8 @@ BugReports: https://github.com/drieslab/Giotto/issues
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Depends:
-    base (>= 4.4.0),
-    R (>= 4.4.0)
+    base (>= 4.4.1),
+    R (>= 4.4.1)
 Imports:
     checkmate,
     data.table,
@@ -35,7 +35,7 @@ Imports:
     methods,
     progressr,
     R.utils,
-    utils (>= 4.4.0)
+    utils (>= 4.4.1)
 Suggests:
     future.apply,
     Matrix,

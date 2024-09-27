@@ -1,4 +1,9 @@
 
+# GiottoUtils 0.2.0 (2024/09/27)
+
+## Breaking change
+- R version requirement is now 4.4.1
+
 # GiottoUtils 0.1.12 (2024/09/27)
 
 ## New
