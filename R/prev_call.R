@@ -4,6 +4,10 @@
 #' calls. Used in putting together object histories and error handling.
 #' @param toplevel integer. Relative stack where the function call was made.
 #' @param verbose be verbose
+#' @examples
+#' get_prev_call()
+#' 
+#' get_prev_fname(1)
 NULL
 
 
@@ -31,18 +35,14 @@ get_args <- function(toplevel = 2L, verbose = FALSE) {
     nframes <- sys.nframe()
 
     if (isTRUE(verbose)) {
-        cat("\n number of frames: ")
-        print(nframes)
-        cat("\n")
+        message("number of frames: ", nframes)
     }
 
 
     cl <- sys.call(-toplevel)
 
     if (isTRUE(verbose)) {
-        cat("\n system call: ")
-        print(cl)
-        cat("\n")
+        message("system call: ", cl)
     }
 
 
@@ -54,9 +54,7 @@ get_args <- function(toplevel = 2L, verbose = FALSE) {
     }
 
     if (isTRUE(verbose)) {
-        cat("\n function name: ")
-        print(fname)
-        cat("\n")
+        message("function name: ", fname)
     }
 
 
