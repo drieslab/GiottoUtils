@@ -53,17 +53,17 @@ jobs:
         run: |
           Rscript -e "reticulate::install_miniconda()"
           Rscript -e "reticulate::conda_install(packages = 'scipy')"
-
-      - uses: r-lib/actions/check-r-package@v2
-        with:
-          upload-snapshots: true
-          build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
-          
+      
       - name: Install BiocCheck
         run: |
           Rscript -e "install.packages('BiocManager')"
           Rscript -e "BiocManager::install('BiocCheck')"
           Rscript -e "BiocManager::install('BiocStyle')"
+
+      - uses: r-lib/actions/check-r-package@v2
+        with:
+          upload-snapshots: true
+          build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
           
 
       - name: Run BiocCheck
