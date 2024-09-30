@@ -63,6 +63,8 @@ jobs:
         run: |
           Rscript -e "install.packages('BiocManager')"
           Rscript -e "BiocManager::install('BiocCheck')"
+          Rscript -e "BiocManager::install('BiocStyle')"
+          
 
       - name: Run BiocCheck
         run: |
