@@ -60,14 +60,12 @@ jobs:
           Rscript -e "BiocManager::install('BiocCheck')"
           Rscript -e "BiocManager::install('BiocStyle')"
 
-      - uses: r-lib/actions/check-r-package@v2
-        with:
-          upload-snapshots: true
-          build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
-          
-
       - name: Run BiocCheck
         run: |
           Rscript -e "BiocCheck::BiocCheck()"
+          
+      - name: Run rcmdcheck
+        run: |
+          Rscript -e "rcmdcheck::rcmdcheck()"
 
 
