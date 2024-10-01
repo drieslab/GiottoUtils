@@ -87,6 +87,9 @@ from_scipy_sparse <- function(x, format = c("C", "R"), transpose = FALSE, ...) {
 #' If none initialized, `FALSE` is returned. If an initialized environment
 #' is found, the env name based on [reticulate::conda_list()] will be returned
 #' @returns boolean
+#' @examples
+#' py_active_env
+#' 
 #' @export
 py_active_env <- function() {
     # declare data.table variables to avoid code check NOTE
