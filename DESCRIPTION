@@ -73,6 +73,7 @@ Collate:
     'string.R'
     'system_info.R'
     'test.R'
+    'with.R'
     'zzz.R'
 VignetteBuilder: knitr
 Config/testthat/edition: 3
