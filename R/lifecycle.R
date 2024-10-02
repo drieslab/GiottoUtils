@@ -43,6 +43,9 @@ lifecycle::deprecate_stop
 #' @importFrom lifecycle badge
 #' @family lifecycle
 #' @returns markdown
+#' @examples
+#' lifecycle_badge()
+#' 
 #' @export
 lifecycle_badge <- function(stage = "stable") {
     lifecycle::badge(stage)

@@ -12,4 +12,8 @@ pipe operator
 \description{
 See \code{magrittr::\link[magrittr]{\%>\%}} for details.
 }
+\examples{
+x <- "a"
+x \%>\% print()
+}
 \keyword{internal}

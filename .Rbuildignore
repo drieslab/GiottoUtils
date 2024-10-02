@@ -5,7 +5,6 @@
 ^.github$
 
 ^docs
-^vignettes
 ^\.github
 
 ^codecov\.yml$
