@@ -32,7 +32,7 @@ Simple \emph{with} functions. Similar to or from \pkg{withr} implementations.
 \examples{
 # options ###################################
 gwith_options(list(gutils.temp = "found"), {
-    print(getOption("gutils.temp", default = "not_found"))
+  print(getOption("gutils.temp", default = "not_found"))
 })
 getOption("gutils.temp", default = "not_found")
 

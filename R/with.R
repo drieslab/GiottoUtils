@@ -1,4 +1,3 @@
-
 #' @name with
 #' @title With utilities
 #' @description
@@ -46,8 +45,6 @@ set_options <- function(new_options) {
     do.call(options, as.list(new_options))
 }
 
-reset_options <- function (old_options) {
+reset_options <- function(old_options) {
     options(old_options)
 }
-
-
