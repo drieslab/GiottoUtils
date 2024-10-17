@@ -35,7 +35,7 @@ Imports:
     methods,
     progressr,
     R.utils,
-    utils (>= 4.4.1)
+    utils (>= 4.4.0)
 Suggests:
     future.apply,
     Matrix,
