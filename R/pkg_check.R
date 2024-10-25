@@ -19,7 +19,7 @@ check_github_suite_ver <- function(pkg = "Giotto") {
         "GiottoVisuals" = "GiottoVisuals/master"
     )
 
-    current_ver <- utils::packageVersion(pkg)
+    current_ver <- packageVersion(pkg)
     url <- sprintf(
         "https://raw.githubusercontent.com/drieslab/%s/DESCRIPTION", repo
     )
@@ -65,7 +65,7 @@ new_github_ver_avail <- function(url, current_ver = NULL) {
     gh_ver <- descfile[grep(pattern = "Version:", descfile)]
     gh_ver <- gsub(pattern = "Version: ", replacement = "", gh_ver)
     # see if GH version is newer
-    ver_compare <- utils::compareVersion(gh_ver, as.character(current_ver))
+    ver_compare <- compareVersion(gh_ver, as.character(current_ver))
 
     # silently return NULL if not newer
     if (ver_compare != 1) {

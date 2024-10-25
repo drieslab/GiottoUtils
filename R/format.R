@@ -60,7 +60,7 @@ wrap_txt <- function(...,
     }
 
     cat(..., sep = sep) %>%
-        utils::capture.output() %>%
+        capture.output() %>%
         strwrap(
             prefix = .prefix, initial = .initial, # indent later lines,
             # no indent first line
@@ -93,7 +93,7 @@ wrap_txtf <- function(...,
     }
 
     cat(sprintf(...), sep = sep) %>%
-        utils::capture.output() %>%
+        capture.output() %>%
         strwrap(
             prefix = .prefix, initial = .initial, # indent later lines,
             # no indent first line
