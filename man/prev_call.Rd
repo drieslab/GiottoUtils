@@ -45,6 +45,9 @@ calls. Used in putting together object histories and error handling.
 
 }}
 \examples{
+get_prev_call()
+
+get_prev_fname(1)
 a <- function(x = 1, y = 2, ...) {
     get_args_list(...)
 }

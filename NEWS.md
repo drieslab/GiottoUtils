@@ -1,4 +1,13 @@
 
+# GiottoUtils 0.2.0 (2024/10/26)
+
+## Breaking change
+- R version requirement is now 4.4.1
+
+## New
+- `gwith_package()`, `gwith_options()`, `gwith_seed()` for setting temporary conditions for eval
+- `handle_warnings()` for graceful warning handling
+
 # GiottoUtils 0.1.12 (2024/09/27)
 
 ## New

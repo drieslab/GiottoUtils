@@ -1,5 +1,8 @@
 
 #' @importFrom jsonlite fromJSON
+#' @examples
+#' jsoncars <- jsonlite::toJSON(mtcars, pretty=TRUE)
+#' fromJSON(jsoncars)
 #' @export
 jsonlite::fromJSON
 

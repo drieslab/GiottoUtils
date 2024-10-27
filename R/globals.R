@@ -1,1 +1,1 @@
-utils::globalVariables(names = c(":=", ".N", ".SD", ".", "cast"))
+globalVariables(names = c(":=", ".N", ".SD", ".", "cast"))

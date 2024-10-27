@@ -87,6 +87,9 @@ from_scipy_sparse <- function(x, format = c("C", "R"), transpose = FALSE, ...) {
 #' If none initialized, `FALSE` is returned. If an initialized environment
 #' is found, the env name based on [reticulate::conda_list()] will be returned
 #' @returns boolean
+#' @examples
+#' py_active_env
+#' 
 #' @export
 py_active_env <- function() {
     # declare data.table variables to avoid code check NOTE
@@ -108,6 +111,9 @@ py_active_env <- function() {
     py_tab <- data.table::setDT(reticulate::conda_list())
     py_name <- py_tab[dirname(python) == dirname(py_path), name]
 
+    # if no name found (this is not a miniconda), return path instead
+    if (length(py_name) == 0) py_name <- py_path
+
     options("giotto.py_active_env" = py_name)
     options("giotto.py_active_ver" = py_ver)
     return(py_name)
@@ -116,10 +122,17 @@ py_active_env <- function() {
 
 # internals ####
 
+.get_scipy <- function() {
+    SCP <- getOption("giotto.scipy", NULL)
+    SCP <- SCP %null% reticulate::import("scipy", convert = FALSE)
+    options("giotto.scipy" = SCP)
+    return(SCP)
+}
+
 ## sparse matrices ####
 
 .to_scipy_sparse_matrix <- function(x, format, transpose = FALSE, ...) {
-    SCP <- reticulate::import("scipy", convert = FALSE)
+    SCP <- .get_scipy()
     if (transpose) x <- t(x)
     switch(format,
         "C" = SCP$sparse$csc_matrix(x, ...),
@@ -130,7 +143,7 @@ py_active_env <- function() {
 .to_scipy_sparse_dgc <- function(
         x, format = c("C", "R"),
         transpose = FALSE, ...) {
-    SCP <- reticulate::import("scipy", convert = FALSE)
+    SCP <- .get_scipy()
     if (transpose) x <- Matrix::t(x)
     if (format == "R") {
         x2 <- as(x, "RsparseMatrix")
@@ -146,7 +159,7 @@ py_active_env <- function() {
 .to_scipy_sparse_dgr <- function(
         x, format = c("C", "R"),
         transpose = FALSE, ...) {
-    SCP <- reticulate::import("scipy", convert = FALSE)
+    SCP <- .get_scipy()
     if (transpose) x <- Matrix::t(x)
     if (format == "C") {
         x2 <- as(x, "CsparseMatrix")
