@@ -21,7 +21,7 @@ scipy.sparse._csc.csc_matrix
 
     <a class="navbar-brand me-2" href="../index.html">GiottoUtils</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.11</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -115,11 +115,11 @@ respectively</p>
 <span class="r-err co"><span class="r-pr">#&gt;</span> Run `reticulate::py_last_error()` for details.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">dgc_revert</span> <span class="op">&lt;-</span> <span class="fu">from_scipy_sparse</span><span class="op">(</span><span class="va">py_dgc_c</span>, format <span class="op">=</span> <span class="st">"C"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'py_dgc_c' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'py_dgc_c' not found</span>
 <span class="r-in"><span><span class="va">dgr_revert</span> <span class="op">&lt;-</span> <span class="fu">from_scipy_sparse</span><span class="op">(</span><span class="va">py_dgc_c</span>, format <span class="op">=</span> <span class="st">"R"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'py_dgc_c' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'py_dgc_c' not found</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">dgc</span>, <span class="va">dgc_revert</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'dgc_revert' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'dgc_revert' not found</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -131,7 +131,7 @@ respectively</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer></div>

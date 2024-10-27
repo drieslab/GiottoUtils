@@ -9,7 +9,7 @@ calls. Used in putting together object histories and error handling."><meta prop
 
     <a class="navbar-brand me-2" href="../index.html">GiottoUtils</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.11</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,7 +89,12 @@ specifies which params to capture.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span> <span class="op">=</span> <span class="fl">1</span>, <span class="va">y</span> <span class="op">=</span> <span class="fl">2</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">get_prev_call</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "eval(expr, envir)"</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">get_prev_fname</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "eval"</span>
+<span class="r-in"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span> <span class="op">=</span> <span class="fl">1</span>, <span class="va">y</span> <span class="op">=</span> <span class="fl">2</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>    <span class="fu">get_args_list</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
@@ -111,7 +116,7 @@ specifies which params to capture.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer></div>

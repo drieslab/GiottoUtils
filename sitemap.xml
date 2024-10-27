@@ -33,6 +33,7 @@
 <url><loc>https://drieslab.github.io/GiottoUtils/reference/giottoNewLog.html</loc></url>
 <url><loc>https://drieslab.github.io/GiottoUtils/reference/giottoReadLog.html</loc></url>
 <url><loc>https://drieslab.github.io/GiottoUtils/reference/gstop.html</loc></url>
+<url><loc>https://drieslab.github.io/GiottoUtils/reference/handle_warnings.html</loc></url>
 <url><loc>https://drieslab.github.io/GiottoUtils/reference/index.html</loc></url>
 <url><loc>https://drieslab.github.io/GiottoUtils/reference/init_option.html</loc></url>
 <url><loc>https://drieslab.github.io/GiottoUtils/reference/is_empty_char.html</loc></url>
@@ -41,8 +42,10 @@
 <url><loc>https://drieslab.github.io/GiottoUtils/reference/list_element_exists.html</loc></url>
 <url><loc>https://drieslab.github.io/GiottoUtils/reference/local_seed.html</loc></url>
 <url><loc>https://drieslab.github.io/GiottoUtils/reference/log_write.html</loc></url>
+<url><loc>https://drieslab.github.io/GiottoUtils/reference/melt_matrix.html</loc></url>
 <url><loc>https://drieslab.github.io/GiottoUtils/reference/new_github_ver_avail.html</loc></url>
 <url><loc>https://drieslab.github.io/GiottoUtils/reference/package_check.html</loc></url>
+<url><loc>https://drieslab.github.io/GiottoUtils/reference/pbar.html</loc></url>
 <url><loc>https://drieslab.github.io/GiottoUtils/reference/pipe.html</loc></url>
 <url><loc>https://drieslab.github.io/GiottoUtils/reference/prev_call.html</loc></url>
 <url><loc>https://drieslab.github.io/GiottoUtils/reference/print_list.html</loc></url>
@@ -57,6 +60,8 @@
 <url><loc>https://drieslab.github.io/GiottoUtils/reference/str_locate2.html</loc></url>
 <url><loc>https://drieslab.github.io/GiottoUtils/reference/time_format.html</loc></url>
 <url><loc>https://drieslab.github.io/GiottoUtils/reference/vmsg.html</loc></url>
+<url><loc>https://drieslab.github.io/GiottoUtils/reference/with.html</loc></url>
+<url><loc>https://drieslab.github.io/GiottoUtils/reference/with_pbar.html</loc></url>
 <url><loc>https://drieslab.github.io/GiottoUtils/reference/wrap_msg.html</loc></url>
 <url><loc>https://drieslab.github.io/GiottoUtils/reference/wrap_txt.html</loc></url>
 </urlset>
