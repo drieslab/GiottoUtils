@@ -1,8 +1,12 @@
 
-# GiottoUtils 0.2.0 (2024/09/27)
+# GiottoUtils 0.2.0 (2024/10/26)
 
 ## Breaking change
 - R version requirement is now 4.4.1
+
+## New
+- `gwith_package()`, `gwith_options()`, `gwith_seed()` for setting temporary conditions for eval
+- `handle_warnings()` for graceful warning handling
 
 # GiottoUtils 0.1.12 (2024/09/27)
 
@@ -10,7 +14,6 @@
 - `pbar()` and `with_pbar()` as progress reporting utils. These are wrappers around *progressr* functionalities.
 - reexports of `fromJSON()` and `read_json()` from `jsonlite`.
 - `melt_matrix()` to emulate `reshape2::melt.matrix()` (deprecated package) for most use cases in Giotto.
-- `gwith_package()`, `gwith_options` for setting temporary conditions for eval
 
 
 # GiottoUtils 0.1.11 (2024/08/22)

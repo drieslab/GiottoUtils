@@ -49,6 +49,7 @@ Collate:
     'assert.R'
     'color_pals.R'
     'depth.R'
+    'eval_handle.R'
     'file_read.R'
     'symbols.R'
     'format.R'
