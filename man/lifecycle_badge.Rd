@@ -21,6 +21,10 @@ of functions in documentation when added in backticks as shown below.
  #' `r lifecycle::badge("superseded")`
 }\if{html}{\out{</div>}}
 }
+\examples{
+lifecycle_badge()
+
+}
 \seealso{
 Other lifecycle: 
 \code{\link{reexports}}

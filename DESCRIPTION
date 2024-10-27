@@ -1,6 +1,6 @@
 Package: GiottoUtils
 Title: Giotto Suite Utilities
-Version: 0.1.11
+Version: 0.2.0
 Authors@R: c(
 	person("Ruben", "Dries", email = "rubendries@gmail.com",
 		 role = c("aut", "cre"), comment = c(ORCID = "0000-0001-7650-7754")),
@@ -18,24 +18,22 @@ Authors@R: c(
 Description: Utility functions and imports for Giotto Suite.
 License: MIT + file LICENSE
 Encoding: UTF-8
-LazyData: true
 URL: https://drieslab.github.io/Giotto/, https://github.com/drieslab/Giotto, https://drieslab.github.io/GiottoUtils/
 BugReports: https://github.com/drieslab/Giotto/issues
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Depends:
-    base (>= 4.1.0),
-    R (>= 4.1.0)
+    R (>= 4.4.1)
 Imports:
     checkmate,
     data.table,
     gtools,
+    jsonlite,
     lifecycle,
     magrittr,
     methods,
-    checkmate,
-    R.utils,
-    utils (>= 4.1.0)
+    progressr,
+    R.utils
 Suggests:
     future.apply,
     Matrix,
@@ -44,18 +42,21 @@ Suggests:
     RColorBrewer,
     reticulate,
     testthat (>= 3.0.0),
-    covr
+    covr,
+    rmarkdown
 Collate: 
     'DT_helpers.R'
     'assert.R'
     'color_pals.R'
     'depth.R'
+    'eval_handle.R'
     'file_read.R'
     'symbols.R'
     'format.R'
     'globals.R'
     'gmatch.R'
     'infix.R'
+    'json.R'
     'lapply_flex.R'
     'lifecycle.R'
     'logging.R'
@@ -64,11 +65,14 @@ Collate:
     'pipe.R'
     'pkg_check.R'
     'prev_call.R'
+    'progress.R'
     'py_utils.R'
+    'reshape.R'
     'seed.R'
     'string.R'
     'system_info.R'
     'test.R'
+    'with.R'
     'zzz.R'
 VignetteBuilder: knitr
 Config/testthat/edition: 3

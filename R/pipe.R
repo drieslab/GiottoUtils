@@ -6,9 +6,12 @@
 #' @name %>%
 #' @rdname pipe
 #' @keywords internal
-#' @export
 #' @importFrom magrittr %>%
 #' @usage lhs \%>\% rhs
 #' @returns pipe operator
+#' @examples
+#' x <- "a"
+#' x %>% print()
+#' @export
 NULL
 # nocov end

@@ -53,7 +53,7 @@ All params are directly passed to \verb{[list.files()]} except
 for \code{full.names}. \verb{[list.files()]} also normally returns both actual files
 and directories when \code{recursive = FALSE}, but this function specifically
 tests if items are existing files and not directories with
-\code{utils::file_test(op = -f)} and fully obeys that flag in all cases.
+\code{file_test(op = -f)} and fully obeys that flag in all cases.
 }
 \examples{
 dir_manifest()

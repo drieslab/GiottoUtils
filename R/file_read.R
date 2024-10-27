@@ -23,7 +23,7 @@ file_extension <- function(file) {
 #' for `full.names`. `[list.files()]` also normally returns both actual files
 #' and directories when `recursive = FALSE`, but this function specifically
 #' tests if items are existing files and not directories with
-#' `utils::file_test(op = -f)` and fully obeys that flag in all cases.
+#' `file_test(op = -f)` and fully obeys that flag in all cases.
 #' @param path a character vector of full path names; the default corresponds
 #' to the working directory, `[getwd()]`. Tilde expansion (see [path.expand])
 #' and [`normalizePath()`] are performed. Missing values will be ignored.
@@ -46,20 +46,18 @@ file_extension <- function(file) {
 #' @returns full and normalized filepaths named by the file basename as either
 #' a list (default) or if `as.list = FALSE`, a character vector.
 #' @export
-dir_manifest <- function(
-        path = ".", pattern = NULL, all.files = FALSE, recursive = FALSE,
-        ignore.case = FALSE, include.dirs = FALSE, no.. = FALSE,
-        as.list = TRUE
-) {
+dir_manifest <- function(path = ".", pattern = NULL, all.files = FALSE, recursive = FALSE,
+    ignore.case = FALSE, include.dirs = FALSE, no.. = FALSE,
+    as.list = TRUE) {
     a <- get_args_list(keep = c(
         "path", "pattern", "all.files", "recursive", "ignore.case",
         "include.dirs", "no.."
     ))
-    a$full.names = TRUE
+    a$full.names <- TRUE
     fullpaths <- do.call("list.files", args = a)
     fullpaths <- normalizePath(fullpaths)
     if (include.dirs == FALSE) {
-        is_file <- utils::file_test(op = "-f", x = fullpaths)
+        is_file <- file_test(op = "-f", x = fullpaths)
         fullpaths <- fullpaths[is_file]
     }
     names(fullpaths) <- basename(fullpaths)
@@ -86,12 +84,13 @@ dir_manifest <- function(
 #' }
 #'
 #' @export
-fread_colmatch <- function(file,
-    col,
-    sep = NULL,
-    values_to_match,
-    verbose = FALSE,
-    ...) {
+fread_colmatch <- function(
+        file,
+        col,
+        sep = NULL,
+        values_to_match,
+        verbose = FALSE,
+        ...) {
     package_check("data.table", repository = "CRAN")
 
     # get colnames

@@ -12,6 +12,9 @@ print_list(x, pre = "")
 
 \item{pre}{character. Optional characters to place at the head of each line}
 }
+\value{
+lists and vectors
+}
 \description{
 Pretty print formatting for lists and vectors
 }
