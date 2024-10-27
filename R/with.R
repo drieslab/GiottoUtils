@@ -2,7 +2,7 @@
 #' @title With utilities
 #' @description
 #' Simple _with_ functions. Similar to or from \pkg{withr} implementations.
-#' @param code code to execute with temporary settings
+#' @param code R code to execute with temporary settings
 #' @examples
 #' # options ###################################
 #' gwith_options(list(gutils.temp = "found"), {
@@ -14,6 +14,18 @@
 #' # temporarily attach at end of search (right before "base")
 #' gwith_package("data.table", print(search()), pos = length(search()))
 #' search()
+#'
+#' # seed  #####################################
+#' start_seed <- .Random.seed
+#'
+#' # identical generation
+#' a <- gwith_seed(runif(10), seed = 1234)
+#' b <- gwith_seed(runif(10), seed = 1234)
+#' identical(a, b)
+#'
+#' # does not alter pre-existing seed
+#' end_seed <- .Random.seed
+#' identical(start_seed, end_seed)
 NULL
 
 #' @describeIn with Eval with temporary option setting
@@ -37,6 +49,30 @@ gwith_package <- function(package, code, pos = 2L) {
         on.exit(detach(pname, character.only = TRUE), add = TRUE)
     }
     force(code)
+}
+
+#' @describeIn with Eval with temporary specifiable seed
+#' @inheritParams R.utils::withSeed
+#' @param \dots additional params to pass. See details.
+#' @details
+#' `gwith_seed()` : `...` passes to `set.seed()`
+#' @export
+gwith_seed <- function(seed = 1234,
+    code,
+    ...,
+    substitute = TRUE,
+    envir = parent.frame()) {
+    if (substitute) {
+        code <- substitute(code)
+    }
+
+    R.utils::withSeed(
+        expr = code,
+        seed = seed,
+        ...,
+        substitute = FALSE, # already done
+        envir = envir
+    )
 }
 
 # internals ####

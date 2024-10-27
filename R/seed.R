@@ -1,6 +1,4 @@
-#' @importFrom R.utils withSeed
-#' @export
-R.utils::withSeed
+# See with for `gwith_seed()`
 
 
 #' @title Set a random seed
