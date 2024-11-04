@@ -16,10 +16,6 @@ template:
     fg: "#000000"
     primary: "#7E69AE"
     code_font: {google: "JetBrains Mono"}
-  params:
-    repo:
-      url: https://github.com/drieslab/GiottoUtils
-      branch: main
 
 navbar:
   bg: light
