@@ -37,7 +37,7 @@ suite_packages <- function(type = "core") {
 #' 
 #' This utility will do a full reinstall of the specified Giotto Suite modules
 #' but non-Suite dependencies will never prompt to be updated.
-#' @param modules character. Which modules to install. Defaults the core 
+#' @param modules character. Which modules to install. Defaults to the core 
 #' packages needed for Giotto to run.
 #' @param suite_deps logical. Whether to install any potential Giotto Suite
 #' dependency modules
@@ -54,8 +54,13 @@ suite_packages <- function(type = "core") {
 #' version.
 #' @examples
 #' if (FALSE) {
+#'     # install core packages
 #'     suite_install()
 #'     suite_install("GiottoClass", ref = "dev")
+#'     
+#'     # install ONLY Giotto, ignoring module dependencies 
+#'     # (i.e. GiottoVisuals, GiottoClass, etc)
+#'     suite_install("Giotto", suite_deps = FALSE)
 #' }
 #' @export
 suite_install <- function(
@@ -91,13 +96,14 @@ suite_install <- function(
     }
 
     modules <- unique(modules)
+    # establish install order
     match_res <- match(.module_inst_order, modules)
     match_res <- match_res[!is.na(match_res)]
     modules <- modules[match_res]
     
     vmsg(.is_debug = TRUE, paste0(modules, collapse = "\n"), .prefix = "")
 
-
+    # pick set of repo references
     ref <- match.arg(ref, c("main", "dev", "R4.4.0"))
     fullrefs <- switch(ref,
         "main" = .mainrefs[modules],
@@ -109,6 +115,7 @@ suite_install <- function(
     vmsg(.is_debug = TRUE, "\n")
     vmsg(.is_debug = TRUE, paste0(repos, collapse = "\n"), .prefix = "")
 
+    # install loop
     for (r in repos) {
         remotes::install_github(repo = r, upgrade = "never", ...)
     }
