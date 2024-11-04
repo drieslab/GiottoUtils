@@ -59,7 +59,8 @@
 </div>
 <!-- badges: start -->
 
-<p>GiottoUtils exports functionalities that are called internally by many of the other packages in the Giotto ecosystem. These range from things such as commonly used imports to pretty prints. Users should not need to directly interact with this package.</p>
+<p>GiottoUtils exports functionalities that are called internally by many of the other packages in the Giotto ecosystem. These range from things such as commonly used imports to pretty prints.</p>
+<p>A helpful install utility for the rest of the suite modules is also provided. See <a href="reference/suite_install.html"><code>suite_install()</code></a></p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -67,6 +68,10 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"pak"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pak"</span><span class="op">)</span></span>
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"drieslab/GiottoUtils"</span><span class="op">)</span></span></code></pre></div>
+<p>There is also a version of GiottoUtils locked at R version 4.4.0 that can be installed as following:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"remotes"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"drieslab/GiottoUtils@R4.4.0"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
@@ -113,7 +118,7 @@
 <ul class="list-unstyled">
 <li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
 <li><a href="https://app.codecov.io/gh/drieslab/GiottoUtils?branch=dev" class="external-link"><img src="https://codecov.io/gh/drieslab/GiottoUtils/branch/dev/graph/badge.svg" alt="Codecov test coverage"></a></li>
-<li><a href="https://github.com/drieslab/GiottoUtils/actions/workflows/dev_check.yml" class="external-link"><img src="https://github.com/drieslab/GiottoUtils/actions/workflows/dev_check.yml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://github.com/drieslab/GiottoUtils/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/drieslab/GiottoUtils/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://github.com/drieslab/Giotto/issues" class="external-link"><img src="https://img.shields.io/github/issues/drieslab/Giotto" alt="GitHub issues"></a></li>
 <li><a href="https://github.com/drieslab/GiottoUtils/pulls" class="external-link"><img src="https://img.shields.io/github/issues-pr/drieslab/GiottoUtils" alt="GitHub pulls"></a></li>
 </ul>
