@@ -1,4 +1,4 @@
-# GiottoUtils 0.2.1
+# GiottoUtils 0.2.1 (2024/11/4)
 
 ## New
 - `suite_packages()` for reporting the names of Giotto Suite modules
