@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">GiottoUtils</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,7 +56,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Console Printing</h1>
             
-            <h4 data-toc-skip class="date">27 October 2024</h4>
+            <h4 data-toc-skip class="date">4 November 2024</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/drieslab/Giotto/blob/website/vignettes/print_formatting.Rmd" class="external-link"><code>vignettes/print_formatting.Rmd</code></a></small>
       <div class="d-none name"><code>print_formatting.Rmd</code></div>
@@ -155,11 +155,11 @@ This function is wrapped by the convenient print functions detailed below.<br></
 The logfile defaults to being created in <code><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir()</a></code>, but this can be set to a directory of choice using the <code>"giotto.logdir"</code> option. The specific path to the logfile is stored within the <code>"giotto.last_logpath"</code>.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/vmsg.html">vmsg</a></span><span class="op">(</span>.v <span class="op">=</span> <span class="st">"log"</span>, <span class="st">"Write this to a logfile in tempdir"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Logging to:/tmp/RtmpwGOyV7/giotto_20241027_1.txt</span></span></code></pre>
+<pre><code><span><span class="co">## Logging to:/tmp/RtmpMAieq8/giotto_20241104_1.txt</span></span></code></pre>
 <p>To read the log items, use <code><a href="../reference/giottoReadLog.html">giottoReadLog()</a></code>.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/giottoReadLog.html">giottoReadLog</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] " (2024-10-27 01:36:44) Write this to a logfile in tempdir"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] " (2024-11-04 16:32:32) Write this to a logfile in tempdir"</span></span></code></pre>
 <p>You can start a new logfile using <code><a href="../reference/giottoNewLog.html">giottoNewLog()</a></code></p>
 </div>
 </div>
@@ -189,7 +189,7 @@ The logfile defaults to being created in <code><a href="https://rdrr.io/r/base/t
 <span><span class="co">##  This is an error.</span></span></code></pre>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## R version 4.4.1 (2024-06-14)</span></span>
+<pre><code><span><span class="co">## R version 4.4.2 (2024-10-31)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu</span></span>
 <span><span class="co">## Running under: Ubuntu 22.04.5 LTS</span></span>
 <span><span class="co">## </span></span>
@@ -210,19 +210,19 @@ The logfile defaults to being created in <code><a href="https://rdrr.io/r/base/t
 <span><span class="co">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">## [1] GiottoUtils_0.2.0 BiocStyle_2.32.1 </span></span>
+<span><span class="co">## [1] GiottoUtils_0.2.1 BiocStyle_2.34.0 </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
 <span><span class="co">##  [1] cli_3.6.3           knitr_1.48          rlang_1.1.4        </span></span>
-<span><span class="co">##  [4] xfun_0.48           textshaping_0.4.0   data.table_1.16.2  </span></span>
+<span><span class="co">##  [4] xfun_0.49           textshaping_0.4.0   data.table_1.16.2  </span></span>
 <span><span class="co">##  [7] gtools_3.9.5        jsonlite_1.8.9      backports_1.5.0    </span></span>
 <span><span class="co">## [10] htmltools_0.5.8.1   ragg_1.3.3          sass_0.4.9         </span></span>
 <span><span class="co">## [13] rmarkdown_2.28      evaluate_1.0.1      jquerylib_0.1.4    </span></span>
 <span><span class="co">## [16] fastmap_1.2.0       yaml_2.3.10         lifecycle_1.0.4    </span></span>
-<span><span class="co">## [19] bookdown_0.41       BiocManager_1.30.25 compiler_4.4.1     </span></span>
-<span><span class="co">## [22] fs_1.6.4            systemfonts_1.1.0   digest_0.6.37      </span></span>
-<span><span class="co">## [25] R6_2.5.1            parallel_4.4.1      magrittr_2.0.3     </span></span>
-<span><span class="co">## [28] bslib_0.8.0         checkmate_2.3.2     tools_4.4.1        </span></span>
+<span><span class="co">## [19] bookdown_0.41       BiocManager_1.30.25 compiler_4.4.2     </span></span>
+<span><span class="co">## [22] fs_1.6.5            systemfonts_1.1.0   digest_0.6.37      </span></span>
+<span><span class="co">## [25] R6_2.5.1            parallel_4.4.2      magrittr_2.0.3     </span></span>
+<span><span class="co">## [28] bslib_0.8.0         checkmate_2.3.2     tools_4.4.2        </span></span>
 <span><span class="co">## [31] pkgdown_2.1.1       cachem_1.1.0        desc_1.4.3</span></span></code></pre>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
