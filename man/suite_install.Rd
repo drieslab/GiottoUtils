@@ -7,7 +7,7 @@
 suite_install(modules = suite_packages(), suite_deps = TRUE, ref = "main", ...)
 }
 \arguments{
-\item{modules}{character. Which modules to install. Defaults the core
+\item{modules}{character. Which modules to install. Defaults to the core
 packages needed for Giotto to run.}
 
 \item{suite_deps}{logical. Whether to install any potential Giotto Suite
@@ -47,7 +47,12 @@ version.
 
 \examples{
 if (FALSE) {
+    # install core packages
     suite_install()
     suite_install("GiottoClass", ref = "dev")
+    
+    # install ONLY Giotto, ignoring module dependencies 
+    # (i.e. GiottoVisuals, GiottoClass, etc)
+    suite_install("Giotto", suite_deps = FALSE)
 }
 }
