@@ -18,7 +18,7 @@ Authors@R: c(
 Description: Utility functions and imports for Giotto Suite.
 License: MIT + file LICENSE
 Encoding: UTF-8
-URL: https://drieslab.github.io/Giotto/, https://github.com/drieslab/Giotto, https://drieslab.github.io/GiottoUtils/
+URL: https://drieslab.github.io/GiottoUtils/, https://drieslab.github.io/Giotto/, https://github.com/drieslab/Giotto
 BugReports: https://github.com/drieslab/Giotto/issues
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
