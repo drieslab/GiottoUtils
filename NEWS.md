@@ -1,3 +1,8 @@
+# GiottoUtils 0.2.1 (2024/11/4)
+
+## New
+- `suite_packages()` for reporting the names of Giotto Suite modules
+- `suite_install()` for installing specific branches of Giotto Suite
 
 # GiottoUtils 0.2.0 (2024/10/26)
 
