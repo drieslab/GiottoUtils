@@ -40,6 +40,10 @@ jobs:
           dependencies: '"hard"' # do not use suggested dependencies
           extra-packages: any::pkgdown, local::.
           needs: website
+          
+      - name: Install BiocStyle
+        run: |
+          Rscript -e "BiocManager::install('BiocStyle')"
 
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
