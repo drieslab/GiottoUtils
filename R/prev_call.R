@@ -6,7 +6,7 @@
 #' @param verbose be verbose
 #' @examples
 #' get_prev_call()
-#' 
+#'
 #' get_prev_fname(1)
 NULL
 
