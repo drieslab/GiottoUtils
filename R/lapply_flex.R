@@ -15,13 +15,12 @@
 #' lapply_flex(list(x = 1, y = 2), FUN = log)
 #'
 #' @export
-lapply_flex <- function(
-        X,
-        FUN,
-        cores = NA,
-        future.seed = TRUE,
-        fun = NULL,
-        ...) {
+lapply_flex <- function(X,
+    FUN,
+    cores = NA,
+    future.seed = TRUE,
+    fun = NULL,
+    ...) {
     # a simple wrapper for future.apply::future_lapply
     # probably does not need any additional changes
 

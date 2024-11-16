@@ -1,5 +1,3 @@
-
-
 #' @name handle_warnings
 #' @title Warning handling
 #' @description
