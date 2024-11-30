@@ -36,10 +36,12 @@ Imports:
     R.utils
 Suggests:
     BiocParallel,
+    future,
     future.apply,
     Matrix,
     knitr,
     parallel,
+    remotes,
     RColorBrewer,
     reticulate,
     testthat (>= 3.0.0),
