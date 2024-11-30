@@ -1,4 +1,4 @@
-# GiottoUtils dev
+# GiottoUtils 0.2.2
 
 # Enhancement
 - `lapply_flex()` `BiocParallel` method added.
