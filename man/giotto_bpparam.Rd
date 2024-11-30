@@ -10,6 +10,11 @@ giotto_bpparam(BPPARAM = NULL)
 \item{BPPARAM}{set a BiocParallel parameter class deciding how to perform
 parallelized or (or sequential) evaluation}
 }
+\value{
+If a \code{BiocParallelParam} is passed to \code{BPPARAM}, it will be cached
+and invisibly returned. If \code{BPPARAM} is \code{NULL} then the cached param will be
+invisibly returned (\code{SerialParam}) is default.
+}
 \description{
 Get and set a cached BiocParallel BPPARAM setting. Cached settings can
 either be retrieved using \code{giotto_bpparam()} or directly with

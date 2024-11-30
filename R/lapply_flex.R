@@ -86,6 +86,9 @@ lapply_flex <- function(
 #' `getOption("giotto.bpparam")`
 #' @param BPPARAM set a BiocParallel parameter class deciding how to perform
 #' parallelized or (or sequential) evaluation
+#' @returns If a `BiocParallelParam` is passed to `BPPARAM`, it will be cached 
+#' and invisibly returned. If `BPPARAM` is `NULL` then the cached param will be
+#' invisibly returned (`SerialParam`) is default.
 #' @export
 giotto_bpparam <- function(BPPARAM = NULL) {
     package_check("BiocParallel", repository = "Bioc")
@@ -98,7 +101,7 @@ giotto_bpparam <- function(BPPARAM = NULL) {
         options("giotto.bpparam" = BPPARAM) # cache param
     }
     .check_bpparam(BPPARAM)
-    return(BPPARAM)
+    return(invisible(BPPARAM))
 }
 
 
