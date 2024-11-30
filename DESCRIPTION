@@ -35,6 +35,7 @@ Imports:
     progressr,
     R.utils
 Suggests:
+    BiocParallel,
     future.apply,
     Matrix,
     knitr,

@@ -49,6 +49,7 @@ lapply_flex <- function(X,
             )
         },
         "biocparallel" = {
+            package_check("BiocParallel", repository = "Bioc")
             if (!missing(BPPARAM)) {
                 bpparam <- BPPARAM
             } else {
