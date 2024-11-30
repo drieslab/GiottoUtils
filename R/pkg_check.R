@@ -123,12 +123,11 @@ new_github_ver_avail <- function(url, current_ver = NULL) {
 #' )
 #' }
 #' @export
-package_check <- function(
-        pkg_name,
-        repository = NULL,
-        github_repo = NULL,
-        optional = FALSE,
-        custom_msg = NULL) {
+package_check <- function(pkg_name,
+    repository = NULL,
+    github_repo = NULL,
+    optional = FALSE,
+    custom_msg = NULL) {
     # NSE vars
     repo <- location <- name <- NULL
 

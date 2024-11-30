@@ -46,13 +46,12 @@ wrap_msg <- function(..., sep = " ") {
 #' ))
 #'
 #' @export
-wrap_txt <- function(
-        ...,
-        sep = " ",
-        strWidth = 100,
-        errWidth = FALSE,
-        .prefix = " ",
-        .initial = "") {
+wrap_txt <- function(...,
+    sep = " ",
+    strWidth = 100,
+    errWidth = FALSE,
+    .prefix = " ",
+    .initial = "") {
     custom_width <- ifelse(is.null(match.call()$strWidth),
         yes = FALSE, no = TRUE
     )
@@ -80,13 +79,12 @@ wrap_txt <- function(
 #' ))
 #'
 #' @export
-wrap_txtf <- function(
-        ...,
-        sep = " ",
-        strWidth = 100,
-        errWidth = FALSE,
-        .prefix = " ",
-        .initial = "") {
+wrap_txtf <- function(...,
+    sep = " ",
+    strWidth = 100,
+    errWidth = FALSE,
+    .prefix = " ",
+    .initial = "") {
     custom_width <- ifelse(is.null(match.call()$strWidth),
         yes = FALSE, no = TRUE
     )
@@ -136,8 +134,9 @@ wrap_txtf <- function(
 #' vmsg("Do not print by default", .v = TRUE)
 #' # function level input overrides global option
 #' @export
-vmsg <- function(..., .v = NULL, .is_debug = FALSE,
-    .vopt = getOption("giotto.verbose", TRUE)) {
+vmsg <- function(
+        ..., .v = NULL, .is_debug = FALSE,
+        .vopt = getOption("giotto.verbose", TRUE)) {
     # if function-level flag is provided, override global option
     if (!is.null(.v)) {
         .vopt <- .v
@@ -213,16 +212,17 @@ vmsg <- function(..., .v = NULL, .is_debug = FALSE,
 #'     silent = TRUE
 #' )
 #' @export
-gstop <- function(...,
-    sep = " ",
-    strWidth = 100,
-    errWidth = FALSE,
-    .module,
-    .prefix = " ",
-    .initial = "",
-    .n = 1L,
-    .call = TRUE,
-    .warn_nstack = getOption("giotto.warn_gstop_nstack", FALSE)) {
+gstop <- function(
+        ...,
+        sep = " ",
+        strWidth = 100,
+        errWidth = FALSE,
+        .module,
+        .prefix = " ",
+        .initial = "",
+        .n = 1L,
+        .call = TRUE,
+        .warn_nstack = getOption("giotto.warn_gstop_nstack", FALSE)) {
     nf <- sys.nframe()
     if (.n > nf) {
         # send message and automatically limit to max nframes
@@ -263,15 +263,14 @@ gstop <- function(...,
 
 
 # Use this function internal to this package
-.gstop <- function(
-        ...,
-        sep = " ",
-        strWidth = 100,
-        errWidth = FALSE,
-        .prefix = " ",
-        .initial = "",
-        .n = 1L,
-        .call = TRUE) {
+.gstop <- function(...,
+    sep = " ",
+    strWidth = 100,
+    errWidth = FALSE,
+    .prefix = " ",
+    .initial = "",
+    .n = 1L,
+    .call = TRUE) {
     gstop(...,
         sep = sep,
         strWidth = strWidth,

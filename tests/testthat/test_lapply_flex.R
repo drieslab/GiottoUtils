@@ -8,7 +8,7 @@ test_that("lapply functions produce similar values", {
     resdefault <- lapply_flex(x, log)
     resfuture <- lapply_flex(x, log, method = "future")
     resbioc <- lapply_flex(x, log, method = "biocparallel")
-    
+
     expect_identical(resbase, resdefault)
     expect_identical(resbase, resfuture)
     expect_identical(resbase, resbioc)
@@ -25,16 +25,18 @@ test_that("bpparam can be set", {
 })
 
 giotto_bpparam(BiocParallel::SerialParam()) # reset
-options("giotto.warn_sequential" = TRUE) 
+options("giotto.warn_sequential" = TRUE)
 
 test_that("future warns sequential", {
     expect_warning(
-        lapply_flex(x, log, method = "future"), regexp = "future"
+        lapply_flex(x, log, method = "future"),
+        regexp = "future"
     )
 })
 
 test_that("bioc warns sequential", {
     expect_warning(
-        lapply_flex(x, log, method = "biocparallel"), regexp = "BiocParallel"
+        lapply_flex(x, log, method = "biocparallel"),
+        regexp = "BiocParallel"
     )
 })

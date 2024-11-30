@@ -63,9 +63,8 @@ suite_packages <- function(type = "core") {
 #' }
 #' @export
 suite_install <- function(modules = suite_packages(), suite_deps = TRUE, ref = "main", ...) {
-    
     package_check("remotes", repository = "CRAN")
-    
+
     # switch to R4.4.0 branch if user version low
     if (identical(ref, "main") && .rver() < "4.4.1") {
         ref <- "4.4.0"

@@ -58,12 +58,11 @@ gwith_package <- function(package, code, pos = 2L) {
 #' @details
 #' `gwith_seed()` : `...` passes to `set.seed()`
 #' @export
-gwith_seed <- function(
-        seed = 1234,
-        code,
-        ...,
-        substitute = TRUE,
-        envir = parent.frame()) {
+gwith_seed <- function(seed = 1234,
+    code,
+    ...,
+    substitute = TRUE,
+    envir = parent.frame()) {
     if (substitute) {
         code <- substitute(code)
     }
