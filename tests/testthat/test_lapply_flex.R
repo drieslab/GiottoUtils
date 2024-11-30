@@ -1,8 +1,9 @@
 x <- list(x = 1, y = 2)
 
+options("giotto.warn_sequential" = FALSE)
+
 test_that("lapply functions produce similar values", {
     # suppress sequential warnings
-    options("giotto.warn_sequential" = FALSE)
     resbase <- lapply(x, log)
     resdefault <- lapply_flex(x, log)
     resfuture <- lapply_flex(x, log, method = "future")
@@ -13,6 +14,17 @@ test_that("lapply functions produce similar values", {
     expect_identical(resbase, resbioc)
 })
 
+test_that("bpparam is serial by default", {
+    expect_class(giotto_bpparam(), "SerialParam")
+})
+
+test_that("bpparam can be set", {
+    res <- giotto_bpparam(BiocParallel::SnowParam())
+    expect_class(res, "SnowParam")
+    expect_class(giotto_bpparam(), "SnowParam")
+})
+
+giotto_bpparam(BiocParallel::SerialParam()) # reset
 options("giotto.warn_sequential" = TRUE) 
 
 test_that("future warns sequential", {

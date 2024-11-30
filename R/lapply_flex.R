@@ -28,7 +28,7 @@ lapply_flex <- function(X,
     method = c("future", "biocparallel"),
     cores = NA,
     future.seed = TRUE,
-    BPPARAM,
+    BPPARAM = NULL,
     fun = NULL,
     ...) {
     
@@ -42,7 +42,8 @@ lapply_flex <- function(X,
     # check if parallel, warn if not
     save_list <- switch(method,
         "future" = {
-            check_future_parallel_plan()
+            package_check("future", repository = "CRAN")
+            .check_future_parallel_plan()
             future.apply::future_lapply(
                 X = X, FUN = FUN,
                 future.seed = future.seed, ...
@@ -50,15 +51,11 @@ lapply_flex <- function(X,
         },
         "biocparallel" = {
             package_check("BiocParallel", repository = "Bioc")
-            if (!missing(BPPARAM)) {
+            if (!is.null(BPPARAM)) {
                 bpparam <- BPPARAM
             } else {
-                bpparam <- getOption(
-                    "giotto.bpparam", BiocParallel::SerialParam()
-                )
+                bpparam <- giotto_bpparam()
             }
-           
-            check_bpparam(bpparam)
             BiocParallel::bplapply(
                 X = X, FUN = FUN, BPPARAM = bpparam, ...
             )
@@ -81,23 +78,52 @@ lapply_flex <- function(X,
     # }
 }
 
-check_future_parallel_plan <- function() {
+#' @title Giotto Default BiocParallel Param
+#' @name giotto_bpparam
+#' @description
+#' Get and set a cached BiocParallel BPPARAM setting. Cached settings can
+#' either be retrieved using `giotto_bpparam()` or directly with 
+#' `getOption("giotto.bpparam")`
+#' @param BPPARAM set a BiocParallel parameter class deciding how to perform
+#' parallelized or (or sequential) evaluation
+#' @export
+giotto_bpparam <- function(BPPARAM = NULL) {
+    package_check("BiocParallel", repository = "Bioc")
+    if (is.null(BPPARAM)) {
+        # no input: use default
+        BPPARAM <- getOption("giotto.bpparam", BiocParallel::SerialParam())
+    } else {
+        # input supplied: set new default + use
+        checkmate::assert_class(BPPARAM, "BiocParallelParam")
+        options("giotto.bpparam" = BPPARAM) # cache param
+    }
+    .check_bpparam(BPPARAM)
+    return(BPPARAM)
+}
+
+
+# internals ####
+
+.check_future_parallel_plan <- function() {
     if (!getOption("giotto.warn_sequential", TRUE)) {
         return(invisible())
     }
     if (inherits(future::plan(), "uniprocess")) {
-        wrap_txt("Your code is running sequentially. For better performance, consider using a parallel plan like future::plan(future::multisession)
+        wrap_txt("Your code is running sequentially. For better performance, consider using a parallel plan like:
+            future::plan(future::multisession)
                  \nTo silence this warning, set options(\"giotto.warn_sequential\" = FALSE)") |>
         warning(call. = FALSE)
     }
 }
 
-check_bpparam <- function(bpparam) {
+
+.check_bpparam <- function(bpparam) {
     if (!getOption("giotto.warn_sequential", TRUE)) {
         return(invisible())
     }
     if (inherits(bpparam, "SerialParam")) {
-        wrap_txt("Your code is running sequentially. For better performance, consider using a parallel plan like BiocParallel::SnowParam()
+        wrap_txt("Your code is running sequentially. For better performance, consider using a parallel plan like:
+        GiottoUtils::giotto_bpparam(BiocParallel::SnowParam())
                  \nTo silence this warning, set options(\"giotto.warn_sequential\" = FALSE)") |>
             warning(call. = FALSE)
     }

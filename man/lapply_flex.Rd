@@ -10,7 +10,7 @@ lapply_flex(
   method = c("future", "biocparallel"),
   cores = NA,
   future.seed = TRUE,
-  BPPARAM,
+  BPPARAM = NULL,
   fun = NULL,
   ...
 )
