@@ -1,3 +1,9 @@
+# GiottoUtils dev
+
+# Enhancement
+- `lapply_flex()` `BiocParallel` method added.
+- warning added when sequential evaluation is used with `lapply_flex()`. Silenceable through `options("giotto.warn_sequential" = FAlSE)`
+
 # GiottoUtils 0.2.1 (2024/11/4)
 
 ## New
