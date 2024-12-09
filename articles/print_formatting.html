@@ -9,8 +9,8 @@
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/JetBrains_Mono-0.4.9/font.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Console Printing">
 </head>
 <body>
@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">GiottoUtils</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,7 +56,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Console Printing</h1>
             
-            <h4 data-toc-skip class="date">4 November 2024</h4>
+            <h4 data-toc-skip class="date">9 December 2024</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/drieslab/Giotto/blob/website/vignettes/print_formatting.Rmd" class="external-link"><code>vignettes/print_formatting.Rmd</code></a></small>
       <div class="d-none name"><code>print_formatting.Rmd</code></div>
@@ -155,11 +155,11 @@ This function is wrapped by the convenient print functions detailed below.<br></
 The logfile defaults to being created in <code><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir()</a></code>, but this can be set to a directory of choice using the <code>"giotto.logdir"</code> option. The specific path to the logfile is stored within the <code>"giotto.last_logpath"</code>.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/vmsg.html">vmsg</a></span><span class="op">(</span>.v <span class="op">=</span> <span class="st">"log"</span>, <span class="st">"Write this to a logfile in tempdir"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Logging to:/tmp/RtmpVyfvxY/giotto_20241104_1.txt</span></span></code></pre>
+<pre><code><span><span class="co">## Logging to:/tmp/Rtmpzg7po3/giotto_20241209_1.txt</span></span></code></pre>
 <p>To read the log items, use <code><a href="../reference/giottoReadLog.html">giottoReadLog()</a></code>.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/giottoReadLog.html">giottoReadLog</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] " (2024-11-04 17:47:46) Write this to a logfile in tempdir"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] " (2024-12-09 07:18:47) Write this to a logfile in tempdir"</span></span></code></pre>
 <p>You can start a new logfile using <code><a href="../reference/giottoNewLog.html">giottoNewLog()</a></code></p>
 </div>
 </div>
@@ -210,14 +210,14 @@ The logfile defaults to being created in <code><a href="https://rdrr.io/r/base/t
 <span><span class="co">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">## [1] GiottoUtils_0.2.1 BiocStyle_2.34.0 </span></span>
+<span><span class="co">## [1] GiottoUtils_0.2.2 BiocStyle_2.34.0 </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
-<span><span class="co">##  [1] cli_3.6.3           knitr_1.48          rlang_1.1.4        </span></span>
-<span><span class="co">##  [4] xfun_0.49           textshaping_0.4.0   data.table_1.16.2  </span></span>
+<span><span class="co">##  [1] cli_3.6.3           knitr_1.49          rlang_1.1.4        </span></span>
+<span><span class="co">##  [4] xfun_0.49           textshaping_0.4.1   data.table_1.16.4  </span></span>
 <span><span class="co">##  [7] gtools_3.9.5        jsonlite_1.8.9      backports_1.5.0    </span></span>
 <span><span class="co">## [10] htmltools_0.5.8.1   ragg_1.3.3          sass_0.4.9         </span></span>
-<span><span class="co">## [13] rmarkdown_2.28      evaluate_1.0.1      jquerylib_0.1.4    </span></span>
+<span><span class="co">## [13] rmarkdown_2.29      evaluate_1.0.1      jquerylib_0.1.4    </span></span>
 <span><span class="co">## [16] fastmap_1.2.0       yaml_2.3.10         lifecycle_1.0.4    </span></span>
 <span><span class="co">## [19] bookdown_0.41       BiocManager_1.30.25 compiler_4.4.2     </span></span>
 <span><span class="co">## [22] fs_1.6.5            systemfonts_1.1.0   digest_0.6.37      </span></span>
