@@ -516,10 +516,10 @@ use_color_text <- function() {
         if (!isTRUE(opt)) {
             return(opt)
         }
-        if (isTRUE(opt) & isTRUE(ansi8_color)) {
+        if (isTRUE(opt) && isTRUE(ansi8_color)) {
             return(opt)
         }
-        if (isTRUE(opt) & !isTRUE(ansi8_color)) {
+        if (isTRUE(opt) && !isTRUE(ansi8_color)) {
             wrap_msg('Color text not supported on this system.
                Set options("giotto.color_show" = FALSE)')
         }
@@ -554,13 +554,13 @@ ansi_colors <- function() {
     # crayon compatibility (allow color disabling through crayon)
     cray_opt_has <- getOption("crayon.enabled", NULL)
     cray_opt_num <- getOption("crayon.colors", NULL)
-    if (!is.null(cray_opt_has) & !isTRUE(cray_opt_has)) {
+    if (!is.null(cray_opt_has) && !isTRUE(cray_opt_has)) {
         return(1L)
     } # disable
-    if (isTRUE(cray_opt_has) & !is.null(cray_opt_num)) {
+    if (isTRUE(cray_opt_has) && !is.null(cray_opt_num)) {
         return(as.integer(cray_opt_num))
     }
-    if (isTRUE(cray_opt_has) & is.null(cray_opt_num)) {
+    if (isTRUE(cray_opt_has) && is.null(cray_opt_num)) {
         return(8L)
     }
 
@@ -590,8 +590,8 @@ ansi_colors <- function() {
     }
 
     # Windows Emacs
-    if (.Platform$OS.type == "windows" &
-        "--ess" %in% commandArgs() &
+    if (.Platform$OS.type == "windows" &&
+        "--ess" %in% commandArgs() &&
         is_emacs_with_color()) {
         return(8L)
     }
@@ -610,7 +610,7 @@ ansi_colors <- function() {
 #' @export
 is_emacs_with_color <- function() {
     (Sys.getenv("EMACS") != "" || Sys.getenv("INSIDE_EMACS") !=
-        "") & !is.na(emacs_version()[1]) & emacs_version()[1] >=
+        "") && !is.na(emacs_version()[1]) && emacs_version()[1] >=
         23
 }
 
