@@ -140,9 +140,8 @@ py_active_env <- function() {
     )
 }
 
-.to_scipy_sparse_dgc <- function(
-        x, format = c("C", "R"),
-        transpose = FALSE, ...) {
+.to_scipy_sparse_dgc <- function(x, format = c("C", "R"),
+    transpose = FALSE, ...) {
     SCP <- .get_scipy()
     if (transpose) x <- Matrix::t(x)
     if (format == "R") {
@@ -156,9 +155,8 @@ py_active_env <- function() {
     )
 }
 
-.to_scipy_sparse_dgr <- function(
-        x, format = c("C", "R"),
-        transpose = FALSE, ...) {
+.to_scipy_sparse_dgr <- function(x, format = c("C", "R"),
+    transpose = FALSE, ...) {
     SCP <- .get_scipy()
     if (transpose) x <- Matrix::t(x)
     if (format == "C") {
@@ -172,9 +170,8 @@ py_active_env <- function() {
     )
 }
 
-.to_scipy_sparse_dgt <- function(
-        x, format = c("C", "R"),
-        transpose = FALSE, ...) {
+.to_scipy_sparse_dgt <- function(x, format = c("C", "R"),
+    transpose = FALSE, ...) {
     if (transpose) x <- Matrix::t(x)
 
     switch(format,
@@ -185,9 +182,8 @@ py_active_env <- function() {
     to_scipy_sparse(x, format = format, transpose = FALSE, ...)
 }
 
-.from_scipy_sparse_csr <- function(
-        x, format = c("C", "R"),
-        transpose = FALSE, ...) {
+.from_scipy_sparse_csr <- function(x, format = c("C", "R"),
+    transpose = FALSE, ...) {
     if (transpose) {
         x <- x$transpose()
         # call again since transpose is accomplished via csr -> csc conversion
@@ -207,9 +203,8 @@ py_active_env <- function() {
 
 
 
-.from_scipy_sparse_csc <- function(
-        x, format = c("C", "R"),
-        transpose = FALSE, ...) {
+.from_scipy_sparse_csc <- function(x, format = c("C", "R"),
+    transpose = FALSE, ...) {
     if (transpose) {
         x <- x$transpose()
         # call again since transpose is accomplished via csc -> csr conversion

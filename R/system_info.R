@@ -5,10 +5,9 @@
 #' @examples
 #' determine_cores()
 #' @export
-determine_cores <- function(
-        cores = getOption("giotto.cores", default = NA),
-        min_cores = 1,
-        max_cores = 10) {
+determine_cores <- function(cores = getOption("giotto.cores", default = NA),
+    min_cores = 1,
+    max_cores = 10) {
     if (is.na(cores) ||
         !is.numeric(cores) ||
         (is.numeric(cores) && cores <= 0)) {

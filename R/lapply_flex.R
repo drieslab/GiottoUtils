@@ -23,15 +23,14 @@
 #'
 #' lapply_flex(list(x = 1, y = 2), FUN = log, method = "biocparallel")
 #' @export
-lapply_flex <- function(
-        X,
-        FUN,
-        method = c("future", "biocparallel"),
-        cores = NA,
-        future.seed = TRUE,
-        BPPARAM = NULL,
-        fun = NULL,
-        ...) {
+lapply_flex <- function(X,
+    FUN,
+    method = c("future", "biocparallel"),
+    cores = NA,
+    future.seed = TRUE,
+    BPPARAM = NULL,
+    fun = NULL,
+    ...) {
     # backwards compatible with previous version
     if (!is.null(fun)) {
         FUN <- fun
@@ -86,7 +85,7 @@ lapply_flex <- function(
 #' `getOption("giotto.bpparam")`
 #' @param BPPARAM set a BiocParallel parameter class deciding how to perform
 #' parallelized or (or sequential) evaluation
-#' @returns If a `BiocParallelParam` is passed to `BPPARAM`, it will be cached 
+#' @returns If a `BiocParallelParam` is passed to `BPPARAM`, it will be cached
 #' and invisibly returned. If `BPPARAM` is `NULL` then the cached param will be
 #' invisibly returned (`SerialParam`) is default.
 #' @export

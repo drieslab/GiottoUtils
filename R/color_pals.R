@@ -6,21 +6,21 @@
 #' @param n numeric. Number of colors wanted
 #' @param slim numeric. Saturation. If two values are provided, a random
 #' uniform distribution with the two values as min and max will be used.
-#' @param vlim numeric. Value. If two values are provided, a random uniform 
+#' @param vlim numeric. Value. If two values are provided, a random uniform
 #' distribution with the two values as min and max will be used.
 #' @param seed integer. seed to use when randomizing saturation and value.
 #' Default is 1234.
 #' @return character vector of hexadecimal rainbow colors
 #' @examples
 #' getRainbowColors(100)
-#' getRainbowColors(10, slim = c(0.5,1), vlim = c(0.3, 1))
-#' getRainbowColors(10, slim = c(0.5,1), vlim = c(0.3, 1), seed = 11)
+#' getRainbowColors(10, slim = c(0.5, 1), vlim = c(0.3, 1))
+#' getRainbowColors(10, slim = c(0.5, 1), vlim = c(0.3, 1), seed = 11)
 #' @export
 #' @family basic color palette functions
 getRainbowColors <- function(n, slim = 1, vlim = 1, seed = 1234) {
     if (length(slim) == 1) slim <- rep(slim, 2)
     if (length(vlim) == 1) vlim <- rep(vlim, 2)
-    
+
     gwith_seed(seed = seed, {
         s <- runif(100, min = slim[1], max = slim[2])
         v <- runif(100, min = vlim[1], max = vlim[2])
