@@ -1,4 +1,3 @@
-
 #' @name pbar
 #' @title Create a \pkg{progressr} progress tracker.
 #' @description
@@ -47,6 +46,3 @@ pbar <- progressr::progressor
 #'
 #' a()
 with_pbar <- progressr::with_progress
-
-
-

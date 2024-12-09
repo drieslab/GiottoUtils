@@ -46,12 +46,13 @@ wrap_msg <- function(..., sep = " ") {
 #' ))
 #'
 #' @export
-wrap_txt <- function(...,
-    sep = " ",
-    strWidth = 100,
-    errWidth = FALSE,
-    .prefix = " ",
-    .initial = "") {
+wrap_txt <- function(
+        ...,
+        sep = " ",
+        strWidth = 100,
+        errWidth = FALSE,
+        .prefix = " ",
+        .initial = "") {
     custom_width <- ifelse(is.null(match.call()$strWidth),
         yes = FALSE, no = TRUE
     )
@@ -79,12 +80,13 @@ wrap_txt <- function(...,
 #' ))
 #'
 #' @export
-wrap_txtf <- function(...,
-    sep = " ",
-    strWidth = 100,
-    errWidth = FALSE,
-    .prefix = " ",
-    .initial = "") {
+wrap_txtf <- function(
+        ...,
+        sep = " ",
+        strWidth = 100,
+        errWidth = FALSE,
+        .prefix = " ",
+        .initial = "") {
     custom_width <- ifelse(is.null(match.call()$strWidth),
         yes = FALSE, no = TRUE
     )
@@ -134,9 +136,8 @@ wrap_txtf <- function(...,
 #' vmsg("Do not print by default", .v = TRUE)
 #' # function level input overrides global option
 #' @export
-vmsg <- function(
-        ..., .v = NULL, .is_debug = FALSE,
-        .vopt = getOption("giotto.verbose", TRUE)) {
+vmsg <- function(..., .v = NULL, .is_debug = FALSE,
+    .vopt = getOption("giotto.verbose", TRUE)) {
     # if function-level flag is provided, override global option
     if (!is.null(.v)) {
         .vopt <- .v
@@ -212,17 +213,16 @@ vmsg <- function(
 #'     silent = TRUE
 #' )
 #' @export
-gstop <- function(
-        ...,
-        sep = " ",
-        strWidth = 100,
-        errWidth = FALSE,
-        .module,
-        .prefix = " ",
-        .initial = "",
-        .n = 1L,
-        .call = TRUE,
-        .warn_nstack = getOption("giotto.warn_gstop_nstack", FALSE)) {
+gstop <- function(...,
+    sep = " ",
+    strWidth = 100,
+    errWidth = FALSE,
+    .module,
+    .prefix = " ",
+    .initial = "",
+    .n = 1L,
+    .call = TRUE,
+    .warn_nstack = getOption("giotto.warn_gstop_nstack", FALSE)) {
     nf <- sys.nframe()
     if (.n > nf) {
         # send message and automatically limit to max nframes
@@ -263,14 +263,15 @@ gstop <- function(
 
 
 # Use this function internal to this package
-.gstop <- function(...,
-    sep = " ",
-    strWidth = 100,
-    errWidth = FALSE,
-    .prefix = " ",
-    .initial = "",
-    .n = 1L,
-    .call = TRUE) {
+.gstop <- function(
+        ...,
+        sep = " ",
+        strWidth = 100,
+        errWidth = FALSE,
+        .prefix = " ",
+        .initial = "",
+        .n = 1L,
+        .call = TRUE) {
     gstop(...,
         sep = sep,
         strWidth = strWidth,
@@ -515,10 +516,10 @@ use_color_text <- function() {
         if (!isTRUE(opt)) {
             return(opt)
         }
-        if (isTRUE(opt) & isTRUE(ansi8_color)) {
+        if (isTRUE(opt) && isTRUE(ansi8_color)) {
             return(opt)
         }
-        if (isTRUE(opt) & !isTRUE(ansi8_color)) {
+        if (isTRUE(opt) && !isTRUE(ansi8_color)) {
             wrap_msg('Color text not supported on this system.
                Set options("giotto.color_show" = FALSE)')
         }
@@ -553,13 +554,13 @@ ansi_colors <- function() {
     # crayon compatibility (allow color disabling through crayon)
     cray_opt_has <- getOption("crayon.enabled", NULL)
     cray_opt_num <- getOption("crayon.colors", NULL)
-    if (!is.null(cray_opt_has) & !isTRUE(cray_opt_has)) {
+    if (!is.null(cray_opt_has) && !isTRUE(cray_opt_has)) {
         return(1L)
     } # disable
-    if (isTRUE(cray_opt_has) & !is.null(cray_opt_num)) {
+    if (isTRUE(cray_opt_has) && !is.null(cray_opt_num)) {
         return(as.integer(cray_opt_num))
     }
-    if (isTRUE(cray_opt_has) & is.null(cray_opt_num)) {
+    if (isTRUE(cray_opt_has) && is.null(cray_opt_num)) {
         return(8L)
     }
 
@@ -589,8 +590,8 @@ ansi_colors <- function() {
     }
 
     # Windows Emacs
-    if (.Platform$OS.type == "windows" &
-        "--ess" %in% commandArgs() &
+    if (.Platform$OS.type == "windows" &&
+        "--ess" %in% commandArgs() &&
         is_emacs_with_color()) {
         return(8L)
     }
@@ -609,7 +610,7 @@ ansi_colors <- function() {
 #' @export
 is_emacs_with_color <- function() {
     (Sys.getenv("EMACS") != "" || Sys.getenv("INSIDE_EMACS") !=
-        "") & !is.na(emacs_version()[1]) & emacs_version()[1] >=
+        "") && !is.na(emacs_version()[1]) && emacs_version()[1] >=
         23
 }
 

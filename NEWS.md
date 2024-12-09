@@ -1,3 +1,10 @@
+# GiottoUtils 0.2.2
+
+## Enhancement
+- `lapply_flex()` `BiocParallel` method added.
+- warning added when sequential evaluation is used with `lapply_flex()`. Silenceable through `options("giotto.warn_sequential" = FALSE)`
+- `vlim`, `slim`, `seed` params for `getRainbowColors()` to allow more diverse palettes
+
 # GiottoUtils 0.2.1 (2024/11/4)
 
 ## New

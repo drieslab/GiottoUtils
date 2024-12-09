@@ -53,22 +53,24 @@ gwith_package <- function(package, code, pos = 2L) {
 
 #' @describeIn with Eval with temporary specifiable seed
 #' @inheritParams R.utils::withSeed
+#' @param seed numeric. seed to set
 #' @param \dots additional params to pass. See details.
 #' @details
 #' `gwith_seed()` : `...` passes to `set.seed()`
 #' @export
-gwith_seed <- function(seed = 1234,
-    code,
-    ...,
-    substitute = TRUE,
-    envir = parent.frame()) {
+gwith_seed <- function(
+        seed = 1234,
+        code,
+        ...,
+        substitute = TRUE,
+        envir = parent.frame()) {
     if (substitute) {
         code <- substitute(code)
     }
 
     R.utils::withSeed(
         expr = code,
-        seed = seed,
+        seed = as.integer(seed),
         ...,
         substitute = FALSE, # already done
         envir = envir

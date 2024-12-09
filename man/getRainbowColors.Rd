@@ -4,10 +4,19 @@
 \alias{getRainbowColors}
 \title{getRainbowColors}
 \usage{
-getRainbowColors(n)
+getRainbowColors(n, slim = 1, vlim = 1, seed = 1234)
 }
 \arguments{
-\item{n}{number of colors wanted}
+\item{n}{numeric. Number of colors wanted}
+
+\item{slim}{numeric. Saturation. If two values are provided, a random
+uniform distribution with the two values as min and max will be used.}
+
+\item{vlim}{numeric. Value. If two values are provided, a random uniform
+distribution with the two values as min and max will be used.}
+
+\item{seed}{integer. seed to use when randomizing saturation and value.
+Default is 1234.}
 }
 \value{
 character vector of hexadecimal rainbow colors
@@ -18,6 +27,8 @@ Only 100 unique colors will be supplied after which they are recycled.
 }
 \examples{
 getRainbowColors(100)
+getRainbowColors(10, slim = c(0.5, 1), vlim = c(0.3, 1))
+getRainbowColors(10, slim = c(0.5, 1), vlim = c(0.3, 1), seed = 11)
 }
 \seealso{
 Other basic color palette functions: 
