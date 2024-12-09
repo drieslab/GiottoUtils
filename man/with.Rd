@@ -22,6 +22,8 @@ gwith_seed(seed = 1234, code, ..., substitute = TRUE, envir = parent.frame())
 
 \item{pos}{integer. position in search to attach at. Default = 2}
 
+\item{seed}{numeric. seed to set}
+
 \item{\dots}{additional params to pass. See details.}
 
 \item{substitute}{If \code{\link[base:logical]{TRUE}}, argument \code{expr} is

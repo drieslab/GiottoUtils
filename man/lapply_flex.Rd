@@ -4,16 +4,32 @@
 \alias{lapply_flex}
 \title{lapply_flex}
 \usage{
-lapply_flex(X, FUN, cores = NA, future.seed = TRUE, fun = NULL, ...)
+lapply_flex(
+  X,
+  FUN,
+  method = c("future", "biocparallel"),
+  cores = NA,
+  future.seed = TRUE,
+  BPPARAM = NULL,
+  fun = NULL,
+  ...
+)
 }
 \arguments{
 \item{X}{list to use}
 
 \item{FUN}{function to be performed}
 
-\item{cores}{cores to use}
+\item{method}{character. Either \code{"future"} or \code{"biocparallel"}, determining
+which parallelization framework to use.}
 
-\item{future.seed}{whether to set a seed when using future_lapply}
+\item{cores}{deprecated}
+
+\item{future.seed}{whether to set a seed when using \code{method = "future"}}
+
+\item{BPPARAM}{a BiocParallel parameter class deciding how to perform
+parallelized or sequential (default) evaluation. Used with
+\code{method = "biocparallel"}}
 
 \item{fun}{deprecated. Backwards compatibility for FUN}
 
@@ -28,5 +44,11 @@ lapply_flex
 \examples{
 lapply_flex(list(x = 1, y = 2), FUN = log)
 
+# suppress warnings
+options("giotto.warn_sequential" = FALSE)
+
+lapply_flex(list(x = 1, y = 2), FUN = log, method = "future")
+
+lapply_flex(list(x = 1, y = 2), FUN = log, method = "biocparallel")
 }
 \keyword{internal}
