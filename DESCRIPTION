@@ -1,6 +1,6 @@
 Package: GiottoUtils
 Title: Giotto Suite Utilities
-Version: 0.2.1
+Version: 0.2.2
 Authors@R: c(
 	person("Ruben", "Dries", email = "rubendries@gmail.com",
 		 role = c("aut", "cre"), comment = c(ORCID = "0000-0001-7650-7754")),
@@ -35,10 +35,13 @@ Imports:
     progressr,
     R.utils
 Suggests:
+    BiocParallel,
+    future,
     future.apply,
     Matrix,
     knitr,
     parallel,
+    remotes,
     RColorBrewer,
     reticulate,
     testthat (>= 3.0.0),

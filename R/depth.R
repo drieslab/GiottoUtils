@@ -16,10 +16,9 @@
 #' depth(x)
 #'
 #' @export
-depth <- function(
-        this,
-        method = c("max", "min"),
-        sig = "data.frame") {
+depth <- function(this,
+    method = c("max", "min"),
+    sig = "data.frame") {
     method <- match.arg(arg = method, choices = c("max", "min"))
 
     # Stop conditions:

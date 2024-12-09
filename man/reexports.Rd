@@ -29,7 +29,7 @@ A sorted vector
 vector giving the sort order of the input elements
 }
 \examples{
-jsoncars <- jsonlite::toJSON(mtcars, pretty=TRUE)
+jsoncars <- jsonlite::toJSON(mtcars, pretty = TRUE)
 fromJSON(jsoncars)
 }
 \seealso{

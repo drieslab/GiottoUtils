@@ -50,8 +50,8 @@ if (FALSE) {
     # install core packages
     suite_install()
     suite_install("GiottoClass", ref = "dev")
-    
-    # install ONLY Giotto, ignoring module dependencies 
+
+    # install ONLY Giotto, ignoring module dependencies
     # (i.e. GiottoVisuals, GiottoClass, etc)
     suite_install("Giotto", suite_deps = FALSE)
 }

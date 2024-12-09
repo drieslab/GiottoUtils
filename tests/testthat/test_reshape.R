@@ -19,4 +19,3 @@ test_that("test matrix melting with colnames", {
     expect_integer(res$Var2)
     expect_factor(res$Var1)
 })
-

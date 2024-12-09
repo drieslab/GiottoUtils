@@ -1,6 +1,3 @@
-
-
-
 #' @name melt_matrix
 #' @title Melt a matrix
 #' @description Simple implementation of melt for matrices to produces results
@@ -19,8 +16,11 @@
 #' Data <- matrix(round(rnorm(12, 10, 4)), nrow = 4, ncol = 3)
 #' melt_matrix(Data)
 melt_matrix <- function(
-        data, varnames = NULL, ..., as.is = FALSE, value.name = "value"
-) {
+        data,
+        varnames = NULL,
+        ...,
+        as.is = FALSE,
+        value.name = "value") {
     # NSE vars
     Var1 <- Var2 <- NULL
 
@@ -65,6 +65,3 @@ melt_matrix <- function(
 
     return(dt)
 }
-
-
-
