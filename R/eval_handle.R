@@ -30,3 +30,42 @@ handle_warnings <- function(expr) {
         warnings = warnings
     )
 }
+
+#' @name handle_errors
+#' @title Error handling
+#' @description
+#' Some errors may lock up the console for much longer than they should. This
+#' can often be because R has difficulty figuring out the callstack to generate
+#' the error message. This function is a simple wrapper to set up a tryCatch
+#' evaluation that will return all enclosed errors with the `stop()` arg 
+#' `call. = FALSE` setting.
+#' @param expr expression to evaluate 
+#' @param prefix string. An optional prefix to add before the error to help
+#' report where it was from.
+#' @returns Throws an error without processing stop calls.
+#' @examples
+#' x <- function() {handle_errors(stop("this is an error"))}
+#' if (FALSE) {
+#'     x()
+#' }
+#' 
+#' y <- function() {
+#'     handle_errors(
+#'         stop("this is an error"), 
+#'         prefix = "error location:"
+#'     )
+#' }
+#' #' if (FALSE) {
+#'     y()
+#' }
+#' @export
+handle_errors <- function(expr, prefix = "") {
+    res <- tryCatch(
+        expr,
+        error = function(e) {
+            stop(wrap_txtf("%s\n%s", prefix, e$message), call. = FALSE)
+        }
+    )
+}
+
+
