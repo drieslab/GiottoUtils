@@ -120,6 +120,10 @@ new_github_ver_avail <- function(url, current_ver = NULL) {
 #'     repository = c("CRAN", "github:johndoe/cooltool")
 #' )
 #'
+#' # specific version (most useful for python modules)
+#' package_check("numpy", "pip:numpy>=1.0")
+#' package_check("numpy", "pip:numpy==1.0")
+#'
 #' # github pip (python) checks
 #' package_check(
 #'     pkg_name = "pysodb",
@@ -128,12 +132,11 @@ new_github_ver_avail <- function(url, current_ver = NULL) {
 #' )
 #' }
 #' @export
-package_check <- function(
-        pkg_name,
-        repository = NULL,
-        github_repo = NULL,
-        optional = FALSE,
-        custom_msg = NULL) {
+package_check <- function(pkg_name,
+    repository = NULL,
+    github_repo = NULL,
+    optional = FALSE,
+    custom_msg = NULL) {
     # NSE vars
     location <- name <- NULL
 
@@ -181,26 +184,26 @@ package_check <- function(
     # protect URLs from split
     repository <- gsub("http://", "HTTP__", repository)
     repository <- gsub("https://", "HTTPS__", repository)
-    
+
     repo_split <- strsplit(repository, ":")
-    
+
     # restore URLs
     repo_split <- lapply(repo_split, function(p) {
         gsub("HTTPS__", "https://", gsub("HTTP__", "http://", p))
     })
-    
+
     repo <- vapply(repo_split, function(r) r[1L], FUN.VALUE = character(1L))
     name_and_version <- lapply(repo_split, function(r) {
         .check_package_parse_version_request(r[2L])
     }) |>
         do.call(what = rbind) |>
         data.table::as.data.table()
-    
+
     repos_dt <- data.table::data.table(
         name = pkg_name,
         repo = repo,
         input = vapply(
-            repo_split, 
+            repo_split,
             function(r) paste(r[-1L], collapse = ":"),
             FUN.VALUE = character(1L)
         )
@@ -239,19 +242,19 @@ package_check <- function(
     vcompares <- which(repos_dt[, !is.na(version)])
     for (v_ii in vcompares) {
         repos_dt[
-            v_ii, 
-            version_ok := 
+            v_ii,
+            version_ok :=
                 .check_package_compare_version(version, version_req, operator)
         ]
     }
-    
+
     version_fail_dt <- repos_dt[(!version_ok), ]
     install_dt <- repos_dt[(missing), ]
-    
+
     .package_version_warning(version_fail_dt)
 
     .package_missing_error(install_dt, custom_msg, is_error)
-    
+
     # return TRUE if .package_missing_error did not throw an error
     return(invisible(TRUE))
 }
@@ -260,12 +263,14 @@ package_check <- function(
 # report check results
 
 .package_version_warning <- function(version_fail_dt) {
-    if (nrow(version_fail_dt) == 0L) return(invisible())
+    if (nrow(version_fail_dt) == 0L) {
+        return(invisible())
+    }
 
     warn_list <- character()
     for (i in seq_len(nrow(version_fail_dt))) {
         w <- with(version_fail_dt, {
-           wrap_txtf(
+            wrap_txtf(
                 "{%s} is version %s, but %s%s is required",
                 name[[i]],
                 version[[i]],
@@ -278,9 +283,10 @@ package_check <- function(
     }
 
     if (length(warn_list) > 0L) {
-        warning(paste0(warn_list, collapse = "\n"), 
-                call. = FALSE,
-                immediate. = FALSE)
+        warning(paste0(warn_list, collapse = "\n"),
+            call. = FALSE,
+            immediate. = FALSE
+        )
     }
 }
 
@@ -289,9 +295,9 @@ package_check <- function(
     if (nrow(install_dt) == 0L) {
         return(invisible())
     } # return early if no installs needed
-    
+
     # prints
-    
+
     # select console print function
     print_fun <- ifelse(
         is_error,
@@ -301,12 +307,12 @@ package_check <- function(
             return(invisible(FALSE))
         }
     )
-    
+
     # custom install msg
     if (!is.null(custom_msg)) {
         print_fun(custom_msg)
     } else { # default install msg
-        
+
         # header
         plural_installs <- install_dt[, .N > 1L]
         inst_msg <- sprintf(
@@ -315,38 +321,43 @@ package_check <- function(
             install_dt[, paste0(name, collapse = "\', \'")],
             ifelse(plural_installs, "are", "is")
         )
-        
+
         # pip
         inst_msg <- c(
             inst_msg,
             .msg_pip_install(
-                location = install_dt[repo == "pip", location])
+                location = install_dt[repo == "pip", location]
+            )
         )
         # bioc
         inst_msg <- c(
             inst_msg,
             .msg_bioc_install(
-                location = install_dt[repo == "Bioc", location])
+                location = install_dt[repo == "Bioc", location]
+            )
         )
         # cran
         inst_msg <- c(
             inst_msg,
             .msg_cran_install(
-                location = install_dt[repo == "CRAN", location])
+                location = install_dt[repo == "CRAN", location]
+            )
         )
         # github
         inst_msg <- c(
             inst_msg,
             .msg_github_install(
-                location = install_dt[repo == "github", location])
+                location = install_dt[repo == "github", location]
+            )
         )
         # bitbucket
         inst_msg <- c(
             inst_msg,
             .msg_bitbucket_install(
-                location = install_dt[repo == "bitbucket", location])
+                location = install_dt[repo == "bitbucket", location]
+            )
         )
-        
+
         print_fun(inst_msg)
     }
 }
@@ -368,7 +379,7 @@ package_check <- function(
 }
 
 .check_package_py <- function(name) {
-    package_check("reticulate", repository = "CRAN")    
+    package_check("reticulate", repository = "CRAN")
     !reticulate::py_module_available(name)
 }
 
@@ -383,13 +394,16 @@ package_check <- function(
 # should return character no matter what
 .py_module_version <- function(module) {
     if (reticulate::py_module_available(module)) {
-        tryCatch({
-            reticulate::py_eval(
-                sprintf("__import__('%s').__version__", module)
-            )
-        }, error = function(e) {
-            NA_character_
-        })
+        tryCatch(
+            {
+                reticulate::py_eval(
+                    sprintf("__import__('%s').__version__", module)
+                )
+            },
+            error = function(e) {
+                NA_character_
+            }
+        )
     } else {
         # should generally never see this since checking is only run
         # on modules found to already exist
