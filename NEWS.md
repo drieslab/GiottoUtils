@@ -3,6 +3,9 @@
 ## New
 - `handle_errors()` for catching errors with `call. = FALSE` to avoid console locking in complex calls
 
+## Enhancement
+- `package_check()` now supports version checks of the style `repository = "pip:XXXXX>=A.B.C"` (reported as warnings)
+
 # GiottoUtils 0.2.2 (2024/12/09)
 
 ## Enhancement
