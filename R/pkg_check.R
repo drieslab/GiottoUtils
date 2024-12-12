@@ -138,7 +138,7 @@ package_check <- function(pkg_name,
     optional = FALSE,
     custom_msg = NULL) {
     # NSE vars
-    location <- name <- NULL
+    location <- name <- operator <- repo <- version_ok <- version_req <- NULL
 
     # set default repo to CRAN if not supplied
     no_val <- is.null(repository)
@@ -266,6 +266,9 @@ package_check <- function(pkg_name,
     if (nrow(version_fail_dt) == 0L) {
         return(invisible())
     }
+    
+    # NSE vars
+    name <- version <- operator <- version_req <- NULL
 
     warn_list <- character()
     for (i in seq_len(nrow(version_fail_dt))) {
@@ -296,7 +299,8 @@ package_check <- function(pkg_name,
         return(invisible())
     } # return early if no installs needed
 
-    # prints
+    # NSE vars
+    location <- name <- repo <- NULL
 
     # select console print function
     print_fun <- ifelse(

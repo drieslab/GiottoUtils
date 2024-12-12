@@ -23,18 +23,20 @@ evaluation that will return all enclosed errors with the \code{stop()} arg
 \code{call. = FALSE} setting.
 }
 \examples{
-x <- function() {handle_errors(stop("this is an error"))}
+x <- function() {
+    handle_errors(stop("this is an error"))
+}
 if (FALSE) {
     x()
 }
 
 y <- function() {
     handle_errors(
-        stop("this is an error"), 
+        stop("this is an error"),
         prefix = "error location:"
     )
 }
-#' if (FALSE) {
+if (FALSE) {
     y()
 }
 }

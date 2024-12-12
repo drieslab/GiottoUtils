@@ -16,6 +16,7 @@
 #' getRainbowColors(10, slim = c(0.5, 1), vlim = c(0.3, 1))
 #' getRainbowColors(10, slim = c(0.5, 1), vlim = c(0.3, 1), seed = 11)
 #' @export
+#' @importFrom stats runif
 #' @family basic color palette functions
 getRainbowColors <- function(n, slim = 1, vlim = 1, seed = 1234) {
     if (length(slim) == 1) slim <- rep(slim, 2)
