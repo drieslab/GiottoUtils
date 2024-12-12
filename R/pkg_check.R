@@ -108,6 +108,11 @@ new_github_ver_avail <- function(url, current_ver = NULL) {
 #' package_check("faketool")
 #' package_check("faketool", repository = "Bioc")
 #' package_check("installme", repository = "pip:installme")
+#' package_check(
+#'     pkg_name = "cooltool",
+#'     repository = c("github"),
+#'     github_repo = "johndoe/cooltool@dev"
+#' )
 #'
 #' # vectorized
 #' package_check(
@@ -115,7 +120,7 @@ new_github_ver_avail <- function(url, current_ver = NULL) {
 #'     repository = c("CRAN", "github:johndoe/cooltool")
 #' )
 #'
-#' # github pip checks
+#' # github pip (python) checks
 #' package_check(
 #'     pkg_name = "pysodb",
 #'     repository =
@@ -130,7 +135,7 @@ package_check <- function(
         optional = FALSE,
         custom_msg = NULL) {
     # NSE vars
-    repo <- location <- name <- NULL
+    location <- name <- NULL
 
     # set default repo to CRAN if not supplied
     no_val <- is.null(repository)
@@ -165,7 +170,6 @@ package_check <- function(
         }
     }
 
-
     checkmate::assert_character(pkg_name)
     checkmate::assert_logical(optional)
 
@@ -174,16 +178,35 @@ package_check <- function(
     is_error <- any(!optional)
 
     # treat custom_msg as a replacement for the overall error/warning message
-
+    # protect URLs from split
+    repository <- gsub("http://", "HTTP__", repository)
+    repository <- gsub("https://", "HTTPS__", repository)
+    
     repo_split <- strsplit(repository, ":")
+    
+    # restore URLs
+    repo_split <- lapply(repo_split, function(p) {
+        gsub("HTTPS__", "https://", gsub("HTTP__", "http://", p))
+    })
+    
+    repo <- vapply(repo_split, function(r) r[1L], FUN.VALUE = character(1L))
+    name_and_version <- lapply(repo_split, function(r) {
+        .check_package_parse_version_request(r[2L])
+    }) |>
+        do.call(what = rbind) |>
+        data.table::as.data.table()
+    
     repos_dt <- data.table::data.table(
         name = pkg_name,
-        repo = lapply(repo_split, function(r) r[1L]),
-        location = lapply(
-            repo_split, function(r) paste(r[-1L], collapse = ":")
+        repo = repo,
+        input = vapply(
+            repo_split, 
+            function(r) paste(r[-1L], collapse = ":"),
+            FUN.VALUE = character(1L)
         )
     )
 
+    repos_dt <- merge(repos_dt, name_and_version, all.x = TRUE, by = "input")
 
     # check repos
     repo_choices <- c("CRAN", "Bioc", "github", "bitbucket", "pip")
@@ -205,15 +228,70 @@ package_check <- function(
         USE.NAMES = FALSE
     )]
 
+    # check versions for non-missing pkgs
+    repos_dt[, version := NA_character_]
+    vchecks <- which(repos_dt[, !isTRUE(missing) & !is.na(version_req)])
+    for (v_i in vchecks) {
+        repos_dt[v_i, version := .check_package_version(location, repo)]
+    }
+
+    repos_dt[, version_ok := NA]
+    vcompares <- which(repos_dt[, !is.na(version)])
+    for (v_ii in vcompares) {
+        repos_dt[
+            v_ii, 
+            version_ok := 
+                .check_package_compare_version(version, version_req, operator)
+        ]
+    }
+    
+    version_fail_dt <- repos_dt[(!version_ok), ]
     install_dt <- repos_dt[(missing), ]
+    
+    .package_version_warning(version_fail_dt)
+
+    .package_missing_error(install_dt, custom_msg, is_error)
+    
+    # return TRUE if .package_missing_error did not throw an error
+    return(invisible(TRUE))
+}
+
+
+# report check results
+
+.package_version_warning <- function(version_fail_dt) {
+    if (nrow(version_fail_dt) == 0L) return(invisible())
+
+    warn_list <- character()
+    for (i in seq_len(nrow(version_fail_dt))) {
+        w <- with(version_fail_dt, {
+           wrap_txtf(
+                "{%s} is version %s, but %s%s is required",
+                name[[i]],
+                version[[i]],
+                operator[[i]],
+                version_req[[i]],
+                .initial = "  "
+            )
+        })
+        warn_list <- c(warn_list, w)
+    }
+
+    if (length(warn_list) > 0L) {
+        warning(paste0(warn_list, collapse = "\n"), 
+                call. = FALSE,
+                immediate. = FALSE)
+    }
+}
+
+
+.package_missing_error <- function(install_dt, custom_msg, is_error) {
     if (nrow(install_dt) == 0L) {
-        return(invisible(TRUE))
-    } # return TRUE if no installs needed
-
-
-
+        return(invisible())
+    } # return early if no installs needed
+    
     # prints
-
+    
     # select console print function
     print_fun <- ifelse(
         is_error,
@@ -223,14 +301,12 @@ package_check <- function(
             return(invisible(FALSE))
         }
     )
-
-
-
+    
     # custom install msg
     if (!is.null(custom_msg)) {
         print_fun(custom_msg)
     } else { # default install msg
-
+        
         # header
         plural_installs <- install_dt[, .N > 1L]
         inst_msg <- sprintf(
@@ -239,41 +315,46 @@ package_check <- function(
             install_dt[, paste0(name, collapse = "\', \'")],
             ifelse(plural_installs, "are", "is")
         )
-
+        
         # pip
         inst_msg <- c(
             inst_msg,
-            .msg_pip_install(location = install_dt[repo == "pip", location])
+            .msg_pip_install(
+                location = install_dt[repo == "pip", location])
         )
         # bioc
         inst_msg <- c(
             inst_msg,
-            .msg_bioc_install(location = install_dt[repo == "Bioc", location])
+            .msg_bioc_install(
+                location = install_dt[repo == "Bioc", location])
         )
         # cran
         inst_msg <- c(
             inst_msg,
-            .msg_cran_install(location = install_dt[repo == "CRAN", location])
+            .msg_cran_install(
+                location = install_dt[repo == "CRAN", location])
         )
         # github
         inst_msg <- c(
             inst_msg,
-            .msg_github_install(location = install_dt[repo == "github", location])
+            .msg_github_install(
+                location = install_dt[repo == "github", location])
         )
         # bitbucket
         inst_msg <- c(
             inst_msg,
-            .msg_bitbucket_install(location = install_dt[repo == "bitbucket", location])
+            .msg_bitbucket_install(
+                location = install_dt[repo == "bitbucket", location])
         )
-
+        
         print_fun(inst_msg)
     }
 }
 
 
-
-
 # package check functions ####
+
+# Dispatch to py and R package functions
 # return TRUE if install is needed
 .check_package_handler <- function(name, repo) {
     switch(repo,
@@ -287,9 +368,56 @@ package_check <- function(
 }
 
 .check_package_py <- function(name) {
-    package_check("reticulate", repository = "CRAN")
+    package_check("reticulate", repository = "CRAN")    
     !reticulate::py_module_available(name)
 }
+
+.check_package_version <- function(name, repo) {
+    switch(repo,
+        "pip" = .py_module_version(name),
+        packageVersion(name) # default
+    ) |>
+        as.character()
+}
+
+# should return character no matter what
+.py_module_version <- function(module) {
+    if (reticulate::py_module_available(module)) {
+        tryCatch({
+            reticulate::py_eval(
+                sprintf("__import__('%s').__version__", module)
+            )
+        }, error = function(e) {
+            NA_character_
+        })
+    } else {
+        # should generally never see this since checking is only run
+        # on modules found to already exist
+        "Module not found"
+    }
+}
+
+# parse inputs such as "GiottoUtils>=0.2.2" into the useful components
+.check_package_parse_version_request <- function(x) {
+    # Pattern matches package name followed by optional operator and version
+    pattern <- "^(git\\+https?://github\\.com/[[:alnum:]/_.-]+\\.git|[[:alnum:]_/@-]+)(?:([=<>!~]=?|<=|>=)(.+))?$"
+    matches <- regexec(pattern, x)
+    res <- regmatches(x, matches)[[1]]
+    res[nchar(res) == 0] <- NA_character_
+    # res <- as.list(res)
+    names(res) <- c("input", "location", "operator", "version_req")
+    res
+}
+
+.check_package_compare_version <- function(available, request, operator) {
+    unsupported <- "~="
+    if (operator %in% unsupported) {
+        stop("`~=` operator is not supported", call. = FALSE)
+    }
+    get(as.name(operator))(available, request)
+}
+
+
 
 
 
