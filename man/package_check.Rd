@@ -48,6 +48,11 @@ package_check("leidenalg", repository = "pip:leidenalg")
 package_check("faketool")
 package_check("faketool", repository = "Bioc")
 package_check("installme", repository = "pip:installme")
+package_check(
+    pkg_name = "cooltool",
+    repository = c("github"),
+    github_repo = "johndoe/cooltool@dev"
+)
 
 # vectorized
 package_check(
@@ -55,7 +60,11 @@ package_check(
     repository = c("CRAN", "github:johndoe/cooltool")
 )
 
-# github pip checks
+# specific version (most useful for python modules)
+package_check("numpy", "pip:numpy>=1.0")
+package_check("numpy", "pip:numpy==1.0")
+
+# github pip (python) checks
 package_check(
     pkg_name = "pysodb",
     repository =
