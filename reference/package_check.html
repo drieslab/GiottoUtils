@@ -15,7 +15,7 @@ status of."><meta property="og:image" content="https://drieslab.github.io/Giotto
 
     <a class="navbar-brand me-2" href="../index.html">GiottoUtils</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -107,6 +107,11 @@ message</p></dd>
 <span class="r-in"><span><span class="fu">package_check</span><span class="op">(</span><span class="st">"faketool"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">package_check</span><span class="op">(</span><span class="st">"faketool"</span>, repository <span class="op">=</span> <span class="st">"Bioc"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">package_check</span><span class="op">(</span><span class="st">"installme"</span>, repository <span class="op">=</span> <span class="st">"pip:installme"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">package_check</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    pkg_name <span class="op">=</span> <span class="st">"cooltool"</span>,</span></span>
+<span class="r-in"><span>    repository <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"github"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    github_repo <span class="op">=</span> <span class="st">"johndoe/cooltool@dev"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># vectorized</span></span></span>
 <span class="r-in"><span><span class="fu">package_check</span><span class="op">(</span></span></span>
@@ -114,7 +119,11 @@ message</p></dd>
 <span class="r-in"><span>    repository <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CRAN"</span>, <span class="st">"github:johndoe/cooltool"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># github pip checks</span></span></span>
+<span class="r-in"><span><span class="co"># specific version (most useful for python modules)</span></span></span>
+<span class="r-in"><span><span class="fu">package_check</span><span class="op">(</span><span class="st">"numpy"</span>, <span class="st">"pip:numpy&gt;=1.0"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">package_check</span><span class="op">(</span><span class="st">"numpy"</span>, <span class="st">"pip:numpy==1.0"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># github pip (python) checks</span></span></span>
 <span class="r-in"><span><span class="fu">package_check</span><span class="op">(</span></span></span>
 <span class="r-in"><span>    pkg_name <span class="op">=</span> <span class="st">"pysodb"</span>,</span></span>
 <span class="r-in"><span>    repository <span class="op">=</span></span></span>

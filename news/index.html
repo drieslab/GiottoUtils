@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">GiottoUtils</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,6 +34,19 @@
       <small>Source: <a href="https://github.com/drieslab/Giotto/blob/website/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.2.3" id="giottoutils-023-20250117">GiottoUtils 0.2.3 (2025/01/17)<a class="anchor" aria-label="anchor" href="#giottoutils-023-20250117"></a></h2>
+<div class="section level3">
+<h3 id="new-0-2-3">New<a class="anchor" aria-label="anchor" href="#new-0-2-3"></a></h3>
+<ul><li>
+<code><a href="../reference/handle_errors.html">handle_errors()</a></code> for catching errors with <code>call. = FALSE</code> to avoid console locking in complex calls</li>
+</ul></div>
+<div class="section level3">
+<h3 id="enhancement-0-2-3">Enhancement<a class="anchor" aria-label="anchor" href="#enhancement-0-2-3"></a></h3>
+<ul><li>
+<code><a href="../reference/package_check.html">package_check()</a></code> now supports version checks of the style <code>repository = "pip:XXXXX&gt;=A.B.C"</code> (reported as warnings)</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.2" id="giottoutils-022-20241209">GiottoUtils 0.2.2 (2024/12/09)<a class="anchor" aria-label="anchor" href="#giottoutils-022-20241209"></a></h2>
 <div class="section level3">
@@ -76,7 +89,7 @@
 <h3 id="new-0-1-12">New<a class="anchor" aria-label="anchor" href="#new-0-1-12"></a></h3>
 <ul><li>
 <code><a href="../reference/pbar.html">pbar()</a></code> and <code><a href="../reference/with_pbar.html">with_pbar()</a></code> as progress reporting utils. These are wrappers around <em>progressr</em> functionalities.</li>
-<li>reexports of <code><a href="https://rdrr.io/pkg/jsonlite/man/fromJSON.html" class="external-link">fromJSON()</a></code> and <code><a href="https://rdrr.io/pkg/jsonlite/man/read_json.html" class="external-link">read_json()</a></code> from <code>jsonlite</code>.</li>
+<li>reexports of <code><a href="https://jeroen.r-universe.dev/jsonlite/reference/fromJSON.html" class="external-link">fromJSON()</a></code> and <code><a href="https://jeroen.r-universe.dev/jsonlite/reference/read_json.html" class="external-link">read_json()</a></code> from <code>jsonlite</code>.</li>
 <li>
 <code><a href="../reference/melt_matrix.html">melt_matrix()</a></code> to emulate <code>reshape2::melt.matrix()</code> (deprecated package) for most use cases in Giotto.</li>
 </ul></div>
