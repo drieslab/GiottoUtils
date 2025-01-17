@@ -1,4 +1,4 @@
-# GiottoUtils 0.2.3
+# GiottoUtils 0.2.3 (2025/01/17)
 
 ## New
 - `handle_errors()` for catching errors with `call. = FALSE` to avoid console locking in complex calls
