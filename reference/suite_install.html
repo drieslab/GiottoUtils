@@ -19,7 +19,7 @@ but non-Suite dependencies will never prompt to be updated."><meta property="og:
 
     <a class="navbar-brand me-2" href="../index.html">GiottoUtils</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -93,10 +93,18 @@ determine which branches to install. See details.</p></dd>
 highest R version.</p>
     </div>
     <div class="section level2">
-    <h2 id="ref-r-">ref <code>"R4.4.0"</code><a class="anchor" aria-label="anchor" href="#ref-r-"></a></h2>
+    <h2 id="ref-r-r-or-">ref <code>"R4.4.0"</code>, <code>r440</code>, or <code>440</code><a class="anchor" aria-label="anchor" href="#ref-r-r-or-"></a></h2>
 
 
-<p>Mirrors the main branch, but locks the R version at 4.4.0</p>
+<p>Mirrors the main branch, but locks the R version at 4.4.0 (lowest version
+supported by all dependencies)</p>
+    </div>
+    <div class="section level2">
+    <h2 id="ref-r-r-or--1">ref <code>"R4.1.0"</code>, <code>r410</code>, or <code>410</code><a class="anchor" aria-label="anchor" href="#ref-r-r-or--1"></a></h2>
+
+
+<p>Mirrors the main branch, but locks the R version at 4.1.0. This version
+requires installation of Matrix 1.6-5</p>
     </div>
     <div class="section level2">
     <h2 id="ref-dev-">ref <code>"dev"</code><a class="anchor" aria-label="anchor" href="#ref-dev-"></a></h2>
