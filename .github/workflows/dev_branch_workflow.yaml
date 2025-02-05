@@ -32,6 +32,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Build and install
+        run: |
+          R CMD build .
+          R CMD INSTALL *.tar.gz
       - name: Generate coverage report
         run: |
           install.packages('covr')
@@ -56,6 +60,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Build and install
+        run: |
+          R CMD build .
+          R CMD INSTALL *.tar.gz
       - name: Run BiocCheck
         run: |
           if (!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager")
