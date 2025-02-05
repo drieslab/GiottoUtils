@@ -49,3 +49,48 @@ str_locate2 <- function(string, pattern) {
 
     return(out)
 }
+
+#' @name str_abbreviate
+#' @title Abbreviate a string
+#' @description Abbreviates a string in the format of `head`\[...\]`tail`
+#' when it exceeds the length specified by `width`. Useful for shortening
+#' how filepaths are displayed.
+#' @param string character. Input string
+#' @param width numeric. Strings longer than this many characters will be
+#' abbreviated
+#' @param head numeric. Number of characters to include before abbreviated
+#' section
+#' @param tail numeric. Number of characters to include after abbreviated
+#' section
+#' @returns character
+#' @examples
+#' a <- "/short/file/path/"
+#' b <- "/much/longer/foooooooooooooooooooo/baaaaaaaaaaaaaaaaaaaar/file/path/"
+#' str_abbreviate(c(a,b))
+#' str_abbreviate(c(a,b), width = 10, head = 3, tail = 3)
+#' @export
+str_abbreviate <- function(string, width = 60L, head = 15L, tail = 35L) {
+    head <- as.integer(head)
+    tail <- as.integer(tail)
+    min_width <- head + tail
+    if (min_width > width) {
+        "str_abbreviate: `head` + `tail` is greater than `width`. 
+        Using `width` =" |>
+            wrap_txt(min_width) |>
+            warning(call. = FALSE)
+    }
+    width <- as.integer(max(min_width, width))
+
+    res <- vapply(string, function(str) {
+        nch <- nchar(str)
+        if (nch > width) {
+            p1 <- substring(str, first = 0L, last = head)
+            p2 <- substring(str, first = nch - tail, last = nch)
+            sprintf("%s[...]%s", p1, p2)
+        } else {
+            str
+        }
+    }, FUN.VALUE = character(1L), USE.NAMES = FALSE)
+    
+    return(res)
+}
