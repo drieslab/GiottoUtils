@@ -46,8 +46,12 @@ suite_packages <- function(type = "core") {
 #' @section ref `"main"`:
 #' Installs the main Giotto version. This version is expected to chase the
 #' highest R version.
-#' @section ref `"R4.4.0"`:
-#' Mirrors the main branch, but locks the R version at 4.4.0
+#' @section ref `"R4.4.0"`, `r440`, or `440`:
+#' Mirrors the main branch, but locks the R version at 4.4.0 (lowest version
+#' supported by all dependencies)
+#' @section ref `"R4.1.0"`, `r410`, or `410`:
+#' Mirrors the main branch, but locks the R version at 4.1.0. This version
+#' requires installation of {Matrix} 1.6-5
 #' @section ref `"dev"`:
 #' This version is ahead of the main version and also chases the latest R
 #' version.
@@ -67,10 +71,12 @@ suite_install <- function(modules = suite_packages(),
     ref = "main",
     ...) {
     package_check("remotes", repository = "CRAN")
+    
+    ref <- .guess_ref(ref)
 
     # switch to R4.4.0 branch if user version low
     if (identical(ref, "main") && .rver() < "4.4.1") {
-        ref <- "4.4.0"
+        ref <- "R4.4.0"
     }
 
     not_module <- !modules %in% suite_packages("all")
@@ -107,11 +113,12 @@ suite_install <- function(modules = suite_packages(),
     vmsg(.is_debug = TRUE, paste0(modules, collapse = "\n"), .prefix = "")
 
     # pick set of repo references
-    ref <- match.arg(ref, c("main", "dev", "R4.4.0"))
+    ref <- match.arg(ref, c("main", "dev", "R4.4.0", "R4.1.0"))
     fullrefs <- switch(ref,
         "main" = .mainrefs[modules],
         "dev" = .devrefs[modules],
-        "R4.4.0" = .r440refs[modules]
+        "R4.4.0" = .r440refs[modules],
+        "R4.1.0" = .r410refs[modules]
     )
 
     repos <- fullrefs[modules]
@@ -137,6 +144,22 @@ suite_install <- function(modules = suite_packages(),
     paste(version$major, version$minor, sep = ".")
 }
 
+# setup ref aliases
+.guess_ref <- function(ref) {
+    x <- tolower(ref)
+    if (x == "main") {
+        return("main")
+    } else if (x == "dev") {
+        return("dev")
+    } else if (x %in% c("r4.4.0", "r440", "440")) {
+        return("R4.4.0")
+    } else if (x %in% c("r4.1.0", "r410", "410")) {
+        return("R4.1.0")
+    } else {
+        return(ref) # no change
+    }
+}
+
 .mainrefs <- c(
     GiottoUtils = "drieslab/GiottoUtils",
     GiottoClass = "drieslab/GiottoClass",
@@ -160,6 +183,15 @@ suite_install <- function(modules = suite_packages(),
     GiottoClass = "drieslab/GiottoClass@R4.4.0",
     GiottoVisuals = "drieslab/GiottoVisuals@R4.4.0",
     Giotto = "drieslab/Giotto@R4.4.0",
+    GiottoData = "drieslab/GiottoData", # TODO
+    GiottoDB = "drieslab/GiottoDB" # TODO
+)
+
+.r410refs <- c(
+    GiottoUtils = "drieslab/GiottoUtils@R4.1.0",
+    GiottoClass = "drieslab/GiottoClass@R4.1.0",
+    GiottoVisuals = "drieslab/GiottoVisuals@R4.1.0",
+    Giotto = "drieslab/Giotto@R4.1.0",
     GiottoData = "drieslab/GiottoData", # TODO
     GiottoDB = "drieslab/GiottoDB" # TODO
 )
