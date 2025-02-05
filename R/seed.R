@@ -76,7 +76,7 @@ local_seed <- function(seed) {
     # send to prev stack frame
 
     set.seed(seed)
-    
+
     do.call(
         "on.exit",
         args = list(add = TRUE, expr = quote({
