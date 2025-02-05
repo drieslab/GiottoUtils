@@ -19,7 +19,12 @@ jobs:
           use-public-rspm: true
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::rcmdcheck
+          extra-packages: |
+            any::rcmdcheck
+            any::testthat
+            any::styler
+            bioc::biocthis
+            bioc::BiocStyle
           needs: check
       - name: Install reticulate
         run: |
@@ -28,24 +33,17 @@ jobs:
         run: |
           Rscript -e "reticulate::install_miniconda()"
           Rscript -e "reticulate::conda_install(packages = 'scipy')"
-          
-      - name: Install styler and biocthis
-        run: |
-          install.packages('styler')
-          if (!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager")
-          BiocManager::install('biocthis')
-          BiocManager::install('BiocStyle')
-        shell: Rscript {0}
         
       - name: Check code style
         run: |
           styler::style_pkg(transformers = biocthis::bioc_style())
         shell: Rscript {0}
         
-      # Run quick unit tests
+      # Run unit tests
       - name: Run unit tests
         run: |
-          install.packages('testthat')
+          R CMD build .
+          R CMD INSTALL *.tar.gz
           testthat::test_dir('tests/testthat')
         shell: Rscript {0}
         
