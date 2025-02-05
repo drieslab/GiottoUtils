@@ -71,21 +71,21 @@ local_seed <- function(seed) {
 
     .gutils_prev_seed <- NULL
     assign(".gutils_prev_seed", prev_seed, sys.frame(-1))
+    assign(".has_seed", .has_seed, sys.frame(-1))
+    assign(".rm_seed", .rm_seed, sys.frame(-1))
     # send to prev stack frame
 
     set.seed(seed)
-
+    
     do.call(
         "on.exit",
-        args = list(add = TRUE, expr = {
-            quote(
-                if (is.null(.gutils_prev_seed)) {
-                    .rm_seed()
-                } else {
-                    assign(".Random.seed", .gutils_prev_seed, 1)
-                }
-            )
-        }),
+        args = list(add = TRUE, expr = quote({
+            if (is.null(.gutils_prev_seed)) {
+                .rm_seed()
+            } else {
+                assign(".Random.seed", .gutils_prev_seed, 1)
+            }
+        })),
         envir = sys.frame(-1)
     )
 }
