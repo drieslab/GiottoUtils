@@ -15,13 +15,13 @@ test_that("lapply functions produce similar values", {
 })
 
 test_that("bpparam is serial by default", {
-    expect_class(giotto_bpparam(), "SerialParam")
+    checkmate::expect_class(giotto_bpparam(), "SerialParam")
 })
 
 test_that("bpparam can be set", {
     res <- giotto_bpparam(BiocParallel::SnowParam())
-    expect_class(res, "SnowParam")
-    expect_class(giotto_bpparam(), "SnowParam")
+    checkmate::expect_class(res, "SnowParam")
+    checkmate::expect_class(giotto_bpparam(), "SnowParam")
 })
 
 giotto_bpparam(BiocParallel::SerialParam()) # reset
