@@ -34,9 +34,16 @@ Installs the main Giotto version. This version is expected to chase the
 highest R version.
 }
 
-\section{ref \code{"R4.4.0"}}{
+\section{ref \code{"R4.4.0"}, \code{r440}, or \code{440}}{
 
-Mirrors the main branch, but locks the R version at 4.4.0
+Mirrors the main branch, but locks the R version at 4.4.0 (lowest version
+supported by all dependencies)
+}
+
+\section{ref \code{"R4.1.0"}, \code{r410}, or \code{410}}{
+
+Mirrors the main branch, but locks the R version at 4.1.0. This version
+requires installation of {Matrix} 1.6-5
 }
 
 \section{ref \code{"dev"}}{
