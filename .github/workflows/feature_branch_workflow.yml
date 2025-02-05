@@ -2,10 +2,8 @@ name: Feature Branch Checks
 on:
   pull_request:
     branches: [ "dev" ]
-
 permissions:
   contents: read
-
 jobs:
   style-and-lint:
     runs-on: ubuntu-latest
@@ -23,20 +21,15 @@ jobs:
             any::rcmdcheck
             any::testthat
             any::styler
+            any::reticulate
             bioc::biocthis
             bioc::BiocStyle
           needs: check
-      - name: Install reticulate
-        run: |
-          Rscript -e "install.packages('reticulate')"
+          
       - name: Create miniconda
         run: |
-          Rscript -e "reticulate::install_miniconda()"
-          Rscript -e "reticulate::conda_install(packages = 'scipy')"
-        
-      - name: Check code style
-        run: |
-          styler::style_pkg(transformers = biocthis::bioc_style())
+          reticulate::install_miniconda()
+          reticulate::conda_install(packages = 'scipy')
         shell: Rscript {0}
         
       # Run unit tests
@@ -48,10 +41,16 @@ jobs:
         run: |
           library(testthat)
           library(GiottoUtils)
-          test_check("GiottoUtils")
+          test_dir("tests/testthat")
         shell: Rscript {0}
         
-      # Check if styler made changes
+      # Style checks
+      - name: Check code style
+        run: |
+          style_opts <- biocthis::bioc_style()
+          styler::style_pkg(transformers = style_opts)
+        shell: Rscript {0}
+        
       - name: Style Results
         if: always()
         run: |
