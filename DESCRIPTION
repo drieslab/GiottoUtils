@@ -23,7 +23,7 @@ BugReports: https://github.com/drieslab/Giotto/issues
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Depends:
-    R (>= 4.4.1)
+    R (>= 4.1.0)
 Imports:
     checkmate,
     data.table,
