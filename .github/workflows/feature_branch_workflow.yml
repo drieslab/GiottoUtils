@@ -26,6 +26,7 @@ jobs:
             bioc::biocthis
             bioc::BiocStyle
           needs: check
+          
       - name: Install reticulate
         run: |
           Rscript -e "install.packages('reticulate')"
@@ -39,11 +40,14 @@ jobs:
           styler::style_pkg(transformers = biocthis::bioc_style())
         shell: Rscript {0}
         
-      # Run unit tests
-      - name: Run unit tests
+      - name: Build and install
         run: |
           R CMD build .
           R CMD INSTALL *.tar.gz
+          
+      # Run unit tests
+      - name: Run tests
+        run: |
           testthat::test_dir('tests/testthat')
         shell: Rscript {0}
         
