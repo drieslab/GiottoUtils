@@ -1,3 +1,12 @@
+# GiottoUtils 0.2.4 (2025/02/04)
+
+## New
+- `str_abbreviate()` for shortening long strings for printing
+
+## Enhancement
+- More ergonomic ref selection for `suite_install()`
+- `R4.1.0` branch can now be used as a ref for `suite_install()`
+
 # GiottoUtils 0.2.3 (2025/01/17)
 
 ## New
