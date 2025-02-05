@@ -1,0 +1,63 @@
+name: Dev Branch Checks
+on:
+  push:
+    branches: [ "dev" ]
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: r-lib/actions/setup-pandoc@v2
+      - uses: r-lib/actions/setup-r@v2
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::rcmdcheck
+          needs: check
+      - name: Install reticulate
+        run: |
+          Rscript -e "install.packages('reticulate')"
+      - name: Create miniconda
+        run: |
+          Rscript -e "reticulate::install_miniconda()"
+          Rscript -e "reticulate::conda_install(packages = 'scipy')"
+      - name: Cache R packages
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-r-${{ hashFiles('**/DESCRIPTION') }}
+
+  codecov:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate coverage report
+        run: |
+          install.packages('covr')
+          covr::codecov(
+            token = ${{ secrets.CODECOV_TOKEN }},
+            flags = c("dev", "quick")
+          )
+        shell: Rscript {0}
+
+  rcmdcheck:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: r-lib/actions/check-r-package@v2
+        with:
+          args: 'c("--no-manual", "--as-cran")'
+          error-on: '"error"'
+
+  bioccheck:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run BiocCheck
+        run: |
+          if (!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager")
+          BiocManager::install("BiocCheck")
+          BiocCheck::BiocCheck()
