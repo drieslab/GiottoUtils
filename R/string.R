@@ -66,15 +66,15 @@ str_locate2 <- function(string, pattern) {
 #' @examples
 #' a <- "/short/file/path/"
 #' b <- "/much/longer/foooooooooooooooooooo/baaaaaaaaaaaaaaaaaaaar/file/path/"
-#' str_abbreviate(c(a,b))
-#' str_abbreviate(c(a,b), width = 10, head = 3, tail = 3)
+#' str_abbreviate(c(a, b))
+#' str_abbreviate(c(a, b), width = 10, head = 3, tail = 3)
 #' @export
 str_abbreviate <- function(string, width = 60L, head = 15L, tail = 35L) {
     head <- as.integer(head)
     tail <- as.integer(tail)
     min_width <- head + tail
     if (min_width > width) {
-        "str_abbreviate: `head` + `tail` is greater than `width`. 
+        "str_abbreviate: `head` + `tail` is greater than `width`.
         Using `width` =" |>
             wrap_txt(min_width) |>
             warning(call. = FALSE)
@@ -91,6 +91,6 @@ str_abbreviate <- function(string, width = 60L, head = 15L, tail = 35L) {
             str
         }
     }, FUN.VALUE = character(1L), USE.NAMES = FALSE)
-    
+
     return(res)
 }

@@ -84,11 +84,10 @@ lifecycle_badge <- function(stage = "stable") {
 #' foo(dep = 3) # deprecation message triggered
 #'
 #' # convenient nested function when deprecating multiple params
-#' bar <- function(
-#'         dep1 = deprecated(),
-#'         dep2 = deprecated(),
-#'         sup1 = 10,
-#'         sup2 = 20) {
+#' bar <- function(dep1 = deprecated(),
+#'     dep2 = deprecated(),
+#'     sup1 = 10,
+#'     sup2 = 20) {
 #'     # internally defined function that streamlines downstream deprecations
 #'     .dep <- function(...) {
 #'         deprecate_param(..., fun = "bar", when = "0.0.2")

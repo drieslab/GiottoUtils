@@ -66,12 +66,13 @@ suite_packages <- function(type = "core") {
 #'     suite_install("Giotto", suite_deps = FALSE)
 #' }
 #' @export
-suite_install <- function(modules = suite_packages(),
-    suite_deps = TRUE,
-    ref = "main",
-    ...) {
+suite_install <- function(
+        modules = suite_packages(),
+        suite_deps = TRUE,
+        ref = "main",
+        ...) {
     package_check("remotes", repository = "CRAN")
-    
+
     ref <- .guess_ref(ref)
 
     # switch to R4.4.0 branch if user version low
