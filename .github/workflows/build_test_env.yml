@@ -1,7 +1,7 @@
 name: Weekly Environment Builder
 on:
   schedule:
-    - cron: '0 0 * * 0'  # Run at midnight every Sunday
+    - cron: '45 * * * *'  # Run at midnight every Sunday
   workflow_dispatch:      # Allow manual trigger
 
 jobs:
