@@ -49,17 +49,11 @@ jobs:
   style-update:
     runs-on: ubuntu-latest
     steps:
-      # Check out with full history for PR creation
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
           token: ${{ secrets.GITHUB_TOKEN }}
-      
-      # Configure Git for PR creation
-      - name: Configure Git
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
       
       # Setup R environment for styling
       - uses: r-lib/actions/setup-r@v2
@@ -72,23 +66,37 @@ jobs:
             bioc::biocthis
           needs: check
         
-      # Apply style changes
-      - name: Apply code style
+      # Apply style changes and commit if needed
+      - name: Apply and commit style changes
         run: |
-          style_opts <- biocthis::bioc_style(indent_by = 4)
-          styler::style_pkg(transformers = style_opts)
-        shell: Rscript {0}
-        
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: 'style: apply bioc style guidelines'
-          title: 'style: automatic style fixes'
-          body: |
-            Applied automatic style fixes using styler with bioc guidelines.
-            - Used biocthis::bioc_style with 4-space indentation
-            - Applied changes through styler::style_pkg
-          branch: style/${{ github.head_ref }}
-          base: ${{ github.head_ref }}
-          delete-branch: true
+          # Configure git
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          
+          # Apply style
+          Rscript -e 'style_opts <- biocthis::bioc_style(indent_by = 4); styler::style_pkg(transformers = style_opts)'
+          
+          # Check if there are changes
+          if [[ -n "$(git status --porcelain)" ]]; then
+            # Commit changes
+            git add .
+            git commit -m "style: apply bioc style guidelines"
+            
+            # Create branch and push
+            style_branch="style-update-${GITHUB_SHA::8}"
+            git checkout -b $style_branch
+            git push origin $style_branch
+            
+            # Create PR using GitHub CLI
+            gh pr create \
+              --title "style: automatic style fixes" \
+              --body "Applied automatic style fixes using styler with bioc guidelines.
+              - Used biocthis::bioc_style with 4-space indentation
+              - Applied changes through styler::style_pkg" \
+              --base "${{ github.event.pull_request.head.ref }}" \
+              --head "$style_branch"
+          else
+            echo "No style changes needed"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
