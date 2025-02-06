@@ -3,9 +3,10 @@ on:
   pull_request:
     branches: [ "dev" ]
 permissions:
-  contents: read
+  contents: write
+  pull-requests: write
 jobs:
-  style-and-lint:
+  unit-tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -20,10 +21,7 @@ jobs:
           extra-packages: |
             any::rcmdcheck
             any::testthat
-            any::styler
             any::reticulate
-            bioc::biocthis
-            bioc::BiocStyle
           needs: check
           
       - name: Create miniconda
@@ -43,21 +41,41 @@ jobs:
           library(GiottoUtils)
           test_dir("tests/testthat")
         shell: Rscript {0}
+
+  style-update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+      
+      # Setup R environment for styling
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: |
+            any::styler
+            bioc::biocthis
+          needs: check
         
-      # Style checks
-      - name: Check code style
+      # Apply style changes
+      - name: Apply code style
         run: |
-          style_opts <- biocthis::bioc_style()
+          style_opts <- biocthis::bioc_style(indent_by = 4)
           styler::style_pkg(transformers = style_opts)
         shell: Rscript {0}
         
-      - name: Style Results
-        if: always()
-        run: |
-          if git diff --quiet; then
-            echo "Style check passed - no changes needed"
-          else
-            echo "Style check failed - styler made changes that need to be committed"
-            git diff
-            exit 1
-          fi
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: 'style: apply bioc style guidelines'
+          title: 'style: automatic style fixes'
+          body: |
+            Applied automatic style fixes using styler with bioc guidelines.
+            - Used biocthis::bioc_style with 4-space indentation
+            - Applied changes through styler::style_pkg
+          branch: style-fixes-${{ github.head_ref }}
+          base: ${{ github.head_ref }}
+          delete-branch: true
