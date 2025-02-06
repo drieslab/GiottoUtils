@@ -1,7 +1,8 @@
 name: Weekly Environment Builder
+
 on:
   schedule:
-    - cron: '45 * * * *'  # Run at midnight every Sunday
+    - cron: '0 0 * * 0'  # Run at midnight every Sunday
   workflow_dispatch:      # Allow manual trigger
 
 jobs:
@@ -36,7 +37,6 @@ jobs:
             any::BiocParallel
             bioc::BiocCheck
           needs: check
-        shell: Rscript {0}
       
       # Set up Python environment
       - name: Setup Python environment
