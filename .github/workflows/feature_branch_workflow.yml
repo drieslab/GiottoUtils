@@ -44,6 +44,7 @@ jobs:
 
   style-bot:
     runs-on: ubuntu-latest
+    secrets: inherit
     steps:
       - uses: actions/checkout@v4
         with:
