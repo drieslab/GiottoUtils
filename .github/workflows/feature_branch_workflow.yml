@@ -42,6 +42,18 @@ jobs:
           test_dir("tests/testthat")
         shell: Rscript {0}
 
+
+  debug-token:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check token presence
+        run: |
+          if [ -n "${{ secrets.STYLEBOT_TOKEN }}" ]; then
+            echo "Token is present"
+          else
+            echo "Token is not present"
+          fi
+
   style-bot:
     runs-on: ubuntu-latest
     steps:
