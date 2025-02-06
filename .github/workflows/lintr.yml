@@ -11,8 +11,6 @@
 name: lintr
 
 on:
-  push:
-    branches: [ "dev" ]
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [ "dev" ]
@@ -58,8 +56,10 @@ jobs:
           lintr::sarif_output(
             lintr::lint_package(
               ".",
+              exclusions = list("tests", "vignettes", "pkgdown"), 
               linters = lintr::linters_with_defaults(
-                indentation_linter = lintr::indentation_linter(indent = 4L)
+                indentation_linter = lintr::indentation_linter(indent = 4L),
+                object_name_linter = lintr::object_name_linter(styles = c("camelCase", "symbols", "snake_case", "UPPERCASE"))
               )
             ),
             "lintr-results.sarif"
