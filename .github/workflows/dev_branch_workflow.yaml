@@ -32,6 +32,11 @@ jobs:
       - name: Debug Python environment
         shell: Rscript {0}
         run: |
+          print("Checking miniconda location:")
+          print(list.files("~/.local/share", recursive = FALSE))
+          print(Sys.getenv("HOME"))
+          print("R lib path:")
+          print(.libPaths())
           print("Available conda environments:")
           print(reticulate::conda_list())
           print("\nPython configuration:")
