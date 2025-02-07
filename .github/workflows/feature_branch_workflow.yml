@@ -32,6 +32,9 @@ jobs:
     
     steps:
       - uses: actions/checkout@v4
+      - name: catch R deps not in container
+        run: devtools::install_deps()
+        shell: Rscript {0}
       - name: Build and install
         run: |
           R CMD build .
