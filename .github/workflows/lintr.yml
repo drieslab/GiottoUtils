@@ -35,6 +35,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: catch R deps not in container
+        run: devtools::install_deps()
+        shell: Rscript {0}
         with:
           ref: dev
 

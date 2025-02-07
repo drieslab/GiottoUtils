@@ -29,6 +29,9 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
+      - name: catch R deps not in container
+        run: devtools::install_deps()
+        shell: Rscript {0}
       - name: Generate coverage report
         run: |
           covr::codecov(
@@ -57,6 +60,9 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
+      - name: catch R deps not in container
+        run: devtools::install_deps()
+        shell: Rscript {0}
       - name: Check package
         run: |
           rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "error")
@@ -72,6 +78,9 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
+      - name: catch R deps not in container
+        run: devtools::install_deps()
+        shell: Rscript {0}
       - name: Build and install
         run: |
           R CMD build .
