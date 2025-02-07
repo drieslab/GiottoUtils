@@ -101,8 +101,6 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0  # Fetch all history and tags
-          submodules: recursive  # Fetch submodules if any
-          persist-credentials: true  # Ensure git credentials are available
       - name: catch R deps not in container
         run: devtools::install_deps()
         shell: Rscript {0}
