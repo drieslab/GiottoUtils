@@ -20,7 +20,17 @@ RUN R -e "install.packages(c(\
     'reticulate', \
     'RColorBrewer', \
     'Matrix', \
-    'future' \
+    'future', \
+    'checkmate', \
+    'data.table', \
+    'gtools', \
+    'jsonlite', \
+    'lifecycle', \
+    'magrittr', \
+    'methods', \
+    'progressr', \
+    'R.utils', \
+    'stats' \
     ))"
 
 # Install Bioconductor packages
