@@ -15,32 +15,33 @@ jobs:
   lintr:
     name: Run lintr scanning
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/${{ github.repository }}/r-env:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
           ref: dev
 
-      - name: Extract Docker metadata
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ghcr.io/${{ github.repository }}/r-env
-          name-canonical: true
-      
-      - uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      
-      - name: Run in container
-        uses: addnab/docker-run-action@v3
-        with:
-          image: ${{ steps.meta.outputs.tags }}:latest
-          options: -v ${{ github.workspace }}:/package
-          run: |
-            cd /package
-            Rscript -e 'lintr::sarif_output(lintr::lint_package(".", exclusions = list("tests", "vignettes", "pkgdown"), linters = lintr::linters_with_defaults(indentation_linter = lintr::indentation_linter(indent = 4L), object_name_linter = lintr::object_name_linter(styles = c("camelCase", "symbols", "snake_case", "UPPERCASE")))), "lintr-results.sarif")'
+      - name: Run lintr
+        run: |
+          lintr::sarif_output(
+            lintr::lint_package(
+              ".",
+              exclusions = list("tests", "vignettes", "pkgdown"), 
+              linters = lintr::linters_with_defaults(
+                indentation_linter = lintr::indentation_linter(indent = 4L),
+                object_name_linter = lintr::object_name_linter(styles = c("camelCase", "symbols", "snake_case", "UPPERCASE"))
+              )
+            ),
+            "lintr-results.sarif"
+          )
+        shell: Rscript {0}
+        continue-on-error: true
 
       - name: Upload analysis results to GitHub
         uses: github/codeql-action/upload-sarif@v3

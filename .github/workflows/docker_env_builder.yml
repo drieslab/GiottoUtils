@@ -29,10 +29,7 @@ jobs:
           tags: |
             type=schedule,pattern={{date 'YYYYMMDD'}}
             type=raw,value=latest
-          flavor: |
-            latest=true
-          name-canonical: true  # Convert name to lowercase
-
+      
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
@@ -41,5 +38,5 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=registry,ref=${{ steps.meta.outputs.tags }}
+          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}/r-env:latest
           cache-to: type=inline

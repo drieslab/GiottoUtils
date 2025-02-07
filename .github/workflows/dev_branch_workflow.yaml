@@ -10,30 +10,24 @@ permissions:
 jobs:
   codecov:
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/${{ github.repository }}/r-env:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    
     steps:
       - uses: actions/checkout@v4
       
-      - name: Extract Docker metadata
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ghcr.io/${{ github.repository }}/r-env
-          name-canonical: true
-      
-      - uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      
-      - name: Run in container
-        uses: addnab/docker-run-action@v3
-        with:
-          image: ${{ steps.meta.outputs.tags }}:latest
-          options: -v ${{ github.workspace }}:/package
-          run: |
-            cd /package
-            Rscript -e 'covr::codecov(quiet = FALSE, clean = FALSE, type = c("tests", "examples"), install_path = file.path(Sys.getenv("RUNNER_TEMP"), "package"))'
+      - name: Generate coverage report
+        run: |
+          covr::codecov(
+            quiet = FALSE,
+            clean = FALSE,
+            type = c("tests", "examples"),
+            install_path = file.path(Sys.getenv("RUNNER_TEMP"), "package")
+          )
+        shell: Rscript {0}
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4
@@ -45,56 +39,37 @@ jobs:
 
   rcmdcheck:
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/${{ github.repository }}/r-env:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    
     steps:
       - uses: actions/checkout@v4
       
-      - name: Extract Docker metadata
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ghcr.io/${{ github.repository }}/r-env
-          name-canonical: true
-      
-      - uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      
-      - name: Run in container
-        uses: addnab/docker-run-action@v3
-        with:
-          image: ${{ steps.meta.outputs.tags }}:latest
-          options: -v ${{ github.workspace }}:/package
-          run: |
-            cd /package
-            Rscript -e 'rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "error")'
+      - name: Check package
+        run: |
+          rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "error")
+        shell: Rscript {0}
 
   bioccheck:
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/${{ github.repository }}/r-env:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    
     steps:
       - uses: actions/checkout@v4
       
-      - name: Extract Docker metadata
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ghcr.io/${{ github.repository }}/r-env
-          name-canonical: true
+      - name: Build and install
+        run: |
+          R CMD build .
+          R CMD INSTALL *.tar.gz
       
-      - uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      
-      - name: Run in container
-        uses: addnab/docker-run-action@v3
-        with:
-          image: ${{ steps.meta.outputs.tags }}:latest
-          options: -v ${{ github.workspace }}:/package
-          run: |
-            cd /package
-            R CMD build .
-            R CMD INSTALL *.tar.gz
-            Rscript -e 'BiocCheck::BiocCheck()'
+      - name: Run BiocCheck
+        run: |
+          BiocCheck::BiocCheck()
+        shell: Rscript {0}
