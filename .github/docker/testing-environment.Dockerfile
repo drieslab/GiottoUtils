@@ -42,6 +42,7 @@ RUN R -e "if (!requireNamespace('BiocManager', quietly = TRUE)) install.packages
     BiocManager::install(c('BiocParallel', 'BiocCheck', 'BiocStyle'), ask=FALSE)"
 
 # Setup Python environment
+ENV RETICULATE_MINICONDA_PATH=/opt/miniconda
 RUN R -e "reticulate::install_miniconda()" && \
     R -e "reticulate::conda_install(packages = 'scipy')"
 
