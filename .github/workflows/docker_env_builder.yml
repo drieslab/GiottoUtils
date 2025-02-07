@@ -11,7 +11,19 @@ permissions:
   packages: write
 
 jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      container_name: ${{ steps.set-name.outputs.name }}
+    steps:
+      - name: Set container name
+        id: set-name
+        run: |
+          LOWER_NAME=$(echo "${{ github.repository }}" | awk '{print tolower($0)}')
+          echo "name=ghcr.io/${LOWER_NAME}/r-env" >> $GITHUB_OUTPUT
+
   check-rebuild-needed:
+    needs: setup
     runs-on: ubuntu-latest
     outputs:
       should_build: ${{ steps.check-date.outputs.should_build }}
@@ -19,14 +31,14 @@ jobs:
       - name: Get latest image info
         id: check-date
         run: |
-          # Get repository name in lowercase
-          REPO_NAME=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+          # Extract package name from container name
+          PACKAGE_NAME=$(echo "${{ needs.setup.outputs.container_name }}" | sed 's|ghcr.io/||')
           
           # Query GHCR API for latest image
           RESPONSE=$(curl -s \
             -H "Accept: application/vnd.github.v3+json" \
             -H "Authorization: Bearer ${{ github.token }}" \
-            "https://api.github.com/users/${{ github.repository_owner }}/packages/container/r-env/versions")
+            "https://api.github.com/users/${{ github.repository_owner }}/packages/container/${PACKAGE_NAME#*/}/versions")
           
           # Check if response is empty or invalid
           if ! echo "$RESPONSE" | jq . > /dev/null 2>&1; then
@@ -61,32 +73,26 @@ jobs:
           fi
 
   cleanup-images:
-    needs: check-rebuild-needed
+    needs: [setup, check-rebuild-needed]
     if: needs.check-rebuild-needed.outputs.should_build == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Delete old images
         uses: actions/delete-package-versions@v4
         with: 
-          package-name: 'r-env'
+          package-name: '${{ github.repository_owner }}/r-env'
           package-type: 'container'
           min-versions-to-keep: 10
           delete-only-untagged-versions: false
 
   build-and-push:
-    needs: [check-rebuild-needed, cleanup-images]
+    needs: [setup, check-rebuild-needed, cleanup-images]
     if: needs.check-rebuild-needed.outputs.should_build == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           ref: dev
-      
-      - name: Set container name
-        id: set-name
-        run: |
-          LOWER_NAME=$(echo "${{ github.repository }}" | awk '{print tolower($0)}')
-          echo "name=${LOWER_NAME}" >> $GITHUB_OUTPUT
       
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
@@ -99,7 +105,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/${{ steps.set-name.outputs.name }}/r-env
+          images: ${{ needs.setup.outputs.container_name }}
           tags: |
             type=raw,value={{date 'YYYYMMDD'}}
             type=raw,value=latest
@@ -112,5 +118,5 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=registry,ref=ghcr.io/${{ steps.set-name.outputs.name }}/r-env:latest
+          cache-from: type=registry,ref=${{ needs.setup.outputs.container_name }}:latest
           cache-to: type=inline
