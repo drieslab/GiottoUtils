@@ -14,6 +14,8 @@ RUN R -e "install.packages(c(\
     'devtools', \
     'remotes', \
     'rcmdcheck', \
+    'knitr', \
+    'rmarkdown', \
     'covr', \
     'testthat', \
     'lintr', \
@@ -21,6 +23,8 @@ RUN R -e "install.packages(c(\
     'RColorBrewer', \
     'Matrix', \
     'future', \
+    'future.apply', \
+    'parallel', \
     'checkmate', \
     'data.table', \
     'gtools', \
