@@ -39,7 +39,7 @@ RUN R -e "install.packages(c(\
 
 # Install Bioconductor packages
 RUN R -e "if (!requireNamespace('BiocManager', quietly = TRUE)) install.packages('BiocManager'); \
-    BiocManager::install(c('BiocParallel', 'BiocCheck'), ask=FALSE)"
+    BiocManager::install(c('BiocParallel', 'BiocCheck', 'BiocStyle'), ask=FALSE)"
 
 # Setup Python environment
 RUN R -e "reticulate::install_miniconda()" && \
