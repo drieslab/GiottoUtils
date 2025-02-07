@@ -1,17 +1,77 @@
-name: Weekly Docker Environment Builder
+name: Docker Environment Manager
 on:
-  schedule:
-    - cron: '0 0 * * 0'  # Run at midnight every Sunday
-  workflow_dispatch:      # Allow manual trigger
+  pull_request:
+    branches: [ "dev" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
 jobs:
-  build-and-push:
+  check-rebuild-needed:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    
+    outputs:
+      should_build: ${{ steps.check-date.outputs.should_build }}
+    steps:
+      - name: Get latest image info
+        id: check-date
+        run: |
+          # Get repository name in lowercase
+          REPO_NAME=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+          
+          # Query GHCR API for latest image
+          RESPONSE=$(curl -s \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: Bearer ${{ github.token }}" \
+            "https://api.github.com/user/packages/container/r-env/versions")
+          
+          # Get creation date of latest version
+          LATEST_DATE=$(echo $RESPONSE | jq -r '.[0].created_at // empty')
+          
+          if [ -z "$LATEST_DATE" ]; then
+            # No image exists, definitely build
+            echo "should_build=true" >> $GITHUB_OUTPUT
+            echo "No existing image found, will build new one"
+            exit 0
+          fi
+          
+          # Convert dates to timestamps
+          LATEST_TS=$(date -d "$LATEST_DATE" +%s)
+          CURRENT_TS=$(date +%s)
+          
+          # Calculate difference in days
+          DAYS_DIFF=$(( ($CURRENT_TS - $LATEST_TS) / 86400 ))
+          
+          if [ $DAYS_DIFF -ge 7 ]; then
+            echo "should_build=true" >> $GITHUB_OUTPUT
+            echo "Latest image is $DAYS_DIFF days old, will rebuild"
+          else
+            echo "should_build=false" >> $GITHUB_OUTPUT
+            echo "Latest image is only $DAYS_DIFF days old, skipping rebuild"
+          fi
+
+  cleanup-images:
+    needs: check-rebuild-needed
+    if: needs.check-rebuild-needed.outputs.should_build == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete old images
+        uses: actions/delete-package-versions@v4
+        with: 
+          package-name: 'r-env'
+          package-type: 'container'
+          min-versions-to-keep: 10
+          delete-only-untagged-versions: false
+
+  build-and-push:
+    needs: [check-rebuild-needed, cleanup-images]
+    if: needs.check-rebuild-needed.outputs.should_build == 'true'
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: dev
       
       - name: Set container name
         id: set-name
@@ -32,7 +92,7 @@ jobs:
         with:
           images: ghcr.io/${{ steps.set-name.outputs.name }}/r-env
           tags: |
-            type=schedule,pattern={{date 'YYYYMMDD'}}
+            type=raw,value={{date 'YYYYMMDD'}}
             type=raw,value=latest
       
       - name: Build and push Docker image
