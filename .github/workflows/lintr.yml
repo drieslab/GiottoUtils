@@ -35,6 +35,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history and tags
       - name: catch R deps not in container
         run: devtools::install_deps()
         shell: Rscript {0}
