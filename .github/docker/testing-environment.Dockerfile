@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     pandoc \
     python3-pip \
-    git \  # BiocCheck needs this
+    git \
     && rm -rf /var/lib/apt/lists/*
 
 # Install CRAN packages
