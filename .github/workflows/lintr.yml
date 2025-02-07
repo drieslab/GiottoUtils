@@ -1,5 +1,4 @@
 name: lintr
-
 on:
   pull_request:
     branches: [ "dev" ]
@@ -12,11 +11,23 @@ permissions:
   actions: read
 
 jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      container_name: ${{ steps.set-name.outputs.name }}
+    steps:
+      - name: Set container name
+        id: set-name
+        run: |
+          LOWER_NAME=$(echo "${{ github.repository }}" | awk '{print tolower($0)}')
+          echo "name=ghcr.io/${LOWER_NAME}/r-env:latest" >> $GITHUB_OUTPUT
+
   lintr:
+    needs: setup
     name: Run lintr scanning
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/${{ github.repository }}/r-env:latest
+      image: ${{ needs.setup.outputs.container_name }}
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
