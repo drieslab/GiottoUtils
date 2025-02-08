@@ -27,22 +27,28 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       should_build: ${{ steps.check-date.outputs.should_build }}
+      package_exists: ${{ steps.check-date.outputs.package_exists }}
     steps:
       - name: Get latest image info
         id: check-date
         run: |
-          # Extract package name from container name
-          PACKAGE_NAME=$(echo "${{ needs.setup.outputs.container_name }}" | sed 's|ghcr.io/||')
-          
           # Query GHCR API for latest image
           RESPONSE=$(curl -s \
             -H "Accept: application/vnd.github.v3+json" \
             -H "Authorization: Bearer ${{ github.token }}" \
-            "https://api.github.com/users/${{ github.repository_owner }}/packages/container/${PACKAGE_NAME#*/}/versions")
+            "https://api.github.com/users/${{ github.repository_owner }}/packages/container/r-env/versions")
+            
+          echo "Querying API endpoint for package versions..."
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: Bearer ${{ github.token }}" \
+            "https://api.github.com/users/${{ github.repository_owner }}/packages/container/r-env/versions")
+          echo "Response status: $STATUS"
           
           # Check if response is empty or invalid
           if ! echo "$RESPONSE" | jq . > /dev/null 2>&1; then
             echo "should_build=true" >> $GITHUB_OUTPUT
+            echo "package_exists=false" >> $GITHUB_OUTPUT
             echo "Invalid API response, will build new image"
             exit 0
           fi
@@ -53,9 +59,13 @@ jobs:
           if [ -z "$LATEST_DATE" ]; then
             # No image exists, definitely build
             echo "should_build=true" >> $GITHUB_OUTPUT
+            echo "package_exists=false" >> $GITHUB_OUTPUT
             echo "No existing image found, will build new one"
             exit 0
           fi
+          
+          # Package exists at this point
+          echo "package_exists=true" >> $GITHUB_OUTPUT
           
           # Convert dates to timestamps
           LATEST_TS=$(date -d "$LATEST_DATE" +%s)
@@ -74,7 +84,7 @@ jobs:
 
   cleanup-images:
     needs: [setup, check-rebuild-needed]
-    if: needs.check-rebuild-needed.outputs.should_build == 'true'
+    if: needs.check-rebuild-needed.outputs.should_build == 'true' && needs.check-rebuild-needed.outputs.package_exists == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Delete old images
