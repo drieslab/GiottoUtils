@@ -17,7 +17,7 @@ jobs:
       image: ghcr.io/drieslab/ci-giottosuite/ci-env
       credentials:
         username: ${{ github.actor }}
-        password: ${{ secrets.CI_TOKEN }}
+        password: ${{ secrets.GITHUB_TOKEN }}
     
     steps:
       - uses: actions/checkout@v4
@@ -39,13 +39,14 @@ jobs:
         
   lintr:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     permissions:
       security-events: write
     container:
       image: ghcr.io/drieslab/ci-giottosuite/ci-env
       credentials:
         username: ${{ github.actor }}
-        password: ${{ secrets.CI_TOKEN }}
+        password: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
       - name: Checkout code
