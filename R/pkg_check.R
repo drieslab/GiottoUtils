@@ -419,7 +419,7 @@ package_check <- function(
 # parse inputs such as "GiottoUtils>=0.2.2" into the useful components
 .check_package_parse_version_request <- function(x) {
     # Pattern matches package name followed by optional operator and version
-    pattern <- "^(git\\+https?://github\\.com/[[:alnum:]/_.-]+\\.git|[[:alnum:]_/@-]+)(?:([=<>!~]=?|<=|>=)(.+))?$"
+    pattern <- "^(git\\+https?://github\\.com/[[:alnum:]/_.-]+\\.git|[[:alnum:]_/.@-]+)(?:([=<>!~]=?|<=|>=)(.+))?$"
     matches <- regexec(pattern, x)
     res <- regmatches(x, matches)[[1]]
     res[nchar(res) == 0] <- NA_character_

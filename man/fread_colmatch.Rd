@@ -26,11 +26,11 @@ A data.table
 Fread specific rows based on column matches
 }
 \examples{
-\dontrun{
+f <- file.path(tempdir(), "my_file.csv")
 x <- data.frame(a = c("a", "b", "c"), b = 1:3, c = 5:7)
-write.csv(x, "my_file.csv")
-fread_colmatch("my_file.csv", col = "a", values_to_match = c(1, 3))
-}
+write.csv(x, f)
+fread_colmatch(f, col = "a", values_to_match = c(1, 3))
+unlink(f)
 
 }
 \keyword{internal}
