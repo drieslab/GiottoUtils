@@ -25,6 +25,8 @@ jobs:
         shell: Rscript {0}
       - name: Generate coverage report and upload
         run: |
+          install.packages("DT")
+          install.packages("htmltools")
           # Generate and save coverage report
           cov_report <- covr::package_coverage(
             type = c("tests", "examples", "vignettes"),
