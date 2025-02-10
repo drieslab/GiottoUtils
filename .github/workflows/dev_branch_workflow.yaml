@@ -23,7 +23,7 @@ jobs:
       - name: catch R deps not in container
         run: devtools::install_deps()
         shell: Rscript {0}
-      - name: Generate coverage report
+      - name: Generate coverage report and upload
         run: |
           covr::codecov(
             quiet = FALSE,
@@ -32,6 +32,8 @@ jobs:
             install_path = file.path(Sys.getenv("RUNNER_TEMP"), "package")
           )
         shell: Rscript {0}
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
       # **This already seems to be done by covr::codecov()**
       # - name: Upload coverage reports to Codecov
