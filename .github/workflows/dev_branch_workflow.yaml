@@ -23,41 +23,24 @@ jobs:
       - name: catch R deps not in container
         run: devtools::install_deps()
         shell: Rscript {0}
-      - name: Generate coverage report and upload
+          - name: Generate coverage report
         run: |
-          install.packages("DT")
-          install.packages("htmltools")
-          # Generate and save coverage report
-          cov_report <- covr::package_coverage(
+          covr_report <- covr::package_coverage(
             type = c("tests", "examples", "vignettes"),
             combine_types = TRUE
           )
-          
-          # Print coverage details to see paths
-          print("Coverage report details:")
-          print(names(cov_report))
-          print("File paths in coverage:")
-          print(covr::coverage_to_list(cov_report)$file)
-          
-          # Save as a file
-          covr::report(cov_report, file = "coverage.html")
-          
-          # Still upload to codecov
-          covr::codecov(
-            coverage = cov_report,
-            quiet = FALSE,
-            clean = FALSE,
-            branch = "dev"
-          )
+          covr::to_cobertura(covr_report, "coverage.xml")
         shell: Rscript {0}
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
-      - name: Upload coverage report
-        uses: actions/upload-artifact@v4
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
         with:
-          name: coverage-report
-          path: coverage.html
+          files: coverage.xml
+          flags: unittests
+          name: codecov-GiottoUtils
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
+          verbose: true
 
   rcmdcheck:
     runs-on: ubuntu-latest
