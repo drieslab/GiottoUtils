@@ -43,6 +43,7 @@ jobs:
       contents: read
       security-events: write
       actions: read
+      packages: read
     container:
       image: ghcr.io/drieslab/ci-giottosuite/ci-env
       credentials:
