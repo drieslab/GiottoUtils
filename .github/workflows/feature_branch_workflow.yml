@@ -6,7 +6,6 @@ on:
 permissions:
   contents: write
   packages: read
-  security-events: write
   actions: read
 
 jobs:
@@ -39,8 +38,9 @@ jobs:
         shell: Rscript {0}
         
   lintr:
-    name: Run lintr scanning
     runs-on: ubuntu-latest
+    permissions:
+      security-events: write
     container:
       image: ghcr.io/drieslab/ci-giottosuite/ci-env
       credentials:
