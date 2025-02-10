@@ -28,7 +28,9 @@ jobs:
           covr::codecov(
             quiet = FALSE,
             clean = FALSE,
+            branch = "dev",
             type = c("tests", "examples", "vignettes"),
+            combine_types = TRUE,
             install_path = file.path(Sys.getenv("RUNNER_TEMP"), "package")
           )
         shell: Rscript {0}
