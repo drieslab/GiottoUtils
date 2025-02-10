@@ -23,31 +23,28 @@ jobs:
       - name: catch R deps not in container
         run: devtools::install_deps()
         shell: Rscript {0}
-    
-      - name: Install curl and GPG
+      - name: Generate coverage report and upload
         run: |
-          apt-get update
-          apt-get install -y curl gnupg
-        shell: bash
-        
-      - name: Generate coverage report
-        run: |
-          covr_report <- covr::package_coverage(
+          covr::codecov(
+            quiet = FALSE,
+            clean = FALSE,
+            branch = "dev",
             type = c("tests", "examples", "vignettes"),
-            combine_types = TRUE
+            combine_types = TRUE,
+            install_path = file.path(Sys.getenv("RUNNER_TEMP"), "package")
           )
-          covr::to_cobertura(covr_report, "coverage.xml")
         shell: Rscript {0}
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5
-        with:
-          files: coverage.xml
-          flags: unittests
-          name: codecov-GiottoUtils
-          token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: true
-          verbose: true
+      # **This already seems to be done by covr::codecov()**
+      # - name: Upload coverage reports to Codecov
+      #   uses: codecov/codecov-action@v4
+      #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #     fail_ci_if_error: false
+      #     flags: unittests
+      #     verbose: true
 
   rcmdcheck:
     runs-on: ubuntu-latest

@@ -1,8 +1,5 @@
 comment: false
 
-fixes:
-  - "/package/::"    # Since Dockerfile sets WORKDIR to /package
-
 coverage:
   status:
     project:
