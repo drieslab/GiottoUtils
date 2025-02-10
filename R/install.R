@@ -51,7 +51,7 @@ suite_packages <- function(type = "core") {
 #' supported by all dependencies)
 #' @section ref `"R4.1.0"`, `r410`, or `410`:
 #' Mirrors the main branch, but locks the R version at 4.1.0. This version
-#' requires installation of {Matrix} 1.6-5
+#' requires installation of \{Matrix\} 1.6-5
 #' @section ref `"dev"`:
 #' This version is ahead of the main version and also chases the latest R
 #' version.
