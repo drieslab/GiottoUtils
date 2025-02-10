@@ -1,108 +1,23 @@
-name: Docker Environment Manager
+name: Weekly Docker Environment Builder
 on:
-  push:
-    branches: [ "dev" ]
-  pull_request:
-    branches: [ "dev" ]
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  packages: write
-
+  schedule:
+    - cron: '0 0 * * 0'  # Run at midnight every Sunday
+  workflow_dispatch:      # Allow manual trigger
 jobs:
-  setup:
+  build-and-push:
     runs-on: ubuntu-latest
-    outputs:
-      container_name: ${{ steps.set-name.outputs.name }}
+    permissions:
+      contents: read
+      packages: write
+    
     steps:
+      - uses: actions/checkout@v4
+      
       - name: Set container name
         id: set-name
         run: |
           LOWER_NAME=$(echo "${{ github.repository }}" | awk '{print tolower($0)}')
-          echo "name=ghcr.io/${LOWER_NAME}/r-env" >> $GITHUB_OUTPUT
-
-  check-rebuild-needed:
-    needs: setup
-    runs-on: ubuntu-latest
-    outputs:
-      should_build: ${{ steps.check-date.outputs.should_build }}
-      package_exists: ${{ steps.check-date.outputs.package_exists }}
-    steps:
-      - name: Get latest image info
-        id: check-date
-        run: |
-          # Query GHCR API for latest image
-          RESPONSE=$(curl -s \
-            -H "Accept: application/vnd.github.v3+json" \
-            -H "Authorization: Bearer ${{ github.token }}" \
-            "https://api.github.com/users/${{ github.repository_owner }}/packages/container/r-env/versions")
-            
-          echo "Querying API endpoint for package versions..."
-          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            -H "Authorization: Bearer ${{ github.token }}" \
-            "https://api.github.com/users/${{ github.repository_owner }}/packages/container/r-env/versions")
-          echo "Response status: $STATUS"
-          
-          # Check if response is empty or invalid
-          if ! echo "$RESPONSE" | jq . > /dev/null 2>&1; then
-            echo "should_build=true" >> $GITHUB_OUTPUT
-            echo "package_exists=false" >> $GITHUB_OUTPUT
-            echo "Invalid API response, will build new image"
-            exit 0
-          fi
-          
-          # Get creation date of latest version (if exists)
-          LATEST_DATE=$(echo "$RESPONSE" | jq -r 'if type=="array" and length>0 then .[0].created_at else empty end')
-          
-          if [ -z "$LATEST_DATE" ]; then
-            # No image exists, definitely build
-            echo "should_build=true" >> $GITHUB_OUTPUT
-            echo "package_exists=false" >> $GITHUB_OUTPUT
-            echo "No existing image found, will build new one"
-            exit 0
-          fi
-          
-          # Package exists at this point
-          echo "package_exists=true" >> $GITHUB_OUTPUT
-          
-          # Convert dates to timestamps
-          LATEST_TS=$(date -d "$LATEST_DATE" +%s)
-          CURRENT_TS=$(date +%s)
-          
-          # Calculate difference in days
-          DAYS_DIFF=$(( ($CURRENT_TS - $LATEST_TS) / 86400 ))
-          
-          if [ $DAYS_DIFF -ge 7 ]; then
-            echo "should_build=true" >> $GITHUB_OUTPUT
-            echo "Latest image is $DAYS_DIFF days old, will rebuild"
-          else
-            echo "should_build=false" >> $GITHUB_OUTPUT
-            echo "Latest image is only $DAYS_DIFF days old, skipping rebuild"
-          fi
-
-  cleanup-images:
-    needs: [setup, check-rebuild-needed]
-    if: needs.check-rebuild-needed.outputs.should_build == 'true' && needs.check-rebuild-needed.outputs.package_exists == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Delete old images
-        uses: actions/delete-package-versions@v4
-        with: 
-          package-name: '${{ github.repository_owner }}/r-env'
-          package-type: 'container'
-          min-versions-to-keep: 10
-          delete-only-untagged-versions: false
-
-  build-and-push:
-    needs: [setup, check-rebuild-needed, cleanup-images]
-    if: needs.check-rebuild-needed.outputs.should_build == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: dev
+          echo "name=${LOWER_NAME}" >> $GITHUB_OUTPUT
       
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
@@ -115,9 +30,9 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ needs.setup.outputs.container_name }}
+          images: ghcr.io/${{ steps.set-name.outputs.name }}/r-env
           tags: |
-            type=raw,value={{date 'YYYYMMDD'}}
+            type=schedule,pattern={{date 'YYYYMMDD'}}
             type=raw,value=latest
       
       - name: Build and push Docker image
@@ -128,5 +43,5 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=registry,ref=${{ needs.setup.outputs.container_name }}:latest
+          cache-from: type=registry,ref=ghcr.io/${{ steps.set-name.outputs.name }}/r-env:latest
           cache-to: type=inline
