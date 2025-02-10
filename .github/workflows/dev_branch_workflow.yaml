@@ -15,7 +15,7 @@ jobs:
       image: ghcr.io/drieslab/ci-giottosuite/ci-env
       credentials:
         username: ${{ github.actor }}
-        password: ${{ secrets.CI_TOKEN }}
+        password: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -52,7 +52,7 @@ jobs:
       image: ghcr.io/drieslab/ci-giottosuite/ci-env
       credentials:
         username: ${{ github.actor }}
-        password: ${{ secrets.CI_TOKEN }}
+        password: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -71,7 +71,7 @@ jobs:
       image: ghcr.io/drieslab/ci-giottosuite/ci-env
       credentials:
         username: ${{ github.actor }}
-        password: ${{ secrets.CI_TOKEN }}
+        password: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
         with:
