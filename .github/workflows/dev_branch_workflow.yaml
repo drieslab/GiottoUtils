@@ -8,22 +8,11 @@ permissions:
   packages: read
 
 jobs:
-  setup:
-    runs-on: ubuntu-latest
-    outputs:
-      container_name: ${{ steps.set-name.outputs.name }}
-    steps:
-      - name: Set container name
-        id: set-name
-        run: |
-          LOWER_NAME=$(echo "${{ github.repository }}" | awk '{print tolower($0)}')
-          echo "name=ghcr.io/${LOWER_NAME}/r-env:latest" >> $GITHUB_OUTPUT
 
   codecov:
-    needs: setup
     runs-on: ubuntu-latest
     container:
-      image: ${{ needs.setup.outputs.container_name }}
+      image: ghcr.io/drieslab/ci-giottosuite/ci-env
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
@@ -31,23 +20,6 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0  # Fetch all history and tags
-      - name: Debug Python environment
-        shell: Rscript {0}
-        run: |
-          print("Checking miniconda location:")
-          print(list.files("~/.local/share", recursive = FALSE))
-          print(Sys.getenv("HOME"))
-          print("R lib path:")
-          print(.libPaths())
-          print("Available conda environments:")
-          print(reticulate::conda_list())
-          print("\nPython configuration:")
-          print(reticulate::py_config())
-          print("\nChecking r-reticulate specifically:")
-          print(file.exists("/root/.local/share/r-miniconda/envs/r-reticulate"))
-          if(file.exists("/root/.local/share/r-miniconda/envs/r-reticulate")) {
-            print(list.files("/root/.local/share/r-miniconda/envs/r-reticulate", recursive = TRUE))
-          }
       - name: catch R deps not in container
         run: devtools::install_deps()
         shell: Rscript {0}
@@ -61,19 +33,19 @@ jobs:
           )
         shell: Rscript {0}
 
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v4
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: false
-          flags: unittests
-          verbose: true
+      # **This already seems to be done by covr::codecov()**
+      # - name: Upload coverage reports to Codecov
+      #   uses: codecov/codecov-action@v4
+      #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #     fail_ci_if_error: false
+      #     flags: unittests
+      #     verbose: true
 
   rcmdcheck:
-    needs: setup
     runs-on: ubuntu-latest
     container:
-      image: ${{ needs.setup.outputs.container_name }}
+      image: ghcr.io/drieslab/ci-giottosuite/ci-env
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
@@ -90,10 +62,9 @@ jobs:
         shell: Rscript {0}
 
   bioccheck:
-    needs: setup
     runs-on: ubuntu-latest
     container:
-      image: ${{ needs.setup.outputs.container_name }}
+      image: ghcr.io/drieslab/ci-giottosuite/ci-env
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
