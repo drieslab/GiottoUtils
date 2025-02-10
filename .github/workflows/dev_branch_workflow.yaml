@@ -37,15 +37,6 @@ jobs:
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
-      # **This already seems to be done by covr::codecov()**
-      # - name: Upload coverage reports to Codecov
-      #   uses: codecov/codecov-action@v4
-      #   with:
-      #     token: ${{ secrets.CODECOV_TOKEN }}
-      #     fail_ci_if_error: false
-      #     flags: unittests
-      #     verbose: true
-
   rcmdcheck:
     runs-on: ubuntu-latest
     container:
