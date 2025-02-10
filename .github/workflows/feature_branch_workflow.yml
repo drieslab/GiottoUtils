@@ -3,16 +3,15 @@ on:
   pull_request:
     branches: [ "dev" ]
 
-permissions:
-  contents: write
-  packages: read
-  actions: read
-
 jobs:
 
   unit-tests:
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    permissions:
+      contents: write
+      packages: read
+      actions: read
     container:
       image: ghcr.io/drieslab/ci-giottosuite/ci-env
       credentials:
@@ -41,6 +40,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     permissions:
+      contents: write
+      packages: read
+      actions: read
       security-events: write
     container:
       image: ghcr.io/drieslab/ci-giottosuite/ci-env
