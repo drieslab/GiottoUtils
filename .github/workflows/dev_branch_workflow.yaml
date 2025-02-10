@@ -33,6 +33,12 @@ jobs:
             combine_types = TRUE
           )
           
+          # Print coverage details to see paths
+          print("Coverage report details:")
+          print(names(cov_report))
+          print("File paths in coverage:")
+          print(covr::coverage_to_list(cov_report)$file)
+          
           # Save as a file
           covr::report(cov_report, file = "coverage.html")
           
