@@ -23,6 +23,13 @@ jobs:
       - name: catch R deps not in container
         run: devtools::install_deps()
         shell: Rscript {0}
+    
+      - name: Install curl and GPG
+        run: |
+          apt-get update
+          apt-get install -y curl gnupg
+        shell: bash
+        
       - name: Generate coverage report
         run: |
           covr_report <- covr::package_coverage(
