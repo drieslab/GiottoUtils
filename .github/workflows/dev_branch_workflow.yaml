@@ -25,26 +25,31 @@ jobs:
         shell: Rscript {0}
       - name: Generate coverage report and upload
         run: |
+          # Generate and save coverage report
+          cov_report <- covr::package_coverage(
+            type = c("tests", "examples", "vignettes"),
+            combine_types = TRUE
+          )
+          
+          # Save as a file
+          covr::report(cov_report, file = "coverage.html")
+          
+          # Still upload to codecov
           covr::codecov(
+            coverage = cov_report,
             quiet = FALSE,
             clean = FALSE,
-            branch = "dev",
-            type = c("tests", "examples", "vignettes"),
-            combine_types = TRUE,
-            install_path = file.path(Sys.getenv("RUNNER_TEMP"), "package")
+            branch = "dev"
           )
         shell: Rscript {0}
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
-      # **This already seems to be done by covr::codecov()**
-      # - name: Upload coverage reports to Codecov
-      #   uses: codecov/codecov-action@v4
-      #   with:
-      #     token: ${{ secrets.CODECOV_TOKEN }}
-      #     fail_ci_if_error: false
-      #     flags: unittests
-      #     verbose: true
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: coverage.html
 
   rcmdcheck:
     runs-on: ubuntu-latest
