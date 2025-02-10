@@ -23,7 +23,7 @@ jobs:
       - name: catch R deps not in container
         run: devtools::install_deps()
         shell: Rscript {0}
-          - name: Generate coverage report
+      - name: Generate coverage report
         run: |
           covr_report <- covr::package_coverage(
             type = c("tests", "examples", "vignettes"),
