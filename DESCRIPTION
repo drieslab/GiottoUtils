@@ -37,6 +37,7 @@ Imports:
     stats
 Suggests:
     BiocParallel,
+    BiocStyle,
     future,
     future.apply,
     Matrix,

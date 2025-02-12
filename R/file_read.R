@@ -46,10 +46,14 @@ file_extension <- function(file) {
 #' @returns full and normalized filepaths named by the file basename as either
 #' a list (default) or if `as.list = FALSE`, a character vector.
 #' @export
-dir_manifest <- function(
-        path = ".", pattern = NULL, all.files = FALSE, recursive = FALSE,
-        ignore.case = FALSE, include.dirs = FALSE, no.. = FALSE,
-        as.list = TRUE) {
+dir_manifest <- function(path = ".",
+    pattern = NULL,
+    all.files = FALSE,
+    recursive = FALSE,
+    ignore.case = FALSE,
+    include.dirs = FALSE,
+    no.. = FALSE,
+    as.list = TRUE) {
     a <- get_args_list(keep = c(
         "path", "pattern", "all.files", "recursive", "ignore.case",
         "include.dirs", "no.."
@@ -78,21 +82,21 @@ dir_manifest <- function(
 #' @keywords internal
 #' @returns A data.table
 #' @examples
-#' \dontrun{
+#' f <- file.path(tempdir(), "my_file.csv")
 #' x <- data.frame(a = c("a", "b", "c"), b = 1:3, c = 5:7)
-#' write.csv(x, "my_file.csv")
-#' fread_colmatch("my_file.csv", col = "a", values_to_match = c(1, 3))
-#' }
+#' write.csv(x, f)
+#' fread_colmatch(f, col = "a", values_to_match = c(1, 3))
+#' unlink(f)
 #'
 #' @export
-fread_colmatch <- function(file,
-    col,
-    sep = NULL,
-    values_to_match,
-    verbose = FALSE,
-    ...) {
+fread_colmatch <- function(
+        file,
+        col,
+        sep = NULL,
+        values_to_match,
+        verbose = FALSE,
+        ...) {
     package_check("data.table", repository = "CRAN")
-
     # get colnames
     col_names <- colnames(data.table::fread(file, nrows = 1L))
     col_num <- which(col_names == col)

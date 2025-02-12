@@ -23,14 +23,15 @@
 #'
 #' lapply_flex(list(x = 1, y = 2), FUN = log, method = "biocparallel")
 #' @export
-lapply_flex <- function(X,
-    FUN,
-    method = c("future", "biocparallel"),
-    cores = NA,
-    future.seed = TRUE,
-    BPPARAM = NULL,
-    fun = NULL,
-    ...) {
+lapply_flex <- function(
+        X,
+        FUN,
+        method = c("future", "biocparallel"),
+        cores = NA,
+        future.seed = TRUE,
+        BPPARAM = NULL,
+        fun = NULL,
+        ...) {
     # backwards compatible with previous version
     if (!is.null(fun)) {
         FUN <- fun
