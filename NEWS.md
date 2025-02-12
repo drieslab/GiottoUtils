@@ -7,6 +7,10 @@
 - More ergonomic ref selection for `suite_install()`
 - `R4.1.0` branch can now be used as a ref for `suite_install()`
 
+## Bug Fixes
+- `package_check()` error when checking with a provided github repo and a version number
+- `package_check()` error when checking packages with "." characters
+
 # GiottoUtils 0.2.3 (2025/01/17)
 
 ## New
