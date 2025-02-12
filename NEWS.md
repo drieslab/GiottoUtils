@@ -9,6 +9,7 @@
 
 ## Bug Fixes
 - `package_check()` error when checking with a provided github repo and a version number
+- `package_check()` error when checking packages with "." characters
 
 # GiottoUtils 0.2.3 (2025/01/17)
 
