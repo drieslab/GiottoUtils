@@ -80,3 +80,38 @@ test_that("Nonexisting nonoptional packages with specified custom message will e
         regexp = custom
     )
 })
+
+# check name parsing internal
+
+parsefun <- get(".check_package_parse_version_request", asNamespace("GiottoUtils"))
+
+test_that("package name and version parsing works", {
+    # check some exotic names
+    checknames <- c(
+        "GiottoUtils", 
+        "data.table",
+        "base64enc", 
+        "test.name.42", 
+        "git+https://github.com/TencentAILabHealthcare/pysodb.git"
+    )
+    
+    for (name in checknames) {
+        expect_identical(
+            object = parsefun(name),
+            expected = c(input = name, location = name, operator = NA, version_req = NA)
+        )
+        expect_identical(
+            object = parsefun(paste0(name, ">=0.2-10")),
+            expected = c(input = paste0(name, ">=0.2-10"), location = name, operator = ">=", version_req = "0.2-10")
+        )
+        
+    }
+})
+
+test_that("version requirement works", {
+    package_check("GiottoUtils") |> expect_no_condition()
+    package_check("GiottoUtils", repository = "github:drieslab/GiottoUtils>=1000") |> expect_warning()
+    package_check("dplyr", repository = "CRAN:dplyr>=1000") |> expect_warning()
+    package_check("dplyr", repository = "CRAN:dplyr<1000") |> expect_no_warning()
+    package_check("dplyr", repository = "CRAN:dplyr>=0.0.1") |> expect_no_condition()
+})
