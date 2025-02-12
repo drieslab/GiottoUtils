@@ -51,7 +51,7 @@ suite_packages <- function(type = "core") {
 #' supported by all dependencies)
 #' @section ref `"R4.1.0"`, `r410`, or `410`:
 #' Mirrors the main branch, but locks the R version at 4.1.0. This version
-#' requires installation of {Matrix} 1.6-5
+#' requires installation of \{Matrix\} 1.6-5
 #' @section ref `"dev"`:
 #' This version is ahead of the main version and also chases the latest R
 #' version.
@@ -66,12 +66,13 @@ suite_packages <- function(type = "core") {
 #'     suite_install("Giotto", suite_deps = FALSE)
 #' }
 #' @export
-suite_install <- function(modules = suite_packages(),
-    suite_deps = TRUE,
-    ref = "main",
-    ...) {
+suite_install <- function(
+        modules = suite_packages(),
+        suite_deps = TRUE,
+        ref = "main",
+        ...) {
     package_check("remotes", repository = "CRAN")
-    
+
     ref <- .guess_ref(ref)
 
     # switch to R4.4.0 branch if user version low
