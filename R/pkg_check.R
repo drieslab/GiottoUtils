@@ -389,6 +389,7 @@ package_check <- function(
 }
 
 .check_package_version <- function(name, repo) {
+    if (repo == "github") name <- gsub(".*/", "", name)
     switch(repo,
         "pip" = .py_module_version(name),
         packageVersion(name) # default
