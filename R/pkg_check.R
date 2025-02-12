@@ -132,11 +132,12 @@ new_github_ver_avail <- function(url, current_ver = NULL) {
 #' )
 #' }
 #' @export
-package_check <- function(pkg_name,
-    repository = NULL,
-    github_repo = NULL,
-    optional = FALSE,
-    custom_msg = NULL) {
+package_check <- function(
+        pkg_name,
+        repository = NULL,
+        github_repo = NULL,
+        optional = FALSE,
+        custom_msg = NULL) {
     # NSE vars
     location <- name <- operator <- repo <- version_ok <- version_req <- NULL
 
@@ -266,7 +267,7 @@ package_check <- function(pkg_name,
     if (nrow(version_fail_dt) == 0L) {
         return(invisible())
     }
-    
+
     # NSE vars
     name <- version <- operator <- version_req <- NULL
 
@@ -388,6 +389,7 @@ package_check <- function(pkg_name,
 }
 
 .check_package_version <- function(name, repo) {
+    if (repo == "github") name <- gsub(".*/", "", name)
     switch(repo,
         "pip" = .py_module_version(name),
         packageVersion(name) # default
@@ -418,7 +420,16 @@ package_check <- function(pkg_name,
 # parse inputs such as "GiottoUtils>=0.2.2" into the useful components
 .check_package_parse_version_request <- function(x) {
     # Pattern matches package name followed by optional operator and version
-    pattern <- "^(git\\+https?://github\\.com/[[:alnum:]/_.-]+\\.git|[[:alnum:]_/@-]+)(?:([=<>!~]=?|<=|>=)(.+))?$"
+    git_pattern <- "git\\+https?://github\\.com/[[:alnum:]/_.-]+\\.git"
+    pkg_pattern <- "[[:alnum:]_/.@-]+"
+    operator_pattern <- "([=<>!~]=?|<=|>=)"
+    version_pattern <- "(.+)" # everything remaining
+    location_pattern <- paste(sep = "|", git_pattern, pkg_pattern)
+
+    pattern <- sprintf("^(%s)(?:%s%s)?$",
+        location_pattern, operator_pattern, version_pattern
+    )
+    
     matches <- regexec(pattern, x)
     res <- regmatches(x, matches)[[1]]
     res[nchar(res) == 0] <- NA_character_

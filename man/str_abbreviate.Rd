@@ -29,6 +29,6 @@ how filepaths are displayed.
 \examples{
 a <- "/short/file/path/"
 b <- "/much/longer/foooooooooooooooooooo/baaaaaaaaaaaaaaaaaaaar/file/path/"
-str_abbreviate(c(a,b))
-str_abbreviate(c(a,b), width = 10, head = 3, tail = 3)
+str_abbreviate(c(a, b))
+str_abbreviate(c(a, b), width = 10, head = 3, tail = 3)
 }
