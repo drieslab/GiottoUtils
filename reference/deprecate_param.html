@@ -121,11 +121,10 @@ after at least one release with the default.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 3</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># convenient nested function when deprecating multiple params</span></span></span>
-<span class="r-in"><span><span class="va">bar</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span></span></span>
-<span class="r-in"><span>        <span class="va">dep1</span> <span class="op">=</span> <span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>        <span class="va">dep2</span> <span class="op">=</span> <span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>        <span class="va">sup1</span> <span class="op">=</span> <span class="fl">10</span>,</span></span>
-<span class="r-in"><span>        <span class="va">sup2</span> <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="va">bar</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">dep1</span> <span class="op">=</span> <span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    <span class="va">dep2</span> <span class="op">=</span> <span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    <span class="va">sup1</span> <span class="op">=</span> <span class="fl">10</span>,</span></span>
+<span class="r-in"><span>    <span class="va">sup2</span> <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>    <span class="co"># internally defined function that streamlines downstream deprecations</span></span></span>
 <span class="r-in"><span>    <span class="va">.dep</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>        <span class="fu">deprecate_param</span><span class="op">(</span><span class="va">...</span>, fun <span class="op">=</span> <span class="st">"bar"</span>, when <span class="op">=</span> <span class="st">"0.0.2"</span><span class="op">)</span></span></span>
