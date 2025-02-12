@@ -426,7 +426,7 @@ package_check <- function(
     version_pattern <- "(.+)" # everything remaining
     location_pattern <- paste(sep = "|", git_pattern, pkg_pattern)
 
-    pattern <- sprintf("^(%s)(?:%s%s)?$", 
+    pattern <- sprintf("^(%s)(?:%s%s)?$",
         location_pattern, operator_pattern, version_pattern
     )
     
