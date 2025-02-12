@@ -111,7 +111,7 @@ test_that("package name and version parsing works", {
 test_that("version requirement works", {
     package_check("GiottoUtils") |> expect_no_condition()
     package_check("GiottoUtils", repository = "github:drieslab/GiottoUtils>=1000") |> expect_warning()
-    package_check("dplyr", repository = "CRAN:dplyr>=1000") |> expect_warning()
-    package_check("dplyr", repository = "CRAN:dplyr<1000") |> expect_no_warning()
-    package_check("dplyr", repository = "CRAN:dplyr>=0.0.1") |> expect_no_condition()
+    package_check("data.table", repository = "CRAN:data.table>=1000") |> expect_warning()
+    package_check("data.table", repository = "CRAN:data.table<1000") |> expect_no_warning()
+    package_check("data.table", repository = "CRAN:data.table>=0.0.1") |> expect_no_condition()
 })
