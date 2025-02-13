@@ -15,11 +15,25 @@ test_that("file_extension returns the correct file extension", {
     expect_equal(actual, expected)
 })
 
-test_that("fread_colmatch works", {
+x <- data.frame(a = c("a", "b", "c"), b = 1:3, c = 5:7)
+
+test_that("read_colmatch works", {
     f <- file.path(tempdir(), "my_file.csv")
-    x <- data.frame(a = c("a", "b", "c"), b = 1:3, c = 5:7)
     write.csv(x, f)
-    res <- fread_colmatch(f, col = "a", values_to_match = c(1, 3))
+    res <- read_colmatch(f, col = "a", values_to_match = c("a", "c"))
+    
+    checkmate::expect_data_frame(res, nrows = 2, ncols = 4)
+    
+    unlink(f)
+})
+
+test_that("read_colmatch works with headerless files", {
+    f <- file.path(tempdir(), "my_file.csv")
+    names(x) <- NULL
+    write.csv(x, f)
+    # this will throw a warning from data.table
+    res <- suppressWarnings(
+        read_colmatch(f, col = "V2", values_to_match = c("a", "b")))
     
     checkmate::expect_data_frame(res, nrows = 2, ncols = 4)
     
