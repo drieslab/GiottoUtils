@@ -46,14 +46,15 @@ file_extension <- function(file) {
 #' @returns full and normalized filepaths named by the file basename as either
 #' a list (default) or if `as.list = FALSE`, a character vector.
 #' @export
-dir_manifest <- function(path = ".",
-    pattern = NULL,
-    all.files = FALSE,
-    recursive = FALSE,
-    ignore.case = FALSE,
-    include.dirs = FALSE,
-    no.. = FALSE,
-    as.list = TRUE) {
+dir_manifest <- function(
+        path = ".",
+        pattern = NULL,
+        all.files = FALSE,
+        recursive = FALSE,
+        ignore.case = FALSE,
+        include.dirs = FALSE,
+        no.. = FALSE,
+        as.list = TRUE) {
     a <- get_args_list(keep = c(
         "path", "pattern", "all.files", "recursive", "ignore.case",
         "include.dirs", "no.."
@@ -92,17 +93,16 @@ dir_manifest <- function(path = ".",
 #' unlink(f)
 #'
 #' @export
-read_colmatch <- function(
-        file,
-        col,
-        sep = NULL,
-        values_to_match,
-        verbose = FALSE,
-        ...) {
+read_colmatch <- function(file,
+    col,
+    sep = NULL,
+    values_to_match,
+    verbose = FALSE,
+    ...) {
     # check dependencies
     package_check("dplyr")
     .arrow_codec_check(file)
-    
+
     file <- normalizePath(file)
     # get colnames
 
@@ -120,18 +120,20 @@ read_colmatch <- function(
     a <- arrow::open_delim_dataset(file,
         schema = .arrow_infer_schema(file),
         skip = 1L,
-        delim = sep, 
+        delim = sep,
         ...
     )
-    
+
     # check for presence of column to match values against
     cols <- names(a)
     if (!col %in% cols) {
-        sprintf("Column %s not found in file. Available columns: '%s'",
-                col, paste(cols, collapse = "', '")) %>%
+        sprintf(
+            "Column %s not found in file. Available columns: '%s'",
+            col, paste(cols, collapse = "', '")
+        ) %>%
             stop(call. = FALSE)
     }
-    
+
     # perform filter
     dplyr::filter(a, !!dplyr::ensym(col) %in% !!values_to_match) %>%
         dplyr::collect() %>%
@@ -164,9 +166,11 @@ fread_colmatch <- function(...) {
             codec <- c(codec, "bz2")
         }
         # If checked path and no codecs noted, pass.
-        if (length(codec) == 0L) return(invisible(TRUE))
+        if (length(codec) == 0L) {
+            return(invisible(TRUE))
+        }
     }
-    
+
     if (length(codec) == 0L) {
         ".arrow_codec_check: either `file` or `codec` must be provided" %>%
             stop(call. = FALSE)
@@ -182,7 +186,7 @@ fread_colmatch <- function(...) {
         lz4 <- caps[c("lz4")]
         snappy <- caps[c("snappy")]
     }
-    
+
     # determine if (re)install needed
     codecs_okay <- TRUE
     if ("zstd" %in% codec && !zstd) codecs_okay <- FALSE
@@ -190,17 +194,17 @@ fread_colmatch <- function(...) {
     if ("bz2" %in% codec && !bz2) codecs_okay <- FALSE
     if ("lz4" %in% codec && !lz4) codecs_okay <- FALSE
     if ("snappy" %in% codec && !snappy) codecs_okay <- FALSE
-    
+
     # general message for commonly seen codecs
     if (!has_arrow || !codecs_okay) {
         'Needed arrow compression codec(s) not installed. Please run:
-        
+
         Sys.setenv(ARROW_WITH_ZSTD = "ON")
         Sys.setenv(ARROW_WITH_GZ2 = "ON")
         Sys.setenv(ARROW_WITH_BZ2 = "ON")
         Sys.setenv(ARROW_WITH_LZ4 = "ON")
         Sys.setenv(ARROW_WITH_SNAPPY = "ON")
-        install.packages("arrow", 
+        install.packages("arrow",
             repos = c("https://apache.r-universe.dev"),
             type = "source"
         )' %>%
@@ -214,8 +218,8 @@ fread_colmatch <- function(...) {
 .arrow_infer_schema <- function(file, n_rows = 10) {
     lines <- readLines(file, n = 2)
     # Parse with fread as string input
-    sample_dt <- data.table::fread(paste(lines, collapse="\n"))
-    
+    sample_dt <- data.table::fread(paste(lines, collapse = "\n"))
+
     # Map data.table/R types to Arrow types
     type_mapping <- list(
         "integer" = arrow::int32(),
@@ -225,19 +229,19 @@ fread_colmatch <- function(...) {
         "Date" = arrow::date32(),
         "POSIXct" = arrow::timestamp("us")
     )
-    
+
     # Create schema
     fields <- lapply(sample_dt, function(col) {
         col_type <- type_mapping[[typeof(col)]] %null% arrow::string()
         col_type
     })
-    
+
     # If there were no column names, generate them
     if (all(grepl("^V[0-9]+$", names(sample_dt)))) {
         names(fields) <- paste0("V", seq_along(fields))
     } else {
         names(fields) <- names(sample_dt)
     }
-    
+
     arrow::schema(!!!fields)
 }

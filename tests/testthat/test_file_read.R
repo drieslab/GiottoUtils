@@ -21,9 +21,9 @@ test_that("read_colmatch works", {
     f <- file.path(tempdir(), "my_file.csv")
     write.csv(x, f)
     res <- read_colmatch(f, col = "a", values_to_match = c("a", "c"))
-    
+
     checkmate::expect_data_frame(res, nrows = 2, ncols = 4)
-    
+
     unlink(f)
 })
 
@@ -33,9 +33,10 @@ test_that("read_colmatch works with headerless files", {
     write.csv(x, f)
     # this will throw a warning from data.table
     res <- suppressWarnings(
-        read_colmatch(f, col = "V2", values_to_match = c("a", "b")))
-    
+        read_colmatch(f, col = "V2", values_to_match = c("a", "b"))
+    )
+
     checkmate::expect_data_frame(res, nrows = 2, ncols = 4)
-    
+
     unlink(f)
 })
