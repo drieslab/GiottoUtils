@@ -8,6 +8,14 @@
 #' get_prev_call()
 #'
 #' get_prev_fname(1)
+#' 
+#' # preserve params
+#' foo <- function(a, b) get_args(toplevel = 1)
+#' foo(a = 1, b = 2)
+#' 
+#' bar <- function() get_args() # default toplevel = 2
+#' baz <- function(x, y) bar()
+#' baz("a", "b")
 NULL
 
 

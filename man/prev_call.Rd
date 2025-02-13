@@ -48,6 +48,14 @@ calls. Used in putting together object histories and error handling.
 get_prev_call()
 
 get_prev_fname(1)
+
+# preserve params
+foo <- function(a, b) get_args(toplevel = 1)
+foo(a = 1, b = 2)
+
+bar <- function() get_args() # default toplevel = 2
+baz <- function(x, y) bar()
+baz("a", "b")
 a <- function(x = 1, y = 2, ...) {
     get_args_list(...)
 }
