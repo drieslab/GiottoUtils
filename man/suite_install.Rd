@@ -4,7 +4,13 @@
 \alias{suite_install}
 \title{Giotto Suite GitHub Installation}
 \usage{
-suite_install(modules = suite_packages(), suite_deps = TRUE, ref = "main", ...)
+suite_install(
+  modules = suite_packages(),
+  suite_deps = TRUE,
+  ref = "main",
+  dry_run = FALSE,
+  ...
+)
 }
 \arguments{
 \item{modules}{character. Which modules to install. Defaults to the core
@@ -15,6 +21,9 @@ dependency modules}
 
 \item{ref}{character. Currently one of "main", "R4.4.0", or "dev". These
 determine which branches to install. See details.}
+
+\item{dry_run}{logical. When \code{TRUE}, only print the install commands instead
+of actually running them.}
 
 \item{\dots}{additional params to pass to \code{remotes::install_github()}}
 }

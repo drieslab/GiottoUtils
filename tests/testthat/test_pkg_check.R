@@ -113,4 +113,7 @@ test_that("version requirement works", {
     package_check("data.table", repository = "CRAN:data.table>=1000") |> expect_warning()
     package_check("data.table", repository = "CRAN:data.table<1000") |> expect_no_warning()
     package_check("data.table", repository = "CRAN:data.table>=0.0.1") |> expect_no_condition()
+    package_check("scipy", repository = "pip:scipy>=0.0.1") |> expect_no_condition()
+    package_check("scipy", repository = "pip:scipy>=1000") |> expect_warning()
+    package_check("scipy", repository = "pip:scipy~=0.0.1") |> expect_error() # not supported
 })
