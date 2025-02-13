@@ -88,13 +88,13 @@ parsefun <- get(".check_package_parse_version_request", asNamespace("GiottoUtils
 test_that("package name and version parsing works", {
     # check some exotic names
     checknames <- c(
-        "GiottoUtils", 
+        "GiottoUtils",
         "data.table",
-        "base64enc", 
-        "test.name.42", 
+        "base64enc",
+        "test.name.42",
         "git+https://github.com/TencentAILabHealthcare/pysodb.git"
     )
-    
+
     for (name in checknames) {
         expect_identical(
             object = parsefun(name),
@@ -104,7 +104,6 @@ test_that("package name and version parsing works", {
             object = parsefun(paste0(name, ">=0.2-10")),
             expected = c(input = paste0(name, ">=0.2-10"), location = name, operator = ">=", version_req = "0.2-10")
         )
-        
     }
 })
 
