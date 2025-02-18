@@ -231,7 +231,7 @@ fread_colmatch <- function(...) {
 
 # Use data.table to get a sample and infer schema
 .arrow_infer_schema <- function(file, n_rows = 10) {
-    lines <- readLines(file, n = 2)
+    lines <- readLines(file, n = n_rows)
     # Parse with fread as string input
     sample_dt <- data.table::fread(paste(lines, collapse = "\n"))
 
