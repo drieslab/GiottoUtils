@@ -81,6 +81,7 @@ dir_manifest <- function(
 #' @param col name of col to match from
 #' @param sep grep term to match as column delimiters within the file
 #' @param values_to_match values in \code{col} to match given as a vector
+#' @param drop Vector of column names or numbers to drop, keep the rest.
 #' @param verbose be verbose
 #' @param ... additional parameters to pass to [arrow::open_delim_dataset()]
 #' @keywords internal
@@ -90,6 +91,10 @@ dir_manifest <- function(
 #' x <- data.frame(a = c("a", "b", "c"), b = 1:3, c = 5:7)
 #' write.csv(x, f)
 #' read_colmatch(f, col = "a", values_to_match = c("a", "c"))
+#' read_colmatch(f, col = "a", values_to_match = c("a", "c"), drop = c(1, 4))
+#' read_colmatch(f, 
+#'     col = "a", values_to_match = c("a", "c"), drop = c("V1", "b")
+#' )
 #' unlink(f)
 #'
 #' @export
@@ -97,6 +102,7 @@ read_colmatch <- function(file,
     col,
     sep = NULL,
     values_to_match,
+    drop = NULL,
     verbose = FALSE,
     ...) {
     # check dependencies
@@ -135,9 +141,18 @@ read_colmatch <- function(file,
     }
 
     # perform filter
-    dplyr::filter(a, !!dplyr::ensym(col) %in% !!values_to_match) %>%
+    dt <- dplyr::filter(a, !!dplyr::ensym(col) %in% !!values_to_match) %>%
         dplyr::collect() %>%
         data.table::setDT()
+    
+    if (is.character(drop)) {
+        drop <- which(colnames(dt) %in% drop)
+    }
+    if (is.numeric(drop)) {
+        all_idx <- seq_len(ncol(dt))
+        dt <- dt[, all_idx[!all_idx %in% drop], with = FALSE]
+    }
+    return(dt)
 }
 
 #' @describeIn read_colmatch deprecated.
@@ -216,14 +231,15 @@ fread_colmatch <- function(...) {
 
 # Use data.table to get a sample and infer schema
 .arrow_infer_schema <- function(file, n_rows = 10) {
-    lines <- readLines(file, n = 2)
+    lines <- readLines(file, n = n_rows)
     # Parse with fread as string input
     sample_dt <- data.table::fread(paste(lines, collapse = "\n"))
 
     # Map data.table/R types to Arrow types
     type_mapping <- list(
         "integer" = arrow::int32(),
-        "numeric" = arrow::float64(),
+        "double" = arrow::float64(),
+        "raw" = arrow::binary(),
         "character" = arrow::string(),
         "logical" = arrow::boolean(),
         "Date" = arrow::date32(),

@@ -5,7 +5,15 @@
 \alias{fread_colmatch}
 \title{Fread specific rows based on column matches}
 \usage{
-read_colmatch(file, col, sep = NULL, values_to_match, verbose = FALSE, ...)
+read_colmatch(
+  file,
+  col,
+  sep = NULL,
+  values_to_match,
+  drop = NULL,
+  verbose = FALSE,
+  ...
+)
 
 fread_colmatch(...)
 }
@@ -17,6 +25,8 @@ fread_colmatch(...)
 \item{sep}{grep term to match as column delimiters within the file}
 
 \item{values_to_match}{values in \code{col} to match given as a vector}
+
+\item{drop}{Vector of column names or numbers to drop, keep the rest.}
 
 \item{verbose}{be verbose}
 
@@ -38,6 +48,10 @@ f <- file.path(tempdir(), "my_file.csv")
 x <- data.frame(a = c("a", "b", "c"), b = 1:3, c = 5:7)
 write.csv(x, f)
 read_colmatch(f, col = "a", values_to_match = c("a", "c"))
+read_colmatch(f, col = "a", values_to_match = c("a", "c"), drop = c(1, 4))
+read_colmatch(f, 
+    col = "a", values_to_match = c("a", "c"), drop = c("V1", "b")
+)
 unlink(f)
 
 }
