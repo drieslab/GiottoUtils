@@ -238,7 +238,8 @@ fread_colmatch <- function(...) {
     # Map data.table/R types to Arrow types
     type_mapping <- list(
         "integer" = arrow::int32(),
-        "numeric" = arrow::float64(),
+        "double" = arrow::float64(),
+        "raw" = arrow::binary(),
         "character" = arrow::string(),
         "logical" = arrow::boolean(),
         "Date" = arrow::date32(),
