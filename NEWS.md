@@ -9,7 +9,7 @@
 ## Enhancement
 - More ergonomic ref selection for `suite_install()`
 - `R4.1.0` branch can now be used as a ref for `suite_install()`
-- `read_colmatch()` now uses \{arrow\} for faster .csv filtering. Automated schema detection performed through `data.table::fread()`
+- `read_colmatch()` now uses \{arrow\} for faster .csv filtering, enhanced with automated schema detection performed through `data.table::fread()`
 - `dry_run` param for `suite_install()` to preview install commands
 
 ## Bug Fixes
