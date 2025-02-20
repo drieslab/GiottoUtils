@@ -42,6 +42,8 @@ suite_packages <- function(type = "core") {
 #' dependency modules
 #' @param ref character. Currently one of "main", "R4.4.0", or "dev". These
 #' determine which branches to install. See details.
+#' @param dry_run logical. When `TRUE`, only print the install commands instead
+#' of actually running them.
 #' @param \dots additional params to pass to `remotes::install_github()`
 #' @section ref `"main"`:
 #' Installs the main Giotto version. This version is expected to chase the
@@ -70,6 +72,7 @@ suite_install <- function(
         modules = suite_packages(),
         suite_deps = TRUE,
         ref = "main",
+        dry_run = FALSE,
         ...) {
     package_check("remotes", repository = "CRAN")
 
@@ -128,7 +131,13 @@ suite_install <- function(
 
     # install loop
     for (r in repos) {
-        remotes::install_github(repo = r, upgrade = "never", ...)
+        if (isTRUE(dry_run)) {
+            'remotes::install_github(repo = %s, upgrade = "never", ...)' %>%
+                sprintf(r) %>%
+                message()
+        } else {
+            remotes::install_github(repo = r, upgrade = "never", ...)
+        }
     }
     return(invisible(TRUE))
 }

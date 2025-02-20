@@ -36,8 +36,10 @@ Imports:
     R.utils,
     stats
 Suggests:
+    arrow,
     BiocParallel,
     BiocStyle,
+    dplyr,
     future,
     future.apply,
     Matrix,
