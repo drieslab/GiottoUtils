@@ -156,6 +156,7 @@ read_colmatch <- function(file,
 }
 
 #' @describeIn read_colmatch deprecated.
+#' @export
 fread_colmatch <- function(...) {
     deprecate_soft("0.2.4", "fread_colmatch()", "read_colmatch()")
     read_colmatch(...)
