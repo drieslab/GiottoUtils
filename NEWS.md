@@ -1,11 +1,16 @@
 # GiottoUtils 0.2.4 (2025/02/04)
 
+## Changes
+- deprecate `fread_colmatch()` in favor of `read_colmatch()`
+
 ## New
 - `str_abbreviate()` for shortening long strings for printing
 
 ## Enhancement
 - More ergonomic ref selection for `suite_install()`
 - `R4.1.0` branch can now be used as a ref for `suite_install()`
+- `read_colmatch()` now uses \{arrow\} for faster .csv filtering, enhanced with automated schema detection performed through `data.table::fread()`
+- `dry_run` param for `suite_install()` to preview install commands
 
 ## Bug Fixes
 - `package_check()` error when checking with a provided github repo and a version number
