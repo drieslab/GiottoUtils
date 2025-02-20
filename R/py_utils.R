@@ -85,7 +85,10 @@ from_scipy_sparse <- function(x, format = c("C", "R"), transpose = FALSE, ...) {
 #' @name py_active_env
 #' @description Check for an active python environment without initialization.
 #' If none initialized, `FALSE` is returned. If an initialized environment
-#' is found, the env name based on [reticulate::conda_list()] will be returned
+#' is found, the env name based on [reticulate::conda_list()] will be returned.
+#' The options "giotto.py_active_env", "giotto.py_active_ver", and 
+#' "giotto.py_active_path" will also be updated with information about the
+#' active environment.
 #' @returns boolean
 #' @examples
 #' py_active_env
@@ -116,6 +119,7 @@ py_active_env <- function() {
 
     options("giotto.py_active_env" = py_name)
     options("giotto.py_active_ver" = py_ver)
+    options("giotto.py_active_path" = py_path)
     return(py_name)
 }
 
