@@ -82,6 +82,8 @@ dir_manifest <- function(
 #' @param sep grep term to match as column delimiters within the file
 #' @param values_to_match values in \code{col} to match given as a vector
 #' @param drop Vector of column names or numbers to drop, keep the rest.
+#' @param schema_detect_nrow numeric. how many rows to sample to guess the
+#' arrow schema to use.
 #' @param verbose be verbose
 #' @param ... additional parameters to pass to [arrow::open_delim_dataset()]
 #' @keywords internal
@@ -103,6 +105,7 @@ read_colmatch <- function(file,
     sep = NULL,
     values_to_match,
     drop = NULL,
+    schema_detect_nrow = 1000,
     verbose = FALSE,
     ...) {
     # check dependencies
@@ -123,8 +126,8 @@ read_colmatch <- function(file,
         }
     }
 
-    a <- arrow::open_delim_dataset(file,
-        schema = .arrow_infer_schema(file),
+    a <- arrow::read_delim_arrow(file,
+        schema = .arrow_infer_schema(file, n_rows = schema_detect_nrow),
         skip = 1L,
         delim = sep,
         ...
@@ -231,7 +234,7 @@ fread_colmatch <- function(...) {
 }
 
 # Use data.table to get a sample and infer schema
-.arrow_infer_schema <- function(file, n_rows = 10) {
+.arrow_infer_schema <- function(file, n_rows = 1000) {
     lines <- readLines(file, n = n_rows)
     # Parse with fread as string input
     sample_dt <- data.table::fread(paste(lines, collapse = "\n"))
