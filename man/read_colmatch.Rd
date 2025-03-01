@@ -11,6 +11,7 @@ read_colmatch(
   sep = NULL,
   values_to_match,
   drop = NULL,
+  schema_detect_nrow = 1000,
   verbose = FALSE,
   ...
 )
@@ -27,6 +28,9 @@ fread_colmatch(...)
 \item{values_to_match}{values in \code{col} to match given as a vector}
 
 \item{drop}{Vector of column names or numbers to drop, keep the rest.}
+
+\item{schema_detect_nrow}{numeric. how many rows to sample to guess the
+arrow schema to use.}
 
 \item{verbose}{be verbose}
 
