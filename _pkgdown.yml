@@ -26,6 +26,7 @@ navbar:
     - articles
     - news
     right:
+    - search
     - suite
     - github
   components:
