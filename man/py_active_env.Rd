@@ -13,15 +13,14 @@ boolean
 Check for an active python environment without initialization.
 If none initialized, \code{FALSE} is returned. If an initialized environment
 is found, the env name based on \code{\link[reticulate:conda-tools]{reticulate::conda_list()}} will be returned.
-The follwoing options will also be updated with information about the active
+The following options will also be updated with information about the active
 environment:
 \itemize{
-\item \code{"giotto.py_active_env"} \emph{(envname)},
-\item \code{"giotto.py_active_ver"} \emph{(python version)},
+\item \code{"giotto.py_active_env"} \emph{(envname)}
+\item \code{"giotto.py_active_ver"} \emph{(python version)}
 \item \code{"giotto.py_active_path"} \emph{(path to python)}
 }
 }
 \examples{
-py_active_env
-
+py_active_env()
 }
