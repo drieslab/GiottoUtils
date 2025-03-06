@@ -266,11 +266,11 @@ fread_colmatch <- function(...) {
             ), call. = FALSE)
         }
         fields <- lapply(col_classes, function(col_class) {
-            .arrow_type_map[[col_class]] %null% arrow::string()
+            .arrow_type_map()[[col_class]] %null% arrow::string()
         })
     } else { # discern class based on sampled dt
         fields <- lapply(sample_dt, function(col) {
-            .arrow_type_map[[typeof(col)]] %null% arrow::string()
+            .arrow_type_map()[[typeof(col)]] %null% arrow::string()
         })
     }
 
@@ -285,12 +285,12 @@ fread_colmatch <- function(...) {
 }
 
 # Map R types to Arrow types
-.arrow_type_map <- list(
+.arrow_type_map <- function(timestamp_locale = "us") list(
     "integer" = arrow::int32(),
     "double" = arrow::float64(),
     "raw" = arrow::binary(),
     "character" = arrow::string(),
     "logical" = arrow::boolean(),
     "Date" = arrow::date32(),
-    "POSIXct" = arrow::timestamp("us")
+    "POSIXct" = arrow::timestamp(timestamp_locale)
 )
