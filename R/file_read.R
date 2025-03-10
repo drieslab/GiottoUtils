@@ -84,6 +84,11 @@ dir_manifest <- function(
 #' @param drop Vector of column names or numbers to drop, keep the rest.
 #' @param schema_detect_nrow numeric. how many rows to sample to guess the
 #' arrow schema to use.
+#' @param col_classes character vector (optional). R types each column is
+#' expected to be. These will be translated to arrow schema. Only necessary
+#' if the schema autodetection from `schema_detect_nrow` is insufficient.
+#' Select one or multiple of "integer", "double", "raw", "character",
+#' "logical", "Date", "POSIXct"
 #' @param verbose be verbose
 #' @param ... additional parameters to pass to [arrow::open_delim_dataset()]
 #' @keywords internal
@@ -106,11 +111,13 @@ read_colmatch <- function(file,
     values_to_match,
     drop = NULL,
     schema_detect_nrow = 1000,
+    col_classes = NULL,
     verbose = FALSE,
     ...) {
     # check dependencies
     package_check("dplyr")
     .arrow_codec_check(file)
+    checkmate::assert_character(col)
 
     file <- normalizePath(file)
     # get colnames
@@ -125,9 +132,15 @@ read_colmatch <- function(file,
             stop("read_colmatch: sep param cannot be guessed", call. = FALSE)
         }
     }
+    
+    if (is.null(col_classes)) {
+        s <- .arrow_infer_schema(file, n_rows = schema_detect_nrow)
+    } else {
+        s <- .arrow_infer_schema(file, col_classes = col_classes)
+    }
 
     a <- arrow::read_delim_arrow(file,
-        schema = .arrow_infer_schema(file, n_rows = schema_detect_nrow),
+        schema = s,
         skip = 1L,
         delim = sep,
         ...
@@ -234,27 +247,32 @@ fread_colmatch <- function(...) {
 }
 
 # Use data.table to get a sample and infer schema
-.arrow_infer_schema <- function(file, n_rows = 1000) {
+.arrow_infer_schema <- function(file, n_rows = 1000, col_classes = NULL) {
+    # reduce if 'col_classes' given since we then only care about colnames
+    if (!is.null(col_classes)) n_rows <- 10 
     lines <- readLines(file, n = n_rows)
     # Parse with fread as string input
     sample_dt <- data.table::fread(paste(lines, collapse = "\n"))
 
-    # Map data.table/R types to Arrow types
-    type_mapping <- list(
-        "integer" = arrow::int32(),
-        "double" = arrow::float64(),
-        "raw" = arrow::binary(),
-        "character" = arrow::string(),
-        "logical" = arrow::boolean(),
-        "Date" = arrow::date32(),
-        "POSIXct" = arrow::timestamp("us")
-    )
-
     # Create schema
-    fields <- lapply(sample_dt, function(col) {
-        col_type <- type_mapping[[typeof(col)]] %null% arrow::string()
-        col_type
-    })
+    if (!is.null(col_classes)) { # exact class given
+        if (length(col_classes) != ncol(sample_dt)) {
+            message("data preview:")
+            print(sample_dt)
+            stop(sprintf(
+                ".arrow_infer_schema: 'col_classes' incorrect:\n %s\n %s",
+                paste(length(col_classes), "col_classes provided"),
+                paste(ncol(sample_dt), "columns in data")
+            ), call. = FALSE)
+        }
+        fields <- lapply(col_classes, function(col_class) {
+            .arrow_type_map()[[col_class]] %null% arrow::string()
+        })
+    } else { # discern class based on sampled dt
+        fields <- lapply(sample_dt, function(col) {
+            .arrow_type_map()[[typeof(col)]] %null% arrow::string()
+        })
+    }
 
     # If there were no column names, generate them
     if (all(grepl("^V[0-9]+$", names(sample_dt)))) {
@@ -265,3 +283,14 @@ fread_colmatch <- function(...) {
 
     arrow::schema(!!!fields)
 }
+
+# Map R types to Arrow types
+.arrow_type_map <- function(timestamp_locale = "us") list(
+    "integer" = arrow::int32(),
+    "double" = arrow::float64(),
+    "raw" = arrow::binary(),
+    "character" = arrow::string(),
+    "logical" = arrow::boolean(),
+    "Date" = arrow::date32(),
+    "POSIXct" = arrow::timestamp(timestamp_locale)
+)
