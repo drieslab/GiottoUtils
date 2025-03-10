@@ -12,6 +12,7 @@ read_colmatch(
   values_to_match,
   drop = NULL,
   schema_detect_nrow = 1000,
+  col_classes = NULL,
   verbose = FALSE,
   ...
 )
@@ -31,6 +32,12 @@ fread_colmatch(...)
 
 \item{schema_detect_nrow}{numeric. how many rows to sample to guess the
 arrow schema to use.}
+
+\item{col_classes}{character vector (optional). R types each column is
+expected to be. These will be translated to arrow schema. Only necessary
+if the schema autodetection from \code{schema_detect_nrow} is insufficient.
+Select one or multiple of "integer", "double", "raw", "character",
+"logical", "Date", "POSIXct"}
 
 \item{verbose}{be verbose}
 
