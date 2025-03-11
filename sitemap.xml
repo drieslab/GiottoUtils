@@ -23,7 +23,6 @@
 <url><loc>https://drieslab.github.io/GiottoUtils/reference/dt_sort_combine_two_columns.html</loc></url>
 <url><loc>https://drieslab.github.io/GiottoUtils/reference/dt_to_matrix.html</loc></url>
 <url><loc>https://drieslab.github.io/GiottoUtils/reference/file_extension.html</loc></url>
-<url><loc>https://drieslab.github.io/GiottoUtils/reference/fread_colmatch.html</loc></url>
 <url><loc>https://drieslab.github.io/GiottoUtils/reference/g_assert.html</loc></url>
 <url><loc>https://drieslab.github.io/GiottoUtils/reference/g_match_arg.html</loc></url>
 <url><loc>https://drieslab.github.io/GiottoUtils/reference/getDistinctColors.html</loc></url>
@@ -53,6 +52,7 @@
 <url><loc>https://drieslab.github.io/GiottoUtils/reference/print_list.html</loc></url>
 <url><loc>https://drieslab.github.io/GiottoUtils/reference/py_active_env.html</loc></url>
 <url><loc>https://drieslab.github.io/GiottoUtils/reference/random_seed.html</loc></url>
+<url><loc>https://drieslab.github.io/GiottoUtils/reference/read_colmatch.html</loc></url>
 <url><loc>https://drieslab.github.io/GiottoUtils/reference/reexports.html</loc></url>
 <url><loc>https://drieslab.github.io/GiottoUtils/reference/require_depth.html</loc></url>
 <url><loc>https://drieslab.github.io/GiottoUtils/reference/scipy_sparse.html</loc></url>
