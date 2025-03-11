@@ -38,12 +38,8 @@ jobs:
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           dependencies: '"hard"' # do not use suggested dependencies
-          extra-packages: any::pkgdown, local::.
+          extra-packages: any::pkgdown, bioc::BiocStyle, local::.
           needs: website
-          
-      - name: Install BiocStyle
-        run: |
-          Rscript -e "BiocManager::install('BiocStyle')"
 
       - name: Build site
         run: |
