@@ -3,6 +3,9 @@
 #' @description
 #' Simple _with_ functions. Similar to or from \pkg{withr} implementations.
 #' @param code R code to execute with temporary settings
+#' @returns \[function(new, code, ...)\]⁠ A function with at least two arguments:
+#' - new: New state to use
+#' - code: Code to run in that state
 #' @examples
 #' # options ###################################
 #' gwith_options(list(gutils.temp = "found"), {

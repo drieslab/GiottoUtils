@@ -31,6 +31,13 @@ gwith_seed(seed = 1234, code, ..., substitute = TRUE, envir = parent.frame())
 
 \item{envir}{The \code{\link[base]{environment}} in which the expression should be evaluated.}
 }
+\value{
+[function(new, code, ...)]⁠ A function with at least two arguments:
+\itemize{
+\item new: New state to use
+\item code: Code to run in that state
+}
+}
 \description{
 Simple \emph{with} functions. Similar to or from \pkg{withr} implementations.
 }

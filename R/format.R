@@ -520,7 +520,7 @@ use_color_text <- function() {
         }
         if (isTRUE(opt) && !isTRUE(ansi8_color)) {
             wrap_msg('Color text not supported on this system.
-               Set options("giotto.color_show" = FALSE)')
+                Set options("giotto.color_show" = FALSE)')
         }
     } else {
         ansi8_color
