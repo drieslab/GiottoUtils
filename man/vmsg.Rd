@@ -8,7 +8,8 @@ vmsg(
   ...,
   .v = NULL,
   .is_debug = FALSE,
-  .vopt = getOption("giotto.verbose", TRUE)
+  .vopt = getOption("giotto.verbose", TRUE),
+  .log_path = NULL
 )
 }
 \arguments{
@@ -22,6 +23,9 @@ verbose flags}
 (only prints when .v or .vopt is 'debug')}
 
 \item{.vopt}{global verbosity option to pull from}
+
+\item{.log_path}{filepath. Temporarily log to a specific location. Does
+not disturb the \code{"giotto.last_logpath"} option.}
 }
 \value{
 character
