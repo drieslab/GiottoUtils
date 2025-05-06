@@ -31,6 +31,9 @@ gwith_seed(seed = 1234, code, ..., substitute = TRUE, envir = parent.frame())
 
 \item{envir}{The \code{\link[base]{environment}} in which the expression should be evaluated.}
 }
+\value{
+the evaluated value of \code{code}
+}
 \description{
 Simple \emph{with} functions. Similar to or from \pkg{withr} implementations.
 }
