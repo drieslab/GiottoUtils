@@ -112,6 +112,8 @@ wrap_txtf <- function(...,
 #' @param .is_debug flag as a debug print
 #' (only prints when .v or .vopt is 'debug')
 #' @param .vopt global verbosity option to pull from
+#' @param .log_path filepath. Temporarily log to a specific location. Does
+#' not disturb the `"giotto.last_logpath"` option.
 #' @returns character
 #' @examples
 #' # common usage (.v is logical)
@@ -136,7 +138,8 @@ wrap_txtf <- function(...,
 #' @export
 vmsg <- function(
         ..., .v = NULL, .is_debug = FALSE,
-        .vopt = getOption("giotto.verbose", TRUE)) {
+        .vopt = getOption("giotto.verbose", TRUE),
+        .log_path = NULL) {
     # if function-level flag is provided, override global option
     if (!is.null(.v)) {
         .vopt <- .v
@@ -174,7 +177,23 @@ vmsg <- function(
     switch(.vopt,
         "yes" = wrap_msg(...),
         "no" = return(invisible(NULL)),
-        "log" = log_write(x = wrap_txt(...))
+        "log" = {
+            content <- wrap_txt(...)
+            if (!is.null(.log_path)) {
+                # these are ephemeral, do not disturb last log path
+                last_log_path <- getOption("giotto.last_logpath", NULL)
+                on.exit(options("giotto.last_logpath" = last_log_path))
+                log_write(
+                    file_conn = .log_conn(
+                        filepath = .log_path,
+                        verbose = FALSE
+                    ),
+                    x = content
+                )
+            } else {
+                log_write(x = content)
+            }
+        }
     )
 }
 
@@ -520,7 +539,7 @@ use_color_text <- function() {
         }
         if (isTRUE(opt) && !isTRUE(ansi8_color)) {
             wrap_msg('Color text not supported on this system.
-               Set options("giotto.color_show" = FALSE)')
+                Set options("giotto.color_show" = FALSE)')
         }
     } else {
         ansi8_color
