@@ -4,10 +4,12 @@
 \alias{.log_create}
 \title{Create a log file}
 \usage{
-.log_create(filedir = getOption("giotto.logdir", tempdir()))
+.log_create(filedir = getOption("giotto.logdir", tempdir()), filepath = NULL)
 }
 \arguments{
 \item{filedir}{character. Directory to create a logfile}
+
+\item{filepath}{character. Path to logfile. Overrides \code{filedir}.}
 }
 \value{
 file 'log.txt'

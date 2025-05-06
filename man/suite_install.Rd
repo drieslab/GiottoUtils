@@ -27,6 +27,9 @@ of actually running them.}
 
 \item{\dots}{additional params to pass to \code{remotes::install_github()}}
 }
+\value{
+\code{TRUE} if install succeeds
+}
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}\cr
 Installation convenience function. Helps with Giotto Suite installation from
