@@ -58,7 +58,7 @@ suite_packages <- function(type = "core") {
 #' @section ref `"dev"`:
 #' This version is ahead of the main version and also chases the latest R
 #' version.
-#' @returns installed packages
+#' @returns `TRUE` if install succeeds
 #' @examples
 #' if (FALSE) {
 #'     # install core packages
