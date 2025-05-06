@@ -4,10 +4,12 @@
 \alias{.log_conn}
 \title{Create a logfile connection}
 \usage{
-.log_conn(filepath = getOption("giotto.last_logpath", NULL))
+.log_conn(filepath = getOption("giotto.last_logpath", NULL), verbose = TRUE)
 }
 \arguments{
 \item{filepath}{path to the logfile}
+
+\item{verbose}{be verbose about new logfile creation}
 }
 \value{
 file connection
