@@ -12,6 +12,9 @@ for the packages needed for Giotto to run, \code{"extensions"} for extending
 packages such as \emph{GiottoData}, and \code{"all"} for all current modules to be
 returned.}
 }
+\value{
+character
+}
 \description{
 Returns character vector of Giotto Suite's packages. Only the
 core packages are returned by default.

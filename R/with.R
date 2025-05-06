@@ -3,6 +3,7 @@
 #' @description
 #' Simple _with_ functions. Similar to or from \pkg{withr} implementations.
 #' @param code R code to execute with temporary settings
+#' @returns the evaluated value of `code`
 #' @examples
 #' # options ###################################
 #' gwith_options(list(gutils.temp = "found"), {

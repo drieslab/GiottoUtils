@@ -6,6 +6,7 @@
 #' for the packages needed for Giotto to run, `"extensions"` for extending
 #' packages such as *GiottoData*, and `"all"` for all current modules to be
 #' returned.
+#' @returns character
 #' @examples
 #' suite_packages()
 #' suite_packages("core")
@@ -57,6 +58,7 @@ suite_packages <- function(type = "core") {
 #' @section ref `"dev"`:
 #' This version is ahead of the main version and also chases the latest R
 #' version.
+#' @returns `TRUE` if install succeeds
 #' @examples
 #' if (FALSE) {
 #'     # install core packages

@@ -88,6 +88,7 @@ giottoNewLog <- function(logdir) {
 #' @name .log_create
 #' @title Create a log file
 #' @param filedir character. Directory to create a logfile
+#' @param filepath character. Path to logfile. Overrides `filedir`.
 #' @description
 #' Creates a file called 'log.txt' at the specified directory. If no directory
 #' is provided, it defaults to `tempdir()`, but a specific one can be provided
@@ -95,9 +96,15 @@ giottoNewLog <- function(logdir) {
 #' The filepath is additionally written to the option 'giotto.last_logpath'.
 #' @returns file 'log.txt'
 #' @keywords internal
-.log_create <- function(filedir = getOption("giotto.logdir", tempdir())) {
+.log_create <- function(filedir = getOption("giotto.logdir", tempdir()), 
+                        filepath = NULL) {
+    if (is.null(filepath)) {
+        filepath <- .unique_filename(filedir = filedir, prefix = "giotto_")
+    } else {
+        filedir <- dirname(filepath)
+    }
     if (!dir.exists(filedir)) dir.create(filedir, recursive = TRUE)
-    filepath <- .unique_filename(filedir = filedir, prefix = "giotto_")
+
     file.create(filepath)
     filepath <- normalizePath(filepath)
 
@@ -109,15 +116,17 @@ giottoNewLog <- function(logdir) {
 #' @title Create a logfile connection
 #' @name .log_conn
 #' @param filepath path to the logfile
+#' @param verbose be verbose about new logfile creation
 #' @description Create an active file connection object to the logfile to
 #' write to. Opens it in mode "a+" which allows both appending and reading.
 #' @returns file connection
 #' @keywords internal
-.log_conn <- function(filepath = getOption("giotto.last_logpath", NULL)) {
-    if (is.null(filepath)) {
-        filepath <- .log_create() %>%
+.log_conn <- function(filepath = getOption("giotto.last_logpath", NULL),
+                      verbose = TRUE) {
+    if (is.null(filepath) || !checkmate::test_file_exists(filepath)) {
+        filepath <- .log_create(filepath = filepath) %>%
             normalizePath()
-        message("Logging to:", filepath)
+        if (verbose) message("Logging to:", filepath)
     }
 
     file(filepath, open = "a+") # open in 'a'ppend and reading (+) mode
