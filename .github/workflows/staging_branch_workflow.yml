@@ -48,20 +48,19 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
-      - name: Install reticulate
+      - name: Install reticulate and create miniconda
         run: |
           Rscript -e "install.packages('reticulate')"
-      
-      - name: Create miniconda
-        run: |
           Rscript -e "reticulate::install_miniconda()"
           Rscript -e "reticulate::conda_install(packages = 'scipy')"
-      - name: Set RETICULATE_PYTHON environment variable
-        run: |
-          echo "RETICULATE_PYTHON=/opt/miniconda/envs/r-reticulate/bin/python" >> $GITHUB_ENV
+          
+          # Get the path to the Python executable in the r-reticulate environment
+          echo "RETICULATE_PYTHON=$(Rscript -e 'cat(reticulate::conda_python(\"r-reticulate\"))')" >> $GITHUB_ENV
         shell: bash
       - name: Run rcmdcheck
         run: |
+          Rscript -e "print(Sys.getenv('RETICULATE_PYTHON'))"
+          Rscript -e "print(reticulate::py_config())"
           Rscript -e "rcmdcheck::rcmdcheck()"
 
   codecov:
