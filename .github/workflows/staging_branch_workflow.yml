@@ -50,9 +50,11 @@ jobs:
 
       - name: Install reticulate and create miniconda
         run: |
-          Rscript -e "install.packages('reticulate')"
-          Rscript -e "reticulate::conda_create('r-reticulate')"
-          Rscript -e "reticulate::conda_install(packages = 'scipy', envname = 'r-reticulate')"
+          install.packages('reticulate')
+          reticulate::install_miniconda()
+          reticulate::conda_create('r-reticulate')
+          reticulate::conda_install(packages = 'scipy', envname = 'r-reticulate')
+        shell: Rscript {0}
       - name: Set RETICULATE_PYTHON environment variable
         run: |
           echo "RETICULATE_PYTHON=/opt/miniconda/envs/r-reticulate/bin/python" >> $GITHUB_ENV
