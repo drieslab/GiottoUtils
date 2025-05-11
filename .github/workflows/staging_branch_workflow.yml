@@ -56,7 +56,10 @@ jobs:
         run: |
           Rscript -e "reticulate::install_miniconda()"
           Rscript -e "reticulate::conda_install(packages = 'scipy')"
-          
+      - name: Set RETICULATE_PYTHON environment variable
+        run: |
+          echo "RETICULATE_PYTHON=/opt/miniconda/envs/r-reticulate/bin/python" >> $GITHUB_ENV
+        shell: bash
       - name: Run rcmdcheck
         run: |
           Rscript -e "rcmdcheck::rcmdcheck()"
