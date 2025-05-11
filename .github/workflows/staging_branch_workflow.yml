@@ -50,7 +50,7 @@ jobs:
 
       - name: Install reticulate and create miniconda
         run: |
-          Rscript -e "options(repos = c(CRAN = 'https://cran.r-project.org')); Rscript -e "install.packages('reticulate')"
+          Rscript -e "options(repos = c(CRAN = 'https://cran.r-project.org')); install.packages('reticulate')"
           Rscript -e "reticulate::install_miniconda()"
           Rscript -e "reticulate::conda_create('r-reticulate')"
           Rscript -e "reticulate::conda_install(packages = 'scipy', envname = 'r-reticulate')"
