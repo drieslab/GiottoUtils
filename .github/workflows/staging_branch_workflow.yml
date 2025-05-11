@@ -3,6 +3,9 @@
 on:
   push:
     branches: [ staging ]
+  schedule:
+    - cron: '0 0 * * 0'  # Run at midnight every Sunday
+  workflow_dispatch:      # Allow manual trigger
 
 name: STAGING final checks
 
@@ -38,7 +41,7 @@ jobs:
         with:
           r-version: ${{ matrix.config.r }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
-          use-public-rspm: true
+          use-public-rspm: false # use standard CRAN
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
@@ -73,6 +76,10 @@ jobs:
       - name: catch R deps not in container
         run: devtools::install_deps()
         shell: Rscript {0}
+      - name: Set RETICULATE_PYTHON environment variable
+        run: |
+          echo "RETICULATE_PYTHON=/opt/miniconda/envs/r-reticulate/bin/python" >> $GITHUB_ENV
+        shell: bash
       - name: Generate coverage report and upload
         run: |
           covr::codecov(
