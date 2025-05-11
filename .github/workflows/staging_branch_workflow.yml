@@ -53,13 +53,12 @@ jobs:
           Rscript -e "install.packages('reticulate')"
           Rscript -e "reticulate::conda_create('r-reticulate')"
           Rscript -e "reticulate::conda_install(packages = 'scipy', envname = 'r-reticulate')"
-          
-          # Get the path to the Python executable in the r-reticulate environment
-          echo "RETICULATE_PYTHON=$(Rscript -e 'cat(reticulate::conda_python(\"r-reticulate\"))')" >> $GITHUB_ENV
+      - name: Set RETICULATE_PYTHON environment variable
+        run: |
+          echo "RETICULATE_PYTHON=/opt/miniconda/envs/r-reticulate/bin/python" >> $GITHUB_ENV
         shell: bash
       - name: Run rcmdcheck
         run: |
-          Rscript -e "print(Sys.getenv('RETICULATE_PYTHON'))"
           Rscript -e "print(reticulate::py_config())"
           Rscript -e "rcmdcheck::rcmdcheck()"
 
