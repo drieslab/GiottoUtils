@@ -391,11 +391,23 @@ print_list <- function(x, pre = "") {
     if (length(ns) != length(x)) {
         stop("all elements must be named")
     }
-    x <- lapply(x, as.character)
+    x <- lapply(x, function(i) {
+        if (is.character(i) || 
+            is.logical(i) || 
+            is.factor(i) || 
+            is.numeric(i)) {
+            return(as.character(i))
+        }
+        # fallback
+        .print_fallback(i)
+    })
     cat(sprintf("%s%s : %s", pre, format(ns), x), sep = "\n")
     invisible(x)
 }
 
+.print_fallback <- function(x) {
+    sprintf("<%s> length %d", class(x), length(x))
+}
 
 
 
