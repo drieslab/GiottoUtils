@@ -378,7 +378,10 @@ str_quote <- function(x) {
 #' test <- list(
 #'     name1 = "1",
 #'     longername2 = "test_char",
-#'     thirdname = factor("this will be converted with as.character()")
+#'     thirdname = factor("this will be converted with as.character()"),
+#'     df_test = data.frame(a = "a", b = "b"),
+#'     list_test = list(a = 1, b = 2, c = 3),
+#'     formula_test = ~a
 #' )
 #' print_list(test)
 #' print_list(test, pre = "* ")
