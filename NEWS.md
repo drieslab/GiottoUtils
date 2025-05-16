@@ -1,3 +1,9 @@
+# GiottoUtils 0.2.5 (TBD)
+
+## Enhancement
+- Improve fallbacks for `print_list()`
+
+
 # GiottoUtils 0.2.4 (2025/05/06)
 
 ## Changes
