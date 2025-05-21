@@ -1,5 +1,8 @@
 # GiottoUtils 0.2.5 (TBD)
 
+## New
+- `str_reformat()` for print post-processing with `strwrap()`
+
 ## Enhancement
 - Improve fallbacks for `print_list()`
 

@@ -60,13 +60,11 @@ wrap_txt <- function(...,
     }
 
     cat(..., sep = sep) %>%
-        capture.output() %>%
-        strwrap(
-            prefix = .prefix, initial = .initial, # indent later lines,
-            # no indent first line
+        str_reformat(
+            prefix = .prefix, 
+            initial = .initial,
             width = min(80, getOption("width"), strWidth)
-        ) %>%
-        paste(collapse = "\n")
+        )
 }
 
 #' @rdname wrap_txt
@@ -93,13 +91,12 @@ wrap_txtf <- function(...,
     }
 
     cat(sprintf(...), sep = sep) %>%
-        capture.output() %>%
-        strwrap(
-            prefix = .prefix, initial = .initial, # indent later lines,
-            # no indent first line
+        # indent later lines, no indend first line
+        str_reformat(
+            prefix = .prefix, 
+            initial = .initial,
             width = min(80, getOption("width"), strWidth)
-        ) %>%
-        paste(collapse = "\n")
+        )
 }
 
 
@@ -318,14 +315,16 @@ gstop <- function(
 #' cat(str_parenth(x), "\n")
 #' cat(str_double_quote(x), "\n")
 #' cat(str_quote(x), "\n")
-#'
-#' vec <- c("item1", "item2", "item3")
-#' cat(str_vector(vec), "\n")
-#' cat(str_vector(vec, qchar = "double"))
 NULL
 
-#' @rdname str_convenience
+#' @describeIn str_convenience Format a vector of values into 'a', 'b', 'c' or 
+#' "a", "b", "c" depending on `qchar` via [toString()]
 #' @param qchar quote character to use. Either 'single' or "double"
+#' @examples
+#' # format a set of character values with str_vector()
+#' vec <- c("item1", "item2", "item3")
+#' cat(str_vector(vec)) # single quote (default)
+#' cat(str_vector(vec, qchar = "double")) # double quote
 #' @export
 str_vector <- function(x, qchar = c("single", "double")) {
     qchar <- match.arg(qchar, choices = c("single", "double"))
@@ -359,7 +358,17 @@ str_quote <- function(x) {
     paste0("\'", x, "\'")
 }
 
-
+#' @describeIn str_convenience capture and reformat a print with [strwrap()]
+#' @param ... additional params to pass to [strwrap()]
+#' @examples
+#' # print post-processing with str_reformat()
+#' txt <- "hello
+#'         world"
+#' cat(str_reformat(cat(txt), indent = 3))
+str_reformat <- function(x, ...) {
+    cap <- capture.output(x)
+    paste(strwrap(cap, ...), collapse = "\n")
+}
 
 #' @name print_list
 #' @title Pretty print formatting for lists and vectors
