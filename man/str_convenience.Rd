@@ -7,6 +7,7 @@
 \alias{str_parenth}
 \alias{str_double_quote}
 \alias{str_quote}
+\alias{str_reformat}
 \title{String convenience functions}
 \usage{
 str_vector(x, qchar = c("single", "double"))
@@ -18,11 +19,15 @@ str_parenth(x)
 str_double_quote(x)
 
 str_quote(x)
+
+str_reformat(x, ...)
 }
 \arguments{
 \item{x}{string item(s) to format}
 
 \item{qchar}{quote character to use. Either 'single' or "double"}
+
+\item{...}{additional params to pass to \code{\link[=strwrap]{strwrap()}}}
 }
 \value{
 character
@@ -30,14 +35,26 @@ character
 \description{
 String convenience functions
 }
+\section{Functions}{
+\itemize{
+\item \code{str_vector()}: Format a vector of values into 'a', 'b', 'c' or
+"a", "b", "c" depending on \code{qchar} via \code{\link[=toString]{toString()}}
+
+\item \code{str_reformat()}: capture and reformat a print with \code{\link[=strwrap]{strwrap()}}
+
+}}
 \examples{
 x <- "test"
 cat(str_bracket(x), "\n")
 cat(str_parenth(x), "\n")
 cat(str_double_quote(x), "\n")
 cat(str_quote(x), "\n")
-
+# format a set of character values with str_vector()
 vec <- c("item1", "item2", "item3")
-cat(str_vector(vec), "\n")
-cat(str_vector(vec, qchar = "double"))
+cat(str_vector(vec)) # single quote (default)
+cat(str_vector(vec, qchar = "double")) # double quote
+# print post-processing with str_reformat()
+txt <- "hello
+        world"
+cat(str_reformat(cat(txt), indent = 3))
 }
