@@ -1,4 +1,4 @@
-# GiottoUtils 0.2.5 (TBD)
+# GiottoUtils 0.2.5 (2025/05/21)
 
 ## New
 - `str_reformat()` for print post-processing with `strwrap()`
