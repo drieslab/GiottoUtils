@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">GiottoUtils</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,16 +83,25 @@
 <span class="r-in"><span><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    name1 <span class="op">=</span> <span class="st">"1"</span>,</span></span>
 <span class="r-in"><span>    longername2 <span class="op">=</span> <span class="st">"test_char"</span>,</span></span>
-<span class="r-in"><span>    thirdname <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="st">"this will be converted with as.character()"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    thirdname <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="st">"this will be converted with as.character()"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    df_test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>a <span class="op">=</span> <span class="st">"a"</span>, b <span class="op">=</span> <span class="st">"b"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    list_test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span>, b <span class="op">=</span> <span class="fl">2</span>, c <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    formula_test <span class="op">=</span> <span class="op">~</span><span class="va">a</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">print_list</span><span class="op">(</span><span class="va">test</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> name1       : 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> longername2 : test_char</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> thirdname   : this will be converted with as.character()</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> name1        : 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> longername2  : test_char</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> thirdname    : this will be converted with as.character()</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> df_test      : &lt;data.frame&gt; length 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> list_test    : &lt;list&gt; length 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> formula_test : &lt;formula&gt; length 2</span>
 <span class="r-in"><span><span class="fu">print_list</span><span class="op">(</span><span class="va">test</span>, pre <span class="op">=</span> <span class="st">"* "</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * name1       : 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * longername2 : test_char</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * thirdname   : this will be converted with as.character()</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * name1        : 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * longername2  : test_char</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * thirdname    : this will be converted with as.character()</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * df_test      : &lt;data.frame&gt; length 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * list_test    : &lt;list&gt; length 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * formula_test : &lt;formula&gt; length 2</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

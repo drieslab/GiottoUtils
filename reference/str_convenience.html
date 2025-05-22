@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">GiottoUtils</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,7 +51,9 @@
 <span></span>
 <span><span class="fu">str_double_quote</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">str_quote</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">str_quote</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">str_reformat</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -65,11 +67,22 @@
 <dt id="arg-qchar">qchar<a class="anchor" aria-label="anchor" href="#arg-qchar"></a></dt>
 <dd><p>quote character to use. Either 'single' or "double"</p></dd>
 
+
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
+<dd><p>additional params to pass to <code><a href="https://rdrr.io/r/base/strwrap.html" class="external-link">strwrap()</a></code></p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>character</p>
     </div>
+    <div class="section level2">
+    <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
+
+<ul><li><p><code>str_vector()</code>: Format a vector of values into 'a', 'b', 'c' or
+"a", "b", "c" depending on <code>qchar</code> via <code><a href="https://rdrr.io/r/base/toString.html" class="external-link">toString()</a></code></p></li>
+<li><p><code>str_reformat()</code>: capture and reformat a print with <code><a href="https://rdrr.io/r/base/strwrap.html" class="external-link">strwrap()</a></code></p></li>
+</ul></div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
@@ -82,12 +95,18 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> "test" </span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu">str_quote</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 'test' </span>
-<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># format a set of character values with str_vector()</span></span></span>
 <span class="r-in"><span><span class="va">vec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"item1"</span>, <span class="st">"item2"</span>, <span class="st">"item3"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu">str_vector</span><span class="op">(</span><span class="va">vec</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 'item1', 'item2', 'item3' </span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu">str_vector</span><span class="op">(</span><span class="va">vec</span>, qchar <span class="op">=</span> <span class="st">"double"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu">str_vector</span><span class="op">(</span><span class="va">vec</span><span class="op">)</span><span class="op">)</span> <span class="co"># single quote (default)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 'item1', 'item2', 'item3'</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu">str_vector</span><span class="op">(</span><span class="va">vec</span>, qchar <span class="op">=</span> <span class="st">"double"</span><span class="op">)</span><span class="op">)</span> <span class="co"># double quote</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> "item1", "item2", "item3"</span>
+<span class="r-in"><span><span class="co"># print post-processing with str_reformat()</span></span></span>
+<span class="r-in"><span><span class="va">txt</span> <span class="op">&lt;-</span> <span class="st">"hello</span></span></span>
+<span class="r-in"><span><span class="st">        world"</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu">str_reformat</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">txt</span><span class="op">)</span>, indent <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    hello</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    world</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
