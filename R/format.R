@@ -365,6 +365,7 @@ str_quote <- function(x) {
 #' txt <- "hello
 #'         world"
 #' cat(str_reformat(cat(txt), indent = 3))
+#' @export
 str_reformat <- function(x, ...) {
     cap <- capture.output(x)
     paste(strwrap(cap, ...), collapse = "\n")
