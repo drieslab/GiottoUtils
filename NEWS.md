@@ -1,3 +1,12 @@
+# GiottoUtils 0.2.5 (2025/05/21)
+
+## New
+- `str_reformat()` for print post-processing with `strwrap()`
+
+## Enhancement
+- Improve fallbacks for `print_list()`
+
+
 # GiottoUtils 0.2.4 (2025/05/06)
 
 ## Changes
